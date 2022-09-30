@@ -1,0 +1,341 @@
+Script started on 2022-03-18 00:17:27-04:00 [TERM="xterm-256color" TTY="/dev/pts/6" COLUMNS="227" LINES="27"]
+]0;ldc6@maroon25: ~/cs214/Projects/09/java[01;32mldc6@maroon25[00m:[01;34m~/cs214/Projects/09/java[00m$ cat Temperature.java
+/*temperature.java builds class Temperature
+*author: Daniela Contreras
+* 03/18/2021
+* Worked with Germaine Hounakey
+*************************************************************************************************************************
+*/
+import java.util.Scanner;
+
+class Temperature {
+    /*********************************************************************************************************************
+    *With the use of a DOuble and Char we construct temperature
+    *Receive: Degrees as double and scale as a char
+    *Output: Temperature Object
+    */
+    public Temperature(final double degree, final char scale){
+        if (isValid(degree, scale)){
+            myDegree = degree;
+            myScale = scale;
+        }
+    }
+    private
+        double myDegree;
+        char myScale;
+    /*****************************************************************************************************************************
+    *** getDegrees() retrives the degrees
+    ***Outputs: Value of degrees
+    */
+    public final double getDegree(){
+        return myDegree;
+    }
+     /*****************************************************************************************************************************
+    *** getScale() retrives the Scale
+    ***Outputs: Value of scale
+    */
+    public final char getScale() {
+        return myScale;
+    }
+    /*****************************************************************************************************************************
+    *** toFahrenheit() function converts degrees to Fahrenheit
+    ***Outputs: Value of degrees in Fahrenheit
+    */
+    public void toFahrenheit(){
+        if (Character.toUpperCase(myScale) == 'K')
+            myDegree = Math.round(((myDegree-273.15)*9/5+32)*100)/100.0;
+        else if (Character.toUpperCase(myScale) == 'C')
+            myDegree = Math.round((myDegree*9/5+32)*100)/100.0;
+        myScale = 'F';
+    }
+    /*****************************************************************************************************************************
+    *** toCelcius() function converts Temp to Celsius
+    ***Outputs: Value of degrees in Celcius
+    */
+    public void toCelcius(){
+        if (Character.toUpperCase(myScale) == 'K')
+            myDegree = Math.round((myDegree-273.15)*100)/100.0;
+        else if (Character.toUpperCase(myScale) == 'F')
+            myDegree = Math.round(((myDegree-32)*5/9)*100)/100.0;
+        myScale = 'C';
+    }
+     /*****************************************************************************************************************************
+    *** toKelvin() function converts Temp object to Celsius
+    ***Outputs: Value of degrees in Kelvin
+    */
+    public void toKelvin(){
+        if (Character.toUpperCase(myScale) == 'C')
+            myDegree = Math.round((myDegree+273.15)*100)/100.0;
+        else if (Character.toUpperCase(myScale) == 'F')
+            myDegree = Math.round(((myDegree-32)*5/9+273.15)*100)/100.0;
+        myScale = 'K';
+    }
+    /************************************************************************************************
+    *raiseTemperature() increases myDegrees
+    *Receive: degree in double
+    **************************************************************************************/
+    public void raiseTemperature(double degree){
+        if(isValid(myDegree+degree, myScale)){
+            myDegree += degree;
+        }
+    }
+    /************************************************************************************************
+    *lowerTemperature() decreases myDegrees
+    *Receive: degree in double
+    **************************************************************************************/
+    public void lowerTemperature(double degree){
+        if(isValid(myDegree-degree, myScale)){
+            myDegree -= degree;
+        }
+    }
+    /************************************************************************************************
+    *isEqual() checks if operands are equal
+    *Receive: temperature object
+    *Return: Boolean ; True if equal false if otherwise
+    **************************************************************************************/
+    public boolean isEqual(Temperature aTemperature){
+        Temperature aTemperatureCopy = new Temperature(aTemperature.getDegree(), aTemperature.getScale());
+        Temperature localCopy = new Temperature(getDegree(), getScale());
+        aTemperatureCopy.toKelvin();
+        localCopy.toKelvin();
+        return localCopy.getDegree() == aTemperatureCopy.getDegree();
+    }
+    /************************************************************************************************
+    *isLess() checks less than relational operator across scales
+    *Receive: temperature object
+    *Return: Boolean ; True if less than false if otherwise
+    **************************************************************************************/
+    public boolean isLess(Temperature aTemperature){
+        Temperature aTemperatureCopy = new Temperature(aTemperature.getDegree(), aTemperature.getScale());
+        Temperature localCopy = new Temperature(getDegree(), getScale());
+        aTemperatureCopy.toKelvin();
+        localCopy.toKelvin();
+        return localCopy.getDegree() < aTemperatureCopy.getDegree();
+    }
+    /************************************************************************************************
+    *isValid(degre, scale) checks if degree is within range
+    *Receive: Degrees, a double; Scale, a char
+    *Return: Boolean ; True if Valid than false if otherwise
+    **************************************************************************************/
+    public boolean isValid(double degree, char scale) {
+        return (  (Character.toUpperCase(scale) == 'K' && degree >=    0.00)
+               || (Character.toUpperCase(scale) == 'C' && degree >= -273.15)
+               || (Character.toUpperCase(scale) == 'F' && degree >= -459.67));
+    }
+    /***********************************************************************************************************************************************************************
+    * readTemp()
+    * Receive: Scanner keyboard for the input
+    ************************************************************************************************************************************************************************/
+    public void readTemperature(Scanner keyboard){
+        System.out.print("Enter Degree along with Scale: ");
+        double aDegree = keyboard.nextDouble();
+        char aScale = keyboard.next().trim().charAt(0);
+        if (isValid(aDegree, aScale) ) {
+                myDegree = aDegree;
+            myScale = aScale;
+        }
+    }
+     /***********************************************************************************************************************************************************************
+    * writeTemperature())
+    * Receive: prints temperature
+    ************************************************************************************************************************************************************************/
+    public void writeTemperature(){
+            System.out.print(Double.toString(myDegree) + " " + myScale);
+    }
+ /***********************************************************************************************************************************************************************
+    * toScale() converts temperature to scale desired
+    * Receive: Scale as a char
+    ************************************************************************************************************************************************************************/
+    public void toScale(char scale){
+        switch(Character.toUpperCase(scale)){
+            case 'F': toFahrenheit(); break;
+            case 'C': toCelcius(); break;
+            case 'K': toKelvin(); break;
+        }
+    }
+
+}]0;ldc6@maroon25: ~/cs214/Projects/09/java[01;32mldc6@maroon25[00m:[01;34m~/cs214/Projects/09/java[00m$ cat temp_tester.java
+/*temp_tester.java is a test driver for class Temperature
+** Worked with Germaine Hounakey
+***Name: Daniela Contreras
+***Date: 03/18/
+*/
+import java.util.Scanner;
+
+public class temp_tester{
+    public static void main(String[] args){
+
+        //Scanner receives input from the uder
+        Scanner keyboard = new Scanner(System.in);
+
+        //Two temmperature objects
+        Temperature baseTemperature = new Temperature(0.0, 'K');
+        Temperature limitTemperature = new Temperature(0.0, 'K');
+
+        // Prompt user for base temperature
+        System.out.println("Base Temperature");
+        baseTemperature.readTemperature(keyboard);
+
+        // Prompt user for limit temperature
+        System.out.println("Limit Temperature");
+        limitTemperature.readTemperature(keyboard);
+
+        // Prompt user for increment value
+        System.out.print("Enter Step Value: ");
+        double stepValue = keyboard.nextDouble();
+
+        // Store original scale for reset each loop
+        char origScale = baseTemperature.getScale();
+
+        // Loop to print temperature table
+        while (baseTemperature.isLess(limitTemperature) || baseTemperature.isEqual(limitTemperature) ) {
+        // Print Fahrenheit
+            System.out.print("Fahrenheit: ");
+            baseTemperature.toFahrenheit();
+            baseTemperature.writeTemperature();
+            System.out.print("\t");
+
+            // Print Celsius
+            System.out.print("Celsius: ");
+            baseTemperature.toCelcius();
+            baseTemperature.writeTemperature();
+            System.out.print("\t");
+     
+            // Print Kelvin
+            System.out.print("Kelvin: ");
+            baseTemperature.toKelvin();
+            baseTemperature.writeTemperature();
+            System.out.print("\n");
+     
+            // Get baseTemp to original scale and increment temperature
+            baseTemperature.toScale(origScale);
+            baseTemperature.raiseTemperature(stepValue);
+        }
+    }
+
+}
+
+
+
+
+]0;ldc6@maroon25: ~/cs214/Projects/09/java[01;32mldc6@maroon25[00m:[01;34m~/cs214/Projects/09/java[00m$ javac -deprecation temp_tester.java
+]0;ldc6@maroon25: ~/cs214/Projects/09/java[01;32mldc6@maroon25[00m:[01;34m~/cs214/Projects/09/java[00m$ java temp_tester
+Base Temperature
+Enter Degree along with Scale: 0 F
+Limit Temperature
+Enter Degree along with Scale: 100 C
+Enter Step Value: 2.5
+Fahrenheit: 0.0 F	Celsius: -17.78 C	Kelvin: 255.37 K
+Fahrenheit: 2.5 F	Celsius: -16.39 C	Kelvin: 256.76 K
+Fahrenheit: 5.0 F	Celsius: -15.0 C	Kelvin: 258.15 K
+Fahrenheit: 7.5 F	Celsius: -13.61 C	Kelvin: 259.54 K
+Fahrenheit: 10.0 F	Celsius: -12.22 C	Kelvin: 260.93 K
+Fahrenheit: 12.5 F	Celsius: -10.83 C	Kelvin: 262.32 K
+Fahrenheit: 15.01 F	Celsius: -9.44 C	Kelvin: 263.71 K
+Fahrenheit: 17.509999999999998 F	Celsius: -8.05 C	Kelvin: 265.1 K
+Fahrenheit: 20.01 F	Celsius: -6.66 C	Kelvin: 266.49 K
+Fahrenheit: 22.51 F	Celsius: -5.27 C	Kelvin: 267.88 K
+Fahrenheit: 25.01 F	Celsius: -3.88 C	Kelvin: 269.27 K
+Fahrenheit: 27.52 F	Celsius: -2.49 C	Kelvin: 270.66 K
+Fahrenheit: 30.02 F	Celsius: -1.1 C	Kelvin: 272.05 K
+Fahrenheit: 32.519999999999996 F	Celsius: 0.29 C	Kelvin: 273.44 K
+Fahrenheit: 35.02 F	Celsius: 1.68 C	Kelvin: 274.83 K
+Fahrenheit: 37.52 F	Celsius: 3.07 C	Kelvin: 276.22 K
+Fahrenheit: 40.03 F	Celsius: 4.46 C	Kelvin: 277.61 K
+Fahrenheit: 42.53 F	Celsius: 5.85 C	Kelvin: 279.0 K
+Fahrenheit: 45.03 F	Celsius: 7.24 C	Kelvin: 280.39 K
+Fahrenheit: 47.53 F	Celsius: 8.63 C	Kelvin: 281.78 K
+Fahrenheit: 50.03 F	Celsius: 10.02 C	Kelvin: 283.17 K
+Fahrenheit: 52.54 F	Celsius: 11.41 C	Kelvin: 284.56 K
+Fahrenheit: 55.04 F	Celsius: 12.8 C	Kelvin: 285.95 K
+Fahrenheit: 57.54 F	Celsius: 14.19 C	Kelvin: 287.34 K
+Fahrenheit: 60.04 F	Celsius: 15.58 C	Kelvin: 288.73 K
+Fahrenheit: 62.54 F	Celsius: 16.97 C	Kelvin: 290.12 K
+Fahrenheit: 65.05 F	Celsius: 18.36 C	Kelvin: 291.51 K
+Fahrenheit: 67.55 F	Celsius: 19.75 C	Kelvin: 292.9 K
+Fahrenheit: 70.05 F	Celsius: 21.14 C	Kelvin: 294.29 K
+Fahrenheit: 72.55 F	Celsius: 22.53 C	Kelvin: 295.68 K
+Fahrenheit: 75.05 F	Celsius: 23.92 C	Kelvin: 297.07 K
+Fahrenheit: 77.56 F	Celsius: 25.31 C	Kelvin: 298.46 K
+Fahrenheit: 80.06 F	Celsius: 26.7 C	Kelvin: 299.85 K
+Fahrenheit: 82.56 F	Celsius: 28.09 C	Kelvin: 301.24 K
+Fahrenheit: 85.06 F	Celsius: 29.48 C	Kelvin: 302.63 K
+Fahrenheit: 87.56 F	Celsius: 30.87 C	Kelvin: 304.02 K
+Fahrenheit: 90.07 F	Celsius: 32.26 C	Kelvin: 305.41 K
+Fahrenheit: 92.57 F	Celsius: 33.65 C	Kelvin: 306.8 K
+Fahrenheit: 95.07 F	Celsius: 35.04 C	Kelvin: 308.19 K
+Fahrenheit: 97.57 F	Celsius: 36.43 C	Kelvin: 309.58 K
+Fahrenheit: 100.07 F	Celsius: 37.82 C	Kelvin: 310.97 K
+Fahrenheit: 102.58 F	Celsius: 39.21 C	Kelvin: 312.36 K
+Fahrenheit: 105.08 F	Celsius: 40.6 C	Kelvin: 313.75 K
+Fahrenheit: 107.58 F	Celsius: 41.99 C	Kelvin: 315.14 K
+Fahrenheit: 110.08 F	Celsius: 43.38 C	Kelvin: 316.53 K
+Fahrenheit: 112.58 F	Celsius: 44.77 C	Kelvin: 317.92 K
+Fahrenheit: 115.09 F	Celsius: 46.16 C	Kelvin: 319.31 K
+Fahrenheit: 117.59 F	Celsius: 47.55 C	Kelvin: 320.7 K
+Fahrenheit: 120.09 F	Celsius: 48.94 C	Kelvin: 322.09 K
+Fahrenheit: 122.59 F	Celsius: 50.33 C	Kelvin: 323.48 K
+Fahrenheit: 125.09 F	Celsius: 51.72 C	Kelvin: 324.87 K
+Fahrenheit: 127.6 F	Celsius: 53.11 C	Kelvin: 326.26 K
+Fahrenheit: 130.1 F	Celsius: 54.5 C	Kelvin: 327.65 K
+Fahrenheit: 132.6 F	Celsius: 55.89 C	Kelvin: 329.04 K
+Fahrenheit: 135.1 F	Celsius: 57.28 C	Kelvin: 330.43 K
+Fahrenheit: 137.6 F	Celsius: 58.67 C	Kelvin: 331.82 K
+Fahrenheit: 140.11 F	Celsius: 60.06 C	Kelvin: 333.21 K
+Fahrenheit: 142.61 F	Celsius: 61.45 C	Kelvin: 334.6 K
+Fahrenheit: 145.11 F	Celsius: 62.84 C	Kelvin: 335.99 K
+Fahrenheit: 147.61 F	Celsius: 64.23 C	Kelvin: 337.38 K
+Fahrenheit: 150.11 F	Celsius: 65.62 C	Kelvin: 338.77 K
+Fahrenheit: 152.62 F	Celsius: 67.01 C	Kelvin: 340.16 K
+Fahrenheit: 155.12 F	Celsius: 68.4 C	Kelvin: 341.55 K
+Fahrenheit: 157.62 F	Celsius: 69.79 C	Kelvin: 342.94 K
+Fahrenheit: 160.12 F	Celsius: 71.18 C	Kelvin: 344.33 K
+Fahrenheit: 162.62 F	Celsius: 72.57 C	Kelvin: 345.72 K
+Fahrenheit: 165.13 F	Celsius: 73.96 C	Kelvin: 347.11 K
+Fahrenheit: 167.63 F	Celsius: 75.35 C	Kelvin: 348.5 K
+Fahrenheit: 170.13 F	Celsius: 76.74 C	Kelvin: 349.89 K
+Fahrenheit: 172.63 F	Celsius: 78.13 C	Kelvin: 351.28 K
+Fahrenheit: 175.13 F	Celsius: 79.52 C	Kelvin: 352.67 K
+Fahrenheit: 177.64 F	Celsius: 80.91 C	Kelvin: 354.06 K
+Fahrenheit: 180.14 F	Celsius: 82.3 C	Kelvin: 355.45 K
+Fahrenheit: 182.64 F	Celsius: 83.69 C	Kelvin: 356.84 K
+Fahrenheit: 185.14 F	Celsius: 85.08 C	Kelvin: 358.23 K
+Fahrenheit: 187.64 F	Celsius: 86.47 C	Kelvin: 359.62 K
+Fahrenheit: 190.15 F	Celsius: 87.86 C	Kelvin: 361.01 K
+Fahrenheit: 192.65 F	Celsius: 89.25 C	Kelvin: 362.4 K
+Fahrenheit: 195.15 F	Celsius: 90.64 C	Kelvin: 363.79 K
+Fahrenheit: 197.65 F	Celsius: 92.03 C	Kelvin: 365.18 K
+Fahrenheit: 200.15 F	Celsius: 93.42 C	Kelvin: 366.57 K
+Fahrenheit: 202.66 F	Celsius: 94.81 C	Kelvin: 367.96 K
+Fahrenheit: 205.16 F	Celsius: 96.2 C	Kelvin: 369.35 K
+Fahrenheit: 207.66 F	Celsius: 97.59 C	Kelvin: 370.74 K
+Fahrenheit: 210.16 F	Celsius: 98.98 C	Kelvin: 372.13 K
+]0;ldc6@maroon25: ~/cs214/Projects/09/java[01;32mldc6@maroon25[00m:[01;34m~/cs214/Projects/09/java[00m$ java temp_tester
+Base Temperature
+Enter Degree along with Scale: 0 K
+Limit Temperature
+Enter Degree along with Scale: 212 F
+Enter Step Value: 20.0
+Fahrenheit: -459.67 F	Celsius: -273.15 C	Kelvin: 0.0 K
+Fahrenheit: -423.67 F	Celsius: -253.15 C	Kelvin: 20.0 K
+Fahrenheit: -387.67 F	Celsius: -233.15 C	Kelvin: 40.0 K
+Fahrenheit: -351.67 F	Celsius: -213.15 C	Kelvin: 60.0 K
+Fahrenheit: -315.67 F	Celsius: -193.15 C	Kelvin: 80.0 K
+Fahrenheit: -279.67 F	Celsius: -173.15 C	Kelvin: 100.0 K
+Fahrenheit: -243.67 F	Celsius: -153.15 C	Kelvin: 120.0 K
+Fahrenheit: -207.67 F	Celsius: -133.15 C	Kelvin: 140.0 K
+Fahrenheit: -171.67 F	Celsius: -113.15 C	Kelvin: 160.0 K
+Fahrenheit: -135.67 F	Celsius: -93.15 C	Kelvin: 180.0 K
+Fahrenheit: -99.67 F	Celsius: -73.15 C	Kelvin: 200.0 K
+Fahrenheit: -63.67 F	Celsius: -53.15 C	Kelvin: 220.0 K
+Fahrenheit: -27.67 F	Celsius: -33.15 C	Kelvin: 240.0 K
+Fahrenheit: 8.33 F	Celsius: -13.15 C	Kelvin: 260.0 K
+Fahrenheit: 44.33 F	Celsius: 6.85 C	Kelvin: 280.0 K
+Fahrenheit: 80.33 F	Celsius: 26.85 C	Kelvin: 300.0 K
+Fahrenheit: 116.33 F	Celsius: 46.85 C	Kelvin: 320.0 K
+Fahrenheit: 152.33 F	Celsius: 66.85 C	Kelvin: 340.0 K
+Fahrenheit: 188.33 F	Celsius: 86.85 C	Kelvin: 360.0 K
+]0;ldc6@maroon25: ~/cs214/Projects/09/java[01;32mldc6@maroon25[00m:[01;34m~/cs214/Projects/09/java[00m$ exit
+exit
+
+Script done on 2022-03-18 00:18:52-04:00 [COMMAND_EXIT_CODE="0"]

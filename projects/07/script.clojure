@@ -1,0 +1,81 @@
+Script started on 2022-03-15 09:18:06-04:00 [TERM="xterm-256color" TTY="/dev/pts/3" COLUMNS="106" LINES="27"]
+]0;ldc6@remotel2: ~/cs214/Projects/07/clojure[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/07/clojure[00m$ cat src/circle      array.clj
+;; array.clj tests functions printArray and readArray
+;;Author: Daniela Contreras
+;;Date: 03/15/22
+;; User Inputs: values in array
+;; User output: Values in array
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(ns array)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;readArray() fills array with double values
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn readArray [anArray i size]
+    (if (< i size)
+        (do
+        (aset anArray i (double (read)))
+        (readArray anArray (+ i 1) size)
+        )
+    )
+)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; printArray() displays desired values
+;;receive: anArray : anArray now holding doubles
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn printArray [anArray size]
+    (print "Array: ")
+    (if (not= size 0)
+        (println (seq anArray))
+        (println "Nothing here!")
+    )
+)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;main function to display values and test printArray and readArray
+;;Outputs the items of array
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn -main[]
+    (print "Type here desired size for your array: \n") (flush)
+    (def size (int (read)))
+    (def anArray (to-array (repeat size 0)))
+    (if (> size 0)
+        (do (print " Enter values: \n") (flush))
+    )
+    (readArray anArray 0 size)
+    (printArray anArray size)
+)
+]0;ldc6@remotel2: ~/cs214/Projects/07/clojure[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/07/clojure[00m$ clojure -m array
+Type here desired size for your array: 
+3
+ Enter values: 
+3
+2
+3
+Array: (3.0 2.0 3.0)
+]0;ldc6@remotel2: ~/cs214/Projects/07/clojure[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/07/clojure[00m$ clojure -m array
+Type here desired size for your array: 
+5
+ Enter values: 
+4
+5
+4
+2
+3
+Array: (4.0 5.0 4.0 2.0 3.0)
+]0;ldc6@remotel2: ~/cs214/Projects/07/clojure[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/07/clojure[00m$ clojure -m array
+1Type here desired size for your array: 
+
+ Enter values: 
+34
+Array: (34.0)
+]0;ldc6@remotel2: ~/cs214/Projects/07/clojure[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/07/clojure[00m$ clojure -m array
+Type here desired size for your array: 
+5 9 2
+ Enter values: 
+3
+4
+Array: (3.0 4.0)
+]0;ldc6@remotel2: ~/cs214/Projects/07/clojure[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/07/clojure[00m$ exit
+exit
+
+Script done on 2022-03-15 09:19:19-04:00 [COMMAND_EXIT_CODE="0"]

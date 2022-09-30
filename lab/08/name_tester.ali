@@ -1,0 +1,70 @@
+V "GNAT Lib v7"
+M P W=b
+P SS ZX
+
+RN
+RV NO_IO
+RV NO_SECONDARY_STACK
+RV NO_DYNAMIC_SIZED_OBJECTS
+RV SPARK_05
+
+U name_tester%b		name_tester.adb		dd4a43eb NE OO SU IL
+W ada%s			ada.ads			ada.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+W system.concat_3%s	s-conca3.adb		s-conca3.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+
+D ada.ads		20170106103348 76789da1 ada%s
+D a-except.ads		20151016123252 291912d5 ada.exceptions%s
+D a-ioexce.ads		20140225151544 e4a01f64 ada.io_exceptions%s
+D a-stream.ads		20141120112812 119b8fb3 ada.streams%s
+D a-tags.ads		20151016130316 01f5e3ef ada.tags%s
+D a-textio.ads		20140717063745 386df5d4 ada.text_io%s
+D a-unccon.ads		20170106103348 31484697 ada.unchecked_conversion%s
+D interfac.ads		20160502101001 5ab55268 interfaces%s
+D i-cstrea.ads		20140801100435 e53d8b8e interfaces.c_streams%s
+D name_tester.adb	20220401052630 e527b63f name_tester%b
+D system.ads		20170510173650 4635ec04 system%s
+D s-conca3.ads		20140225151544 0b705ca5 system.concat_3%s
+D s-crtl.ads		20141120112812 0ebbdb71 system.crtl%s
+D s-exctab.ads		20140225151139 54135002 system.exception_table%s
+D s-ficobl.ads		20140718105747 078245e4 system.file_control_block%s
+D s-parame.ads		20140801093848 7e2a0d7f system.parameters%s
+D s-secsta.ads		20170112134946 9751b57e system.secondary_stack%s
+D s-soflin.ads		20151020124036 14e1eb6c system.soft_links%s
+D s-stache.ads		20140225151139 a37c21ec system.stack_checking%s
+D s-stalib.ads		20151112104907 09bd3940 system.standard_library%s
+D s-stoele.ads		20140225151139 2dc34a04 system.storage_elements%s
+D s-traent.ads		20140730135025 005bf670 system.traceback_entries%s
+D s-unstyp.ads		20160502101423 34867c83 system.unsigned_types%s
+D s-wchcon.ads		20140718092328 1b7d22d2 system.wch_con%s
+X 1 ada.ads
+16K9*Ada 20e8 10|7r6 7r23
+X 6 a-textio.ads
+49K13*Text_IO 471e16 10|7w10 7r27
+166U14*New_Line 10|105s15 106s29
+242U14*Put 10|90s5 91s5 92s5 106s3
+X 10 name_tester.adb
+9U11*name_tester 9b11 108l5 108t16
+12i3 NAME_SIZE{integer} 16r45
+14R8 Name 17e15 18r11 30r32 44r34 55r35 65r33 77r37 88r30
+16a7 MyFirst{string} 32m15 46r22 79r22 90r17
+16a16 MyMiddle{string} 33m15 57r22 79r40 91r17
+16a26 MyLast{string} 34m15 67r22 79r59 92r17
+18r3 aName{14R8} 97m9 99r27 100r28 101r26 102r30 105r7
+30U13 Init 30b13 30<18 30>38 30>45 30>53 35l9 35t13 97s4
+30r18 TheName{14R8} 32m7 33m7 34m7
+30a38 First{string} 32r26
+30a45 Middle{string} 33r27
+30a53 Last{string} 34r25
+44V12 getFirst{string} 44b12 44>21 47l9 47t17 99s18
+44r21 TheName{14R8} 46r14
+55V12 getMiddle{string} 55b12 55>22 58l9 58t18 100s18
+55r22 TheName{14R8} 57r14
+65V12 getLast{string} 65b12 65>20 68l9 68t16 101s18
+65r20 TheName{14R8} 67r14
+77V12 getFullName{string} 77b12 77>24 80l9 80t20 102s18
+77r24 TheName{14R8} 79r14 79r32 79r51
+88U13 Put 88b13 88>17 93l7 93t10 105s3
+88r17 theName{14R8} 90r9 91r9 92r9
+

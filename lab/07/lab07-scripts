@@ -1,0 +1,51 @@
+Script started on 2022-03-03 01:57:23-05:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="80" LINES="24"]
+]0;ldc6@remotel1: ~/cs214/Labs/07[01;32mldc6@remotel1[00m:[01;34m~/cs214/Labs/07[00m$ gnatmake average
+gnatmake: "average" up to date.
+]0;ldc6@remotel1: ~/cs214/Labs/07[01;32mldc6@remotel1[00m:[01;34m~/cs214/Labs/07[00m$ ./average
+ average 0 is  0.00000E+00
+ average 1 is  7.50000E+00
+]0;ldc6@remotel1: ~/cs214/Labs/07[01;32mldc6@remotel1[00m:[01;34m~/cs214/Labs/07[00m$ ez xit
+exit
+
+Script done on 2022-03-03 01:57:58-05:00 [COMMAND_EXIT_CODE="0"]
+Script started on 2022-03-03 01:58:39-05:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="80" LINES="24"]
+]0;ldc6@remotel1: ~/cs214/Labs/07[01;32mldc6@remotel1[00m:[01;34m~/cs214/Labs/07[00m$ ruby average.rb
+sum 0 is: 0
+sum 1 is: 30.0
+average 0 is: 0.0
+average 1 is: 7.5
+]0;ldc6@remotel1: ~/cs214/Labs/07[01;32mldc6@remotel1[00m:[01;34m~/cs214/Labs/07[00m$ exit
+exit
+
+Script done on 2022-03-03 01:59:18-05:00 [COMMAND_EXIT_CODE="0"]
+Script started on 2022-03-03 12:46:59-05:00 [TERM="xterm-256color" TTY="/dev/pts/1" COLUMNS="167" LINES="15"]
+]0;ldc6@remotel1: ~/cs214/Labs/07[01;32mldc6@remotel1[00m:[01;34m~/cs214/Labs/07[00m$ cp lab07-results /home/cs/214/current/ldc6[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cat script.clojure script.ada script.java script.ruby >lab07-results[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cscript script.clojure[K[3Pclojure -m averagescript script.ruby[1Padarubyclojure -m average
+
+The empty vec:  []
+The test  vec:  [9.0 8.0 7.0 6.0]
+
+
+The first sum is 0.000
+The second sum is 30.000
+
+The first average is 0.000
+The second average is 7.500
+
+
+
+The first sum2 is 0.000
+The second sum2 is 30.000
+
+
+]0;ldc6@remotel1: ~/cs214/Labs/07[01;32mldc6@remotel1[00m:[01;34m~/cs214/Labs/07[00m$ exit
+exit
+
+Script done on 2022-03-03 12:47:18-05:00 [COMMAND_EXIT_CODE="0"]
+Script started on 2022-02-24 18:51:30-05:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="80" LINES="24"]
+]0;ldc6@gold30: ~/cs214/Labs/07[01;32mldc6@gold30[00m:[01;34m~/cs214/Labs/07[00m$ javac -deprecation Average/java     .java
+]0;ldc6@gold30: ~/cs214/Labs/07[01;32mldc6@gold30[00m:[01;34m~/cs214/Labs/07[00m$ java Average
+The first average is 0.0
+The second average is 7.5
+]0;ldc6@gold30: ~/cs214/Labs/07[01;32mldc6@gold30[00m:[01;34m~/cs214/Labs/07[00m$ exit
+
+Script done on 2022-02-24 18:51:47-05:00 [COMMAND_EXIT_CODE="0"]

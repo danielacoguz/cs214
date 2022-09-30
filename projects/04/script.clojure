@@ -1,0 +1,104 @@
+Script started on 2022-02-11 14:02:34-05:00 [TERM="xterm-256color" TTY="/dev/pts/3" COLUMNS="174" LINES="13"]
+]0;ldc6@gold32: ~/cs214/Projects/04/clojure[01;32mldc6@gold32[00m:[01;34m~/cs214/Projects/04/clojure[00m$ cat script.java script.ada script.clojure script.ruby >lab01-results[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cd 04[KProjects/[4Pcs2143[1Ps cs214[4Pexitcat script.java script.ada script.clojure script.ruby[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cd 04[KProjects/[4Pcs214[4Pexitclojure -m factorialat src/factorial.cljexit[Kcat src/factorial.clj
+;;;; factorial.clj the factorial or whatever n the user inputs.
+;;;;
+;;;; Input: n.
+;;;; Precondition: n = 1. i >= 2
+;;;; Output: factorial number of n taken by multiplying n-1 until n = 2
+;;;;
+;;;; Begun by: Prof. Adams, for CS 214 at Calvin College.
+;;;; Completed by: Daniela Contreras
+;;;; Date: 02/09/22
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(ns factorial)                                 ; name the program
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; factorial() recursively generates the factorial numbers.
+;;; Receive: n between 2 and n.
+;;; Output: factorial number
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;IGNORE--was trying to do another loop but will still like top keep (lines19-30)
+;;Using Loop recursion
+;; loop (indirect-recursion) version
+;(defn fatorial2 [n]
+;  (loop [i = 2]                           ; set i to start
+;    (when (<= i n)                       ; if i <= stop:
+;      (printf "Factorial of %f is %f\n" 
+;      (*n (factorial (- n 1)))
+;      (recur (+ i 1))                    ; recurse, i += step
+;    )
+;  )
+;)
+;; direct-recursive version
+ (defn factorial [n] ;;function named factorial taking n as its argument
+ (if (>= n 0) ;;assuring n is equal to or greater than 0. This works because 0! is 1 and 1! is 1 too
+  (if ( < n 2)1 ;;just like in our given code, here we say that if n is less than 2
+    ( * n (factorial (- n 1))) ;;n ! is n times (n-1)
+    )
+    -1
+    )
+ 
+ )
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; -main is a 'driver' for the factorial() function.
+;;; Input: n.
+;;; Output: n!
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn -main []
+ (println "To display factorial for n,")
+ (print " enter n: ") (flush)
+ (let
+    [ n (double (read))
+    ] 
+    (println)
+    (print n)(flush)
+    (printf "\nFactorial = %f"(factorial n))
+    (println) 
+ )
+)
+
+]0;ldc6@gold32: ~/cs214/Projects/04/clojure[01;32mldc6@gold32[00m:[01;34m~/cs214/Projects/04/clojure[00m$ cat src/factorial.cljcript.java script.ada script.clojure script.ruby >lab01-results[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cd 04[KProjects/[4Pcs2143[1Ps cs214[4Pexitcat script.java script.ada script.clojure script.ruby[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cd 04[KProjects/[4Pcs214[4Pexitclojure -m factorial
+To display factorial for n,
+ enter n: 2
+
+2.0
+Factorial = 2.000000
+]0;ldc6@gold32: ~/cs214/Projects/04/clojure[01;32mldc6@gold32[00m:[01;34m~/cs214/Projects/04/clojure[00m$ clojure -m factorial
+To display factorial for n,
+ enter n: 3
+
+3.0
+Factorial = 6.000000
+]0;ldc6@gold32: ~/cs214/Projects/04/clojure[01;32mldc6@gold32[00m:[01;34m~/cs214/Projects/04/clojure[00m$ clojure -m factorial
+To display factorial for n,
+ enter n: 5
+
+5.0
+Factorial = 120.000000
+]0;ldc6@gold32: ~/cs214/Projects/04/clojure[01;32mldc6@gold32[00m:[01;34m~/cs214/Projects/04/clojure[00m$ clojure -m factorial
+To display factorial for n,
+ enter n: 4
+
+4.0
+Factorial = 24.000000
+]0;ldc6@gold32: ~/cs214/Projects/04/clojure[01;32mldc6@gold32[00m:[01;34m~/cs214/Projects/04/clojure[00m$ clojure -m factorial
+To display factorial for n,
+ enter n: 12
+
+12.0
+Factorial = 479001600.000000
+]0;ldc6@gold32: ~/cs214/Projects/04/clojure[01;32mldc6@gold32[00m:[01;34m~/cs214/Projects/04/clojure[00m$ clojure -m factorial
+To display factorial for n,
+ enter n: 6
+
+6.0
+Factorial = 720.000000
+]0;ldc6@gold32: ~/cs214/Projects/04/clojure[01;32mldc6@gold32[00m:[01;34m~/cs214/Projects/04/clojure[00m$ exit
+exit
+
+Script done on 2022-02-11 14:03:31-05:00 [COMMAND_EXIT_CODE="0"]

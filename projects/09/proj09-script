@@ -1,0 +1,1385 @@
+Script started on 2022-03-18 00:17:27-04:00 [TERM="xterm-256color" TTY="/dev/pts/6" COLUMNS="227" LINES="27"]
+]0;ldc6@maroon25: ~/cs214/Projects/09/java[01;32mldc6@maroon25[00m:[01;34m~/cs214/Projects/09/java[00m$ cat Temperature.java
+/*temperature.java builds class Temperature
+*author: Daniela Contreras
+* 03/18/2021
+* Worked with Germaine Hounakey
+*************************************************************************************************************************
+*/
+import java.util.Scanner;
+
+class Temperature {
+    /*********************************************************************************************************************
+    *With the use of a DOuble and Char we construct temperature
+    *Receive: Degrees as double and scale as a char
+    *Output: Temperature Object
+    */
+    public Temperature(final double degree, final char scale){
+        if (isValid(degree, scale)){
+            myDegree = degree;
+            myScale = scale;
+        }
+    }
+    private
+        double myDegree;
+        char myScale;
+    /*****************************************************************************************************************************
+    *** getDegrees() retrives the degrees
+    ***Outputs: Value of degrees
+    */
+    public final double getDegree(){
+        return myDegree;
+    }
+     /*****************************************************************************************************************************
+    *** getScale() retrives the Scale
+    ***Outputs: Value of scale
+    */
+    public final char getScale() {
+        return myScale;
+    }
+    /*****************************************************************************************************************************
+    *** toFahrenheit() function converts degrees to Fahrenheit
+    ***Outputs: Value of degrees in Fahrenheit
+    */
+    public void toFahrenheit(){
+        if (Character.toUpperCase(myScale) == 'K')
+            myDegree = Math.round(((myDegree-273.15)*9/5+32)*100)/100.0;
+        else if (Character.toUpperCase(myScale) == 'C')
+            myDegree = Math.round((myDegree*9/5+32)*100)/100.0;
+        myScale = 'F';
+    }
+    /*****************************************************************************************************************************
+    *** toCelcius() function converts Temp to Celsius
+    ***Outputs: Value of degrees in Celcius
+    */
+    public void toCelcius(){
+        if (Character.toUpperCase(myScale) == 'K')
+            myDegree = Math.round((myDegree-273.15)*100)/100.0;
+        else if (Character.toUpperCase(myScale) == 'F')
+            myDegree = Math.round(((myDegree-32)*5/9)*100)/100.0;
+        myScale = 'C';
+    }
+     /*****************************************************************************************************************************
+    *** toKelvin() function converts Temp object to Celsius
+    ***Outputs: Value of degrees in Kelvin
+    */
+    public void toKelvin(){
+        if (Character.toUpperCase(myScale) == 'C')
+            myDegree = Math.round((myDegree+273.15)*100)/100.0;
+        else if (Character.toUpperCase(myScale) == 'F')
+            myDegree = Math.round(((myDegree-32)*5/9+273.15)*100)/100.0;
+        myScale = 'K';
+    }
+    /************************************************************************************************
+    *raiseTemperature() increases myDegrees
+    *Receive: degree in double
+    **************************************************************************************/
+    public void raiseTemperature(double degree){
+        if(isValid(myDegree+degree, myScale)){
+            myDegree += degree;
+        }
+    }
+    /************************************************************************************************
+    *lowerTemperature() decreases myDegrees
+    *Receive: degree in double
+    **************************************************************************************/
+    public void lowerTemperature(double degree){
+        if(isValid(myDegree-degree, myScale)){
+            myDegree -= degree;
+        }
+    }
+    /************************************************************************************************
+    *isEqual() checks if operands are equal
+    *Receive: temperature object
+    *Return: Boolean ; True if equal false if otherwise
+    **************************************************************************************/
+    public boolean isEqual(Temperature aTemperature){
+        Temperature aTemperatureCopy = new Temperature(aTemperature.getDegree(), aTemperature.getScale());
+        Temperature localCopy = new Temperature(getDegree(), getScale());
+        aTemperatureCopy.toKelvin();
+        localCopy.toKelvin();
+        return localCopy.getDegree() == aTemperatureCopy.getDegree();
+    }
+    /************************************************************************************************
+    *isLess() checks less than relational operator across scales
+    *Receive: temperature object
+    *Return: Boolean ; True if less than false if otherwise
+    **************************************************************************************/
+    public boolean isLess(Temperature aTemperature){
+        Temperature aTemperatureCopy = new Temperature(aTemperature.getDegree(), aTemperature.getScale());
+        Temperature localCopy = new Temperature(getDegree(), getScale());
+        aTemperatureCopy.toKelvin();
+        localCopy.toKelvin();
+        return localCopy.getDegree() < aTemperatureCopy.getDegree();
+    }
+    /************************************************************************************************
+    *isValid(degre, scale) checks if degree is within range
+    *Receive: Degrees, a double; Scale, a char
+    *Return: Boolean ; True if Valid than false if otherwise
+    **************************************************************************************/
+    public boolean isValid(double degree, char scale) {
+        return (  (Character.toUpperCase(scale) == 'K' && degree >=    0.00)
+               || (Character.toUpperCase(scale) == 'C' && degree >= -273.15)
+               || (Character.toUpperCase(scale) == 'F' && degree >= -459.67));
+    }
+    /***********************************************************************************************************************************************************************
+    * readTemp()
+    * Receive: Scanner keyboard for the input
+    ************************************************************************************************************************************************************************/
+    public void readTemperature(Scanner keyboard){
+        System.out.print("Enter Degree along with Scale: ");
+        double aDegree = keyboard.nextDouble();
+        char aScale = keyboard.next().trim().charAt(0);
+        if (isValid(aDegree, aScale) ) {
+                myDegree = aDegree;
+            myScale = aScale;
+        }
+    }
+     /***********************************************************************************************************************************************************************
+    * writeTemperature())
+    * Receive: prints temperature
+    ************************************************************************************************************************************************************************/
+    public void writeTemperature(){
+            System.out.print(Double.toString(myDegree) + " " + myScale);
+    }
+ /***********************************************************************************************************************************************************************
+    * toScale() converts temperature to scale desired
+    * Receive: Scale as a char
+    ************************************************************************************************************************************************************************/
+    public void toScale(char scale){
+        switch(Character.toUpperCase(scale)){
+            case 'F': toFahrenheit(); break;
+            case 'C': toCelcius(); break;
+            case 'K': toKelvin(); break;
+        }
+    }
+
+}]0;ldc6@maroon25: ~/cs214/Projects/09/java[01;32mldc6@maroon25[00m:[01;34m~/cs214/Projects/09/java[00m$ cat temp_tester.java
+/*temp_tester.java is a test driver for class Temperature
+** Worked with Germaine Hounakey
+***Name: Daniela Contreras
+***Date: 03/18/
+*/
+import java.util.Scanner;
+
+public class temp_tester{
+    public static void main(String[] args){
+
+        //Scanner receives input from the uder
+        Scanner keyboard = new Scanner(System.in);
+
+        //Two temmperature objects
+        Temperature baseTemperature = new Temperature(0.0, 'K');
+        Temperature limitTemperature = new Temperature(0.0, 'K');
+
+        // Prompt user for base temperature
+        System.out.println("Base Temperature");
+        baseTemperature.readTemperature(keyboard);
+
+        // Prompt user for limit temperature
+        System.out.println("Limit Temperature");
+        limitTemperature.readTemperature(keyboard);
+
+        // Prompt user for increment value
+        System.out.print("Enter Step Value: ");
+        double stepValue = keyboard.nextDouble();
+
+        // Store original scale for reset each loop
+        char origScale = baseTemperature.getScale();
+
+        // Loop to print temperature table
+        while (baseTemperature.isLess(limitTemperature) || baseTemperature.isEqual(limitTemperature) ) {
+        // Print Fahrenheit
+            System.out.print("Fahrenheit: ");
+            baseTemperature.toFahrenheit();
+            baseTemperature.writeTemperature();
+            System.out.print("\t");
+
+            // Print Celsius
+            System.out.print("Celsius: ");
+            baseTemperature.toCelcius();
+            baseTemperature.writeTemperature();
+            System.out.print("\t");
+     
+            // Print Kelvin
+            System.out.print("Kelvin: ");
+            baseTemperature.toKelvin();
+            baseTemperature.writeTemperature();
+            System.out.print("\n");
+     
+            // Get baseTemp to original scale and increment temperature
+            baseTemperature.toScale(origScale);
+            baseTemperature.raiseTemperature(stepValue);
+        }
+    }
+
+}
+
+
+
+
+]0;ldc6@maroon25: ~/cs214/Projects/09/java[01;32mldc6@maroon25[00m:[01;34m~/cs214/Projects/09/java[00m$ javac -deprecation temp_tester.java
+]0;ldc6@maroon25: ~/cs214/Projects/09/java[01;32mldc6@maroon25[00m:[01;34m~/cs214/Projects/09/java[00m$ java temp_tester
+Base Temperature
+Enter Degree along with Scale: 0 F
+Limit Temperature
+Enter Degree along with Scale: 100 C
+Enter Step Value: 2.5
+Fahrenheit: 0.0 F	Celsius: -17.78 C	Kelvin: 255.37 K
+Fahrenheit: 2.5 F	Celsius: -16.39 C	Kelvin: 256.76 K
+Fahrenheit: 5.0 F	Celsius: -15.0 C	Kelvin: 258.15 K
+Fahrenheit: 7.5 F	Celsius: -13.61 C	Kelvin: 259.54 K
+Fahrenheit: 10.0 F	Celsius: -12.22 C	Kelvin: 260.93 K
+Fahrenheit: 12.5 F	Celsius: -10.83 C	Kelvin: 262.32 K
+Fahrenheit: 15.01 F	Celsius: -9.44 C	Kelvin: 263.71 K
+Fahrenheit: 17.509999999999998 F	Celsius: -8.05 C	Kelvin: 265.1 K
+Fahrenheit: 20.01 F	Celsius: -6.66 C	Kelvin: 266.49 K
+Fahrenheit: 22.51 F	Celsius: -5.27 C	Kelvin: 267.88 K
+Fahrenheit: 25.01 F	Celsius: -3.88 C	Kelvin: 269.27 K
+Fahrenheit: 27.52 F	Celsius: -2.49 C	Kelvin: 270.66 K
+Fahrenheit: 30.02 F	Celsius: -1.1 C	Kelvin: 272.05 K
+Fahrenheit: 32.519999999999996 F	Celsius: 0.29 C	Kelvin: 273.44 K
+Fahrenheit: 35.02 F	Celsius: 1.68 C	Kelvin: 274.83 K
+Fahrenheit: 37.52 F	Celsius: 3.07 C	Kelvin: 276.22 K
+Fahrenheit: 40.03 F	Celsius: 4.46 C	Kelvin: 277.61 K
+Fahrenheit: 42.53 F	Celsius: 5.85 C	Kelvin: 279.0 K
+Fahrenheit: 45.03 F	Celsius: 7.24 C	Kelvin: 280.39 K
+Fahrenheit: 47.53 F	Celsius: 8.63 C	Kelvin: 281.78 K
+Fahrenheit: 50.03 F	Celsius: 10.02 C	Kelvin: 283.17 K
+Fahrenheit: 52.54 F	Celsius: 11.41 C	Kelvin: 284.56 K
+Fahrenheit: 55.04 F	Celsius: 12.8 C	Kelvin: 285.95 K
+Fahrenheit: 57.54 F	Celsius: 14.19 C	Kelvin: 287.34 K
+Fahrenheit: 60.04 F	Celsius: 15.58 C	Kelvin: 288.73 K
+Fahrenheit: 62.54 F	Celsius: 16.97 C	Kelvin: 290.12 K
+Fahrenheit: 65.05 F	Celsius: 18.36 C	Kelvin: 291.51 K
+Fahrenheit: 67.55 F	Celsius: 19.75 C	Kelvin: 292.9 K
+Fahrenheit: 70.05 F	Celsius: 21.14 C	Kelvin: 294.29 K
+Fahrenheit: 72.55 F	Celsius: 22.53 C	Kelvin: 295.68 K
+Fahrenheit: 75.05 F	Celsius: 23.92 C	Kelvin: 297.07 K
+Fahrenheit: 77.56 F	Celsius: 25.31 C	Kelvin: 298.46 K
+Fahrenheit: 80.06 F	Celsius: 26.7 C	Kelvin: 299.85 K
+Fahrenheit: 82.56 F	Celsius: 28.09 C	Kelvin: 301.24 K
+Fahrenheit: 85.06 F	Celsius: 29.48 C	Kelvin: 302.63 K
+Fahrenheit: 87.56 F	Celsius: 30.87 C	Kelvin: 304.02 K
+Fahrenheit: 90.07 F	Celsius: 32.26 C	Kelvin: 305.41 K
+Fahrenheit: 92.57 F	Celsius: 33.65 C	Kelvin: 306.8 K
+Fahrenheit: 95.07 F	Celsius: 35.04 C	Kelvin: 308.19 K
+Fahrenheit: 97.57 F	Celsius: 36.43 C	Kelvin: 309.58 K
+Fahrenheit: 100.07 F	Celsius: 37.82 C	Kelvin: 310.97 K
+Fahrenheit: 102.58 F	Celsius: 39.21 C	Kelvin: 312.36 K
+Fahrenheit: 105.08 F	Celsius: 40.6 C	Kelvin: 313.75 K
+Fahrenheit: 107.58 F	Celsius: 41.99 C	Kelvin: 315.14 K
+Fahrenheit: 110.08 F	Celsius: 43.38 C	Kelvin: 316.53 K
+Fahrenheit: 112.58 F	Celsius: 44.77 C	Kelvin: 317.92 K
+Fahrenheit: 115.09 F	Celsius: 46.16 C	Kelvin: 319.31 K
+Fahrenheit: 117.59 F	Celsius: 47.55 C	Kelvin: 320.7 K
+Fahrenheit: 120.09 F	Celsius: 48.94 C	Kelvin: 322.09 K
+Fahrenheit: 122.59 F	Celsius: 50.33 C	Kelvin: 323.48 K
+Fahrenheit: 125.09 F	Celsius: 51.72 C	Kelvin: 324.87 K
+Fahrenheit: 127.6 F	Celsius: 53.11 C	Kelvin: 326.26 K
+Fahrenheit: 130.1 F	Celsius: 54.5 C	Kelvin: 327.65 K
+Fahrenheit: 132.6 F	Celsius: 55.89 C	Kelvin: 329.04 K
+Fahrenheit: 135.1 F	Celsius: 57.28 C	Kelvin: 330.43 K
+Fahrenheit: 137.6 F	Celsius: 58.67 C	Kelvin: 331.82 K
+Fahrenheit: 140.11 F	Celsius: 60.06 C	Kelvin: 333.21 K
+Fahrenheit: 142.61 F	Celsius: 61.45 C	Kelvin: 334.6 K
+Fahrenheit: 145.11 F	Celsius: 62.84 C	Kelvin: 335.99 K
+Fahrenheit: 147.61 F	Celsius: 64.23 C	Kelvin: 337.38 K
+Fahrenheit: 150.11 F	Celsius: 65.62 C	Kelvin: 338.77 K
+Fahrenheit: 152.62 F	Celsius: 67.01 C	Kelvin: 340.16 K
+Fahrenheit: 155.12 F	Celsius: 68.4 C	Kelvin: 341.55 K
+Fahrenheit: 157.62 F	Celsius: 69.79 C	Kelvin: 342.94 K
+Fahrenheit: 160.12 F	Celsius: 71.18 C	Kelvin: 344.33 K
+Fahrenheit: 162.62 F	Celsius: 72.57 C	Kelvin: 345.72 K
+Fahrenheit: 165.13 F	Celsius: 73.96 C	Kelvin: 347.11 K
+Fahrenheit: 167.63 F	Celsius: 75.35 C	Kelvin: 348.5 K
+Fahrenheit: 170.13 F	Celsius: 76.74 C	Kelvin: 349.89 K
+Fahrenheit: 172.63 F	Celsius: 78.13 C	Kelvin: 351.28 K
+Fahrenheit: 175.13 F	Celsius: 79.52 C	Kelvin: 352.67 K
+Fahrenheit: 177.64 F	Celsius: 80.91 C	Kelvin: 354.06 K
+Fahrenheit: 180.14 F	Celsius: 82.3 C	Kelvin: 355.45 K
+Fahrenheit: 182.64 F	Celsius: 83.69 C	Kelvin: 356.84 K
+Fahrenheit: 185.14 F	Celsius: 85.08 C	Kelvin: 358.23 K
+Fahrenheit: 187.64 F	Celsius: 86.47 C	Kelvin: 359.62 K
+Fahrenheit: 190.15 F	Celsius: 87.86 C	Kelvin: 361.01 K
+Fahrenheit: 192.65 F	Celsius: 89.25 C	Kelvin: 362.4 K
+Fahrenheit: 195.15 F	Celsius: 90.64 C	Kelvin: 363.79 K
+Fahrenheit: 197.65 F	Celsius: 92.03 C	Kelvin: 365.18 K
+Fahrenheit: 200.15 F	Celsius: 93.42 C	Kelvin: 366.57 K
+Fahrenheit: 202.66 F	Celsius: 94.81 C	Kelvin: 367.96 K
+Fahrenheit: 205.16 F	Celsius: 96.2 C	Kelvin: 369.35 K
+Fahrenheit: 207.66 F	Celsius: 97.59 C	Kelvin: 370.74 K
+Fahrenheit: 210.16 F	Celsius: 98.98 C	Kelvin: 372.13 K
+]0;ldc6@maroon25: ~/cs214/Projects/09/java[01;32mldc6@maroon25[00m:[01;34m~/cs214/Projects/09/java[00m$ java temp_tester
+Base Temperature
+Enter Degree along with Scale: 0 K
+Limit Temperature
+Enter Degree along with Scale: 212 F
+Enter Step Value: 20.0
+Fahrenheit: -459.67 F	Celsius: -273.15 C	Kelvin: 0.0 K
+Fahrenheit: -423.67 F	Celsius: -253.15 C	Kelvin: 20.0 K
+Fahrenheit: -387.67 F	Celsius: -233.15 C	Kelvin: 40.0 K
+Fahrenheit: -351.67 F	Celsius: -213.15 C	Kelvin: 60.0 K
+Fahrenheit: -315.67 F	Celsius: -193.15 C	Kelvin: 80.0 K
+Fahrenheit: -279.67 F	Celsius: -173.15 C	Kelvin: 100.0 K
+Fahrenheit: -243.67 F	Celsius: -153.15 C	Kelvin: 120.0 K
+Fahrenheit: -207.67 F	Celsius: -133.15 C	Kelvin: 140.0 K
+Fahrenheit: -171.67 F	Celsius: -113.15 C	Kelvin: 160.0 K
+Fahrenheit: -135.67 F	Celsius: -93.15 C	Kelvin: 180.0 K
+Fahrenheit: -99.67 F	Celsius: -73.15 C	Kelvin: 200.0 K
+Fahrenheit: -63.67 F	Celsius: -53.15 C	Kelvin: 220.0 K
+Fahrenheit: -27.67 F	Celsius: -33.15 C	Kelvin: 240.0 K
+Fahrenheit: 8.33 F	Celsius: -13.15 C	Kelvin: 260.0 K
+Fahrenheit: 44.33 F	Celsius: 6.85 C	Kelvin: 280.0 K
+Fahrenheit: 80.33 F	Celsius: 26.85 C	Kelvin: 300.0 K
+Fahrenheit: 116.33 F	Celsius: 46.85 C	Kelvin: 320.0 K
+Fahrenheit: 152.33 F	Celsius: 66.85 C	Kelvin: 340.0 K
+Fahrenheit: 188.33 F	Celsius: 86.85 C	Kelvin: 360.0 K
+]0;ldc6@maroon25: ~/cs214/Projects/09/java[01;32mldc6@maroon25[00m:[01;34m~/cs214/Projects/09/java[00m$ exit
+exit
+
+Script done on 2022-03-18 00:18:52-04:00 [COMMAND_EXIT_CODE="0"]
+Script started on 2022-03-21 00:35:30-04:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="250" LINES="27"]
+]0;ldc6@maroon25: ~/cs214/Projects/09/ada[01;32mldc6@maroon25[00m:[01;34m~/cs214/Projects/09/ada[00m$ cat temperature_tester.adb
+---temp_tester.adb is a test-driver fro Temp type
+---Author: Daniela Contreras
+-- Date: 03/20/22
+----------------------------------------------------------------------------------------------------------------------------------------------
+with Ada.Float_Text_IO, Ada.Text_IO, Ada.Characters.Handling, Temp_Package;
+use Ada.Float_Text_IO, Ada.Text_IO, Ada.Characters.Handling, Temp_Package;
+
+with Ada.Assertions;  use Ada.Assertions;
+
+procedure Temperature_Tester is
+
+  -- Creates three objects
+  baseDuplicate, baseTemp, limitTemp : Temp_Package.Temp;
+  stepValue : Float := 0.0;
+  orig_scale : Character := 'C';
+
+begin
+  -- Ask user for base temperature
+  Put_Line("Enter Base Temperature");
+  readTemperature(baseTemp);
+ 
+  -- Ask user for limit temperature
+  Put_Line("Enter Limit Temperature");
+  readTemperature(limitTemp);
+ 
+  -- Ask user for increment value
+  Put("Enter Step Value: ");
+  Get(stepValue);
+
+  --  Loop for temperature table
+  while ( isLessThan(baseTemp, limitTemp) or isEqual(baseTemp, limitTemp)) loop
+    -- Stores a copy of baseTemp in baseDuplicate for looping
+    Init(baseDuplicate,getDegree(baseTemp),getScale(baseTemp));
+   
+    -- Prints Fahrenheit and stores copy
+    Put("Fahrenheit: ");
+    toF(baseDuplicate); writeTemp(baseDuplicate);
+    Put("   ");
+
+    -- Prints Celsius and stores copy
+    Put("Celsius: ");
+    toC(baseDuplicate); writeTemp(baseDuplicate);
+    Put("   ");
+
+    -- Prints Kelvin and stores copy
+    Put("Kelvin: ");
+    toK(baseDuplicate); writeTemp(baseDuplicate);
+    New_Line;
+
+    -- Increment temperature
+    raiseTemp(baseTemp, stepValue);
+  end loop;
+end Temperature_Tester;]0;ldc6@maroon25: ~/cs214/Projects/09/ada[01;32mldc6@maroon25[00m:[01;34m~/cs214/Projects/09/ada[00m$ cat temp_package.ab[Kdb
+--------------------------------------------------------------------------------------------------------------------------------------------------
+--- Author: Daniela Contreras
+-- Date: 03/20/22
+--- team_package.adb defines operations for the Temp type
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+with Ada.Text_IO, Ada.Float_Text_IO, Ada.Characters.Handling;
+use Ada.Text_IO, Ada.Float_Text_IO, Ada.Characters.Handling;
+
+package body Temp_Package is
+
+  -- Initialize mid variables:
+  Tmp1_Copy, Tmp2_Copy: Temp;
+  User_Degree : Float := 0.0;
+  User_Scale, Empty : Character;
+
+  -------------------------------------------------------------------------
+  -- Init initializes  Temp variable
+  -- Receive: Tmp, the Temp variable;
+  --          Degree, the degrees value;
+  --          Scale (fahrenheit, celcius or kelvin);
+  -- Return: Tmp, set to degree and scale.
+  -------------------------------------------------------------------------
+  procedure Init(Tmp: out Temp; Degree: in Float; Scale: in Character ) is
+  begin
+    if isValid(Degree, Scale) then
+       Tmp.MyDegree := Degree;
+       Tmp.MyScale := Scale;
+    end if;
+  end Init;
+
+  -------------------------------------------------------------------------
+  -- getDegree(Tmp) retrieves Tmp.MyDegree
+  -- Receive: Tmp, a Temp.
+  -- Return: Tmp.MyDegree.
+  -------------------------------------------------------------------------
+  function getDegree(Tmp: in Temp) return Float is
+  begin
+    return Tmp.MyDegree;
+  end getDegree;
+
+  -------------------------------------------------------------------------
+  -- getScale(Tmp) retrieves Tmp.MyScale
+  -- Receive: Tmp, a Temp.
+  -------------------------------------------------------------------------
+  function getScale(Tmp: in Temp) return Character is
+  begin
+     return Tmp.MyScale;
+  end getScale;
+
+  -------------------------------------------------------------------------
+  -- toF(Temp) converts temperature to Fahrenheit
+  -- Receive: Tmp, a Temp.
+  -------------------------------------------------------------------------
+  procedure toF(Tmp: out Temp) is
+  begin
+     if (To_Upper(getScale(Tmp)) = 'C') then
+        Tmp.MyDegree := 1.8*Tmp.MyDegree+32.0;
+     elsif (To_Upper(getScale(Tmp)) = 'K') then
+        Tmp.MyDegree := 1.8*(Tmp.MyDegree-273.15)+32.0;
+     end if;
+     Tmp.myScale := 'F';
+  end toF;
+
+  -------------------------------------------------------------------------
+  -- toC(Temp) converts temperature to Celsius
+  -- Receive: Tmp, a Temp.
+  -------------------------------------------------------------------------
+  procedure toC(Tmp: out Temp) is
+  begin
+     if (To_Upper(getScale(Tmp)) = 'F') then
+        Tmp.MyDegree := (5.0/9.0)*(Tmp.MyDegree-32.0);
+     elsif (To_Upper(getScale(Tmp)) = 'K') then
+        Tmp.MyDegree := Tmp.MyDegree-273.15;
+     end if;
+     Tmp.myScale := 'C';
+  end toC;
+
+  -------------------------------------------------------------------------
+  -- toK(Temp) converts temperature to Kelvin
+  -- Receive: Tmp, a Temp.
+  -------------------------------------------------------------------------
+  procedure toK(Tmp: out Temp) is
+  begin
+     if (To_Upper(getScale(Tmp)) = 'F') then
+        Tmp.MyDegree := (5.0/9.0)*(Tmp.MyDegree-32.0)+273.15;
+     elsif (To_Upper(getScale(Tmp)) = 'C') then
+        Tmp.MyDegree := Tmp.MyDegree+273.15;
+     end if;
+     Tmp.myScale := 'K';
+  end toK;
+
+  -------------------------------------------------------------------------
+  -- raiseTemp(Tmp) increases the value of Degree
+  -- Receive: Tmp, a Temp.
+  -- PRE: Tmp has been initialized.
+  -------------------------------------------------------------------------
+  procedure raiseTemp(Tmp: out Temp; Degree: in Float) is
+  begin
+     if isValid(Tmp.MyDegree+Degree, Tmp.MyScale) then
+        Tmp.MyDegree := Tmp.MyDegree+Degree;
+     end if;
+  end raiseTemp;
+
+  -------------------------------------------------------------------------
+  -- lowerTemp(Tmp) decreases the value of Degree
+  -- Receive: Tmp, a Temp.
+  -- PRE: Tmp has been initialized.
+  -------------------------------------------------------------------------
+  procedure lowerTemp(Tmp: out Temp; Degree: in Float) is
+  begin
+     if isValid(Tmp.MyDegree-Degree, Tmp.MyScale) then
+        Tmp.MyDegree := Tmp.MyDegree-Degree;
+     end if;
+  end lowerTemp;
+
+  -------------------------------------------------------------------------
+  -- isEqual(Tmp1, Tmp2) Checks '=' Degree relation between any Scale
+  -- Receive: Degree, a Float; Scale, a Character
+  -- Return: True if valid and False if otherwise.
+  -------------------------------------------------------------------------
+  function isEqual(Tmp1: in Temp; Tmp2: in Temp) return Boolean is
+  begin
+    Init(Tmp1_Copy, getDegree(Tmp1), getScale(Tmp1));
+    Init(Tmp2_Copy, getDegree(Tmp2), getScale(Tmp2));
+    toK(Tmp1_Copy);
+    toK(Tmp2_Copy);
+    return Tmp1_Copy.MyDegree = Tmp2_Copy.MyDegree;
+  end isEqual;
+
+  -------------------------------------------------------------------------
+  -- isLessThan(Tmp1, Tmp2) Checks '<' degree relation between any scale
+  -- Receive: Degree, a Float; Scale, a Character
+  -- Return: True if valid and False if otherwise.
+  -------------------------------------------------------------------------
+  function isLessThan(Tmp1: in Temp; Tmp2: in Temp) return Boolean is
+  begin
+    Init(Tmp1_Copy, getDegree(Tmp1), getScale(Tmp1));
+    Init(Tmp2_Copy, getDegree(Tmp2), getScale(Tmp2));
+    toK(Tmp1_Copy);
+    toK(Tmp2_Copy);
+    return Tmp1_Copy.MyDegree < Tmp2_Copy.MyDegree;
+  end isLessThan;
+
+  -------------------------------------------------------------------------
+  -- isValid(Degree, Scale) Checks for valid Degree and Scale
+  -- Receive: Degree, a Float; Scale, a Character
+  -- Return: True if valid and False if otherwise.
+  -------------------------------------------------------------------------
+  function isValid(Degree: in Float; Scale: in Character) return Boolean is
+  begin
+     return (    (To_Upper(Scale) = 'K' and Degree >=    0.00)
+              or (To_Upper(Scale) = 'C' and Degree >= -273.15)
+     or (To_Upper(Scale) = 'F' and Degree >= -459.67));
+  end isValid;
+
+  -------------------------------------------------------------------------
+  -- readTemperature(Tmp) reads in the Degree and Scale from the user
+  -- Receive: Tmp, a Temp.
+  -- PRE: Tmp has been initialized.
+  -------------------------------------------------------------------------
+  procedure readTemperature(Tmp: out Temp) is
+  begin
+     Put("Enter Degrees and Scale: ");
+     Get(User_Degree);
+     Get(Empty);
+     Get(User_Scale);
+     if isValid(User_Degree, User_Scale) then
+        Tmp.MyDegree := User_Degree;
+        Tmp.MyScale  := User_Scale;
+     end if;
+  end readTemperature;
+
+  -------------------------------------------------------------------------
+  -- writeTemp(Tmp) prints Degree and Scale
+  -- Receive: Tmp, a Temp.
+  -- PRE: Tmp has been initialized.
+  -------------------------------------------------------------------------
+  procedure writeTemp(Tmp: in Temp) is
+  begin
+     Put(Float'Image(Tmp.MyDegree) & " " & Tmp.MyScale);
+  end writeTemp;
+
+end Temp_Package;]0;ldc6@maroon25: ~/cs214/Projects/09/ada[01;32mldc6@maroon25[00m:[01;34m~/cs214/Projects/09/ada[00m$ cat temp_package.ads
+-----------------------------------------------------------------------------------------------------------------------------
+-- temperature_package.ads calls the Temp type and the operations
+--name: Daniela Contreras
+--Date: 03/20/22
+--------------------------------------------------------------
+
+package Temp_Package is
+
+  type Temp is private;
+
+  procedure Init(Tmp: out Temp; Degree: in Float; Scale: in Character);
+  function  getDegree(Tmp: in Temp) return Float;
+  function  getScale(Tmp: in Temp) return Character;
+  procedure toF(Tmp: out Temp);
+  procedure toC(Tmp: out Temp);
+  procedure toK(Tmp: out Temp);
+  procedure raiseTemp(Tmp: out Temp; Degree: in Float);
+  procedure lowerTemp(Tmp: out Temp; Degree: in Float);
+  function  isEqual(Tmp1: in Temp; Tmp2: in Temp) return Boolean;
+  function  isLessThan(Tmp1: in Temp; Tmp2: in Temp) return Boolean;
+  function  isValid(Degree: in Float; Scale: in Character) return Boolean;
+  procedure readTemperature(Tmp: out Temp);
+  procedure writeTemp(Tmp: in Temp);
+
+  private
+
+    type Temp is record
+      MyDegree : Float     := 0.0;
+      MyScale  : Character := 'C';
+    end record;
+
+end Temp_Package;]0;ldc6@maroon25: ~/cs214/Projects/09/ada[01;32mldc6@maroon25[00m:[01;34m~/cs214/Projects/09/ada[00m$ gnatmake temperature_tester
+gnatmake: "temperature_tester" up to date.
+]0;ldc6@maroon25: ~/cs214/Projects/09/ada[01;32mldc6@maroon25[00m:[01;34m~/cs214/Projects/09/ada[00m$ ./temperature_tester
+Enter Base Temperature
+Enter Degrees and Scale: 0 F
+Enter Limit Temperature
+Enter Degrees and Scale: 100 C
+Enter Step Value: 2.5
+Fahrenheit:  0.00000E+00 F   Celsius: -1.77778E+01 C   Kelvin:  2.55372E+02 K
+Fahrenheit:  2.50000E+00 F   Celsius: -1.63889E+01 C   Kelvin:  2.56761E+02 K
+Fahrenheit:  5.00000E+00 F   Celsius: -1.50000E+01 C   Kelvin:  2.58150E+02 K
+Fahrenheit:  7.50000E+00 F   Celsius: -1.36111E+01 C   Kelvin:  2.59539E+02 K
+Fahrenheit:  1.00000E+01 F   Celsius: -1.22222E+01 C   Kelvin:  2.60928E+02 K
+Fahrenheit:  1.25000E+01 F   Celsius: -1.08333E+01 C   Kelvin:  2.62317E+02 K
+Fahrenheit:  1.50000E+01 F   Celsius: -9.44444E+00 C   Kelvin:  2.63706E+02 K
+Fahrenheit:  1.75000E+01 F   Celsius: -8.05556E+00 C   Kelvin:  2.65094E+02 K
+Fahrenheit:  2.00000E+01 F   Celsius: -6.66667E+00 C   Kelvin:  2.66483E+02 K
+Fahrenheit:  2.25000E+01 F   Celsius: -5.27778E+00 C   Kelvin:  2.67872E+02 K
+Fahrenheit:  2.50000E+01 F   Celsius: -3.88889E+00 C   Kelvin:  2.69261E+02 K
+Fahrenheit:  2.75000E+01 F   Celsius: -2.50000E+00 C   Kelvin:  2.70650E+02 K
+Fahrenheit:  3.00000E+01 F   Celsius: -1.11111E+00 C   Kelvin:  2.72039E+02 K
+Fahrenheit:  3.25000E+01 F   Celsius:  2.77778E-01 C   Kelvin:  2.73428E+02 K
+Fahrenheit:  3.50000E+01 F   Celsius:  1.66667E+00 C   Kelvin:  2.74817E+02 K
+Fahrenheit:  3.75000E+01 F   Celsius:  3.05556E+00 C   Kelvin:  2.76206E+02 K
+Fahrenheit:  4.00000E+01 F   Celsius:  4.44444E+00 C   Kelvin:  2.77594E+02 K
+Fahrenheit:  4.25000E+01 F   Celsius:  5.83333E+00 C   Kelvin:  2.78983E+02 K
+Fahrenheit:  4.50000E+01 F   Celsius:  7.22222E+00 C   Kelvin:  2.80372E+02 K
+Fahrenheit:  4.75000E+01 F   Celsius:  8.61111E+00 C   Kelvin:  2.81761E+02 K
+Fahrenheit:  5.00000E+01 F   Celsius:  1.00000E+01 C   Kelvin:  2.83150E+02 K
+Fahrenheit:  5.25000E+01 F   Celsius:  1.13889E+01 C   Kelvin:  2.84539E+02 K
+Fahrenheit:  5.50000E+01 F   Celsius:  1.27778E+01 C   Kelvin:  2.85928E+02 K
+Fahrenheit:  5.75000E+01 F   Celsius:  1.41667E+01 C   Kelvin:  2.87317E+02 K
+Fahrenheit:  6.00000E+01 F   Celsius:  1.55556E+01 C   Kelvin:  2.88706E+02 K
+Fahrenheit:  6.25000E+01 F   Celsius:  1.69444E+01 C   Kelvin:  2.90094E+02 K
+Fahrenheit:  6.50000E+01 F   Celsius:  1.83333E+01 C   Kelvin:  2.91483E+02 K
+Fahrenheit:  6.75000E+01 F   Celsius:  1.97222E+01 C   Kelvin:  2.92872E+02 K
+Fahrenheit:  7.00000E+01 F   Celsius:  2.11111E+01 C   Kelvin:  2.94261E+02 K
+Fahrenheit:  7.25000E+01 F   Celsius:  2.25000E+01 C   Kelvin:  2.95650E+02 K
+Fahrenheit:  7.50000E+01 F   Celsius:  2.38889E+01 C   Kelvin:  2.97039E+02 K
+Fahrenheit:  7.75000E+01 F   Celsius:  2.52778E+01 C   Kelvin:  2.98428E+02 K
+Fahrenheit:  8.00000E+01 F   Celsius:  2.66667E+01 C   Kelvin:  2.99817E+02 K
+Fahrenheit:  8.25000E+01 F   Celsius:  2.80556E+01 C   Kelvin:  3.01206E+02 K
+Fahrenheit:  8.50000E+01 F   Celsius:  2.94444E+01 C   Kelvin:  3.02594E+02 K
+Fahrenheit:  8.75000E+01 F   Celsius:  3.08333E+01 C   Kelvin:  3.03983E+02 K
+Fahrenheit:  9.00000E+01 F   Celsius:  3.22222E+01 C   Kelvin:  3.05372E+02 K
+Fahrenheit:  9.25000E+01 F   Celsius:  3.36111E+01 C   Kelvin:  3.06761E+02 K
+Fahrenheit:  9.50000E+01 F   Celsius:  3.50000E+01 C   Kelvin:  3.08150E+02 K
+Fahrenheit:  9.75000E+01 F   Celsius:  3.63889E+01 C   Kelvin:  3.09539E+02 K
+Fahrenheit:  1.00000E+02 F   Celsius:  3.77778E+01 C   Kelvin:  3.10928E+02 K
+Fahrenheit:  1.02500E+02 F   Celsius:  3.91667E+01 C   Kelvin:  3.12317E+02 K
+Fahrenheit:  1.05000E+02 F   Celsius:  4.05556E+01 C   Kelvin:  3.13706E+02 K
+Fahrenheit:  1.07500E+02 F   Celsius:  4.19444E+01 C   Kelvin:  3.15094E+02 K
+Fahrenheit:  1.10000E+02 F   Celsius:  4.33333E+01 C   Kelvin:  3.16483E+02 K
+Fahrenheit:  1.12500E+02 F   Celsius:  4.47222E+01 C   Kelvin:  3.17872E+02 K
+Fahrenheit:  1.15000E+02 F   Celsius:  4.61111E+01 C   Kelvin:  3.19261E+02 K
+Fahrenheit:  1.17500E+02 F   Celsius:  4.75000E+01 C   Kelvin:  3.20650E+02 K
+Fahrenheit:  1.20000E+02 F   Celsius:  4.88889E+01 C   Kelvin:  3.22039E+02 K
+Fahrenheit:  1.22500E+02 F   Celsius:  5.02778E+01 C   Kelvin:  3.23428E+02 K
+Fahrenheit:  1.25000E+02 F   Celsius:  5.16667E+01 C   Kelvin:  3.24817E+02 K
+Fahrenheit:  1.27500E+02 F   Celsius:  5.30556E+01 C   Kelvin:  3.26206E+02 K
+Fahrenheit:  1.30000E+02 F   Celsius:  5.44444E+01 C   Kelvin:  3.27594E+02 K
+Fahrenheit:  1.32500E+02 F   Celsius:  5.58333E+01 C   Kelvin:  3.28983E+02 K
+Fahrenheit:  1.35000E+02 F   Celsius:  5.72222E+01 C   Kelvin:  3.30372E+02 K
+Fahrenheit:  1.37500E+02 F   Celsius:  5.86111E+01 C   Kelvin:  3.31761E+02 K
+Fahrenheit:  1.40000E+02 F   Celsius:  6.00000E+01 C   Kelvin:  3.33150E+02 K
+Fahrenheit:  1.42500E+02 F   Celsius:  6.13889E+01 C   Kelvin:  3.34539E+02 K
+Fahrenheit:  1.45000E+02 F   Celsius:  6.27778E+01 C   Kelvin:  3.35928E+02 K
+Fahrenheit:  1.47500E+02 F   Celsius:  6.41667E+01 C   Kelvin:  3.37317E+02 K
+Fahrenheit:  1.50000E+02 F   Celsius:  6.55556E+01 C   Kelvin:  3.38706E+02 K
+Fahrenheit:  1.52500E+02 F   Celsius:  6.69445E+01 C   Kelvin:  3.40094E+02 K
+Fahrenheit:  1.55000E+02 F   Celsius:  6.83333E+01 C   Kelvin:  3.41483E+02 K
+Fahrenheit:  1.57500E+02 F   Celsius:  6.97222E+01 C   Kelvin:  3.42872E+02 K
+Fahrenheit:  1.60000E+02 F   Celsius:  7.11111E+01 C   Kelvin:  3.44261E+02 K
+Fahrenheit:  1.62500E+02 F   Celsius:  7.25000E+01 C   Kelvin:  3.45650E+02 K
+Fahrenheit:  1.65000E+02 F   Celsius:  7.38889E+01 C   Kelvin:  3.47039E+02 K
+Fahrenheit:  1.67500E+02 F   Celsius:  7.52778E+01 C   Kelvin:  3.48428E+02 K
+Fahrenheit:  1.70000E+02 F   Celsius:  7.66667E+01 C   Kelvin:  3.49817E+02 K
+Fahrenheit:  1.72500E+02 F   Celsius:  7.80556E+01 C   Kelvin:  3.51206E+02 K
+Fahrenheit:  1.75000E+02 F   Celsius:  7.94445E+01 C   Kelvin:  3.52594E+02 K
+Fahrenheit:  1.77500E+02 F   Celsius:  8.08333E+01 C   Kelvin:  3.53983E+02 K
+Fahrenheit:  1.80000E+02 F   Celsius:  8.22222E+01 C   Kelvin:  3.55372E+02 K
+Fahrenheit:  1.82500E+02 F   Celsius:  8.36111E+01 C   Kelvin:  3.56761E+02 K
+Fahrenheit:  1.85000E+02 F   Celsius:  8.50000E+01 C   Kelvin:  3.58150E+02 K
+Fahrenheit:  1.87500E+02 F   Celsius:  8.63889E+01 C   Kelvin:  3.59539E+02 K
+Fahrenheit:  1.90000E+02 F   Celsius:  8.77778E+01 C   Kelvin:  3.60928E+02 K
+Fahrenheit:  1.92500E+02 F   Celsius:  8.91667E+01 C   Kelvin:  3.62317E+02 K
+Fahrenheit:  1.95000E+02 F   Celsius:  9.05556E+01 C   Kelvin:  3.63706E+02 K
+Fahrenheit:  1.97500E+02 F   Celsius:  9.19445E+01 C   Kelvin:  3.65094E+02 K
+Fahrenheit:  2.00000E+02 F   Celsius:  9.33333E+01 C   Kelvin:  3.66483E+02 K
+Fahrenheit:  2.02500E+02 F   Celsius:  9.47222E+01 C   Kelvin:  3.67872E+02 K
+Fahrenheit:  2.05000E+02 F   Celsius:  9.61111E+01 C   Kelvin:  3.69261E+02 K
+Fahrenheit:  2.07500E+02 F   Celsius:  9.75000E+01 C   Kelvin:  3.70650E+02 K
+Fahrenheit:  2.10000E+02 F   Celsius:  9.88889E+01 C   Kelvin:  3.72039E+02 K
+]0;ldc6@maroon25: ~/cs214/Projects/09/ada[01;32mldc6@maroon25[00m:[01;34m~/cs214/Projects/09/ada[00m$ ./temperature_tester
+Enter Base Temperature
+Enter Degrees and Scale: 0 K
+Enter Limit Temperature
+Enter Degrees and Scale: 212 F
+Enter Step Value: 20.0
+Fahrenheit: -4.59670E+02 F   Celsius: -2.73150E+02 C   Kelvin:  0.00000E+00 K
+Fahrenheit: -4.23670E+02 F   Celsius: -2.53150E+02 C   Kelvin:  2.00000E+01 K
+Fahrenheit: -3.87670E+02 F   Celsius: -2.33150E+02 C   Kelvin:  4.00000E+01 K
+Fahrenheit: -3.51670E+02 F   Celsius: -2.13150E+02 C   Kelvin:  6.00000E+01 K
+Fahrenheit: -3.15670E+02 F   Celsius: -1.93150E+02 C   Kelvin:  8.00000E+01 K
+Fahrenheit: -2.79670E+02 F   Celsius: -1.73150E+02 C   Kelvin:  1.00000E+02 K
+Fahrenheit: -2.43670E+02 F   Celsius: -1.53150E+02 C   Kelvin:  1.20000E+02 K
+Fahrenheit: -2.07670E+02 F   Celsius: -1.33150E+02 C   Kelvin:  1.40000E+02 K
+Fahrenheit: -1.71670E+02 F   Celsius: -1.13150E+02 C   Kelvin:  1.60000E+02 K
+Fahrenheit: -1.35670E+02 F   Celsius: -9.31500E+01 C   Kelvin:  1.80000E+02 K
+Fahrenheit: -9.96700E+01 F   Celsius: -7.31500E+01 C   Kelvin:  2.00000E+02 K
+Fahrenheit: -6.36700E+01 F   Celsius: -5.31500E+01 C   Kelvin:  2.20000E+02 K
+Fahrenheit: -2.76700E+01 F   Celsius: -3.31500E+01 C   Kelvin:  2.40000E+02 K
+Fahrenheit:  8.33001E+00 F   Celsius: -1.31500E+01 C   Kelvin:  2.60000E+02 K
+Fahrenheit:  4.43300E+01 F   Celsius:  6.85001E+00 C   Kelvin:  2.80000E+02 K
+Fahrenheit:  8.03300E+01 F   Celsius:  2.68500E+01 C   Kelvin:  3.00000E+02 K
+Fahrenheit:  1.16330E+02 F   Celsius:  4.68500E+01 C   Kelvin:  3.20000E+02 K
+Fahrenheit:  1.52330E+02 F   Celsius:  6.68500E+01 C   Kelvin:  3.40000E+02 K
+Fahrenheit:  1.88330E+02 F   Celsius:  8.68500E+01 C   Kelvin:  3.60000E+02 K
+]0;ldc6@maroon25: ~/cs214/Projects/09/ada[01;32mldc6@maroon25[00m:[01;34m~/cs214/Projects/09/ada[00m$ exit
+exit
+
+Script done on 2022-03-21 00:37:09-04:00 [COMMAND_EXIT_CODE="0"]
+Script started on 2022-03-22 00:12:49-04:00 [TERM="xterm-256color" TTY="/dev/pts/6" COLUMNS="227" LINES="27"]
+]0;ldc6@maroon25: ~/cs214/Projects/09/clojure[01;32mldc6@maroon25[00m:[01;34m~/cs214/Projects/09/clojure[00m$ cat Temp[K[K[K[Ksrc/temp_tester.clj
+;; temp_tester.clj is a test driver for Temp.clj
+;; output: a set of temperature values between baseTemp and limitTemp
+;;  Date: 03/22/22
+;; name: Daniela Contreras
+;; Worked with Germaine Hounakey
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(ns temp_tester)
+
+(load-file "src/Temp.clj")
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; A simple driver to test our Temp functions.
+;; Output: A table of temperatures as described above.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn -main []
+  ; Prompt user for base temperature
+  (println "Enter Base Temperature ") (flush)
+  (def baseTemp (readTemp))
+ 
+  ; Prompt user for limit temperature
+  (println "Enter Limit Temperature ") (flush)
+  (def limitTemp (readTemp))
+
+  ; Prompt user for increment value
+  (print "Enter Step Value: ") (flush)
+  (def stepValue (double (read)))
+
+  ; Store original scale for reset each loop
+  (def duplicateScale (getScale baseTemp))
+
+  ; Loop to printout temperature table
+  (while (or (isLessThan baseTemp limitTemp) (isEqual baseTemp limitTemp))
+    (do
+      ; Print Fahrenheit
+      (print "Fahrenheit: ")
+      (writeTemp (toF baseTemp))
+      (print "\t") (flush)
+
+      ; Print Celsius
+      (print "Celsius: ")
+      (writeTemp (toC baseTemp))
+      (print "\t") (flush)
+
+      ; Print Kelvin
+      (print "Kelvin: ")
+      (writeTemp (toK baseTemp))
+      (print "\n") (flush)
+
+      ; Increment temperature
+      (def baseTemp (raiseTemp baseTemp stepValue))
+    )
+  )
+)
+]0;ldc6@maroon25: ~/cs214/Projects/09/clojure[01;32mldc6@maroon25[00m:[01;34m~/cs214/Projects/09/clojure[00m$ c[Ksrc/Temp.clj[K[K[K[K[K[K[K[K[K[K[K[Kcat ssrc[K[K[K[Ksrc/Temp.clj
+;; Temp.clj is a module for Temp
+;; name: Daniela Contreras
+;; Worked with Germaine Hounakey
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Create a record/struct type named Temp
+(defrecord Temp [myDegrees myScale])
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; make-Temp constructs a Temp object from a double and char.
+;; Receive: degrees, a double; scale, a char
+;; Return: the Temp (degrees scale).
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn make-Temp [degrees scale]
+  (->Temp degrees scale)
+)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; isValid checks temperature's validity
+;; Receive: degree, a double; scale, a char
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn isValid [degree scale]
+  (if (or (and (= scale (or "K" "k")) (>= degree 0.0)    )
+          (and (= scale (or "C" "c")) (>= degree -273.15))
+          (and (= scale (or "F" "f")) (>= degree -459.67)))
+    true
+    false
+  )
+)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; getDegrees extracts the degrees of a Temp object.
+;; Receive: aTemp, a Temp.
+;; Return: myDegrees double in aTemp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn getDegrees [aTemp]
+  (:myDegrees aTemp)
+)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; getScale extracts the scale of a Temp object.
+;; Receive: aTemp, a Temp.
+;; Return: myScale char in aTemp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn getScale [aTemp]
+  (:myScale aTemp)
+)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; writeTemp prints temperature
+;; Receive: aTemp, a Temp.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn writeTemp [aTemp]
+  (print (:myDegrees aTemp) (:myScale aTemp))
+)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; readTemp prints temperature
+;; Receive: aTemp, a Temp.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn readTemp []
+  (print "Enter Degrees and Scale: ") (flush)
+  (def newDegree (double (read)))
+  (def newScale (str (.charAt (str (read)) 0)))
+  (if (isValid newDegree newScale)
+    (make-Temp newDegree newScale)
+  )
+)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; toF converts Temp to Fahrenheit
+;; Receive: aTemp, a Temp.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn toF [aTemp]
+  (def newDegree (:myDegrees aTemp))
+  (if (= (:myScale aTemp) (or "C" "c"))
+    (def newDegree (+ (* (/ 9 5) (:myDegrees aTemp)) 32)))
+  (if (= (:myScale aTemp) (or "K" "k"))
+      (def newDegree (+ (* (/ 9 5) (- (:myDegrees aTemp) 273.15)) 32)))
+  (make-Temp newDegree "F")
+)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; toC converts Temp to Celsius
+;; Receive: aTemp, a Temp.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn toC [aTemp]
+  (def newDegree (:myDegrees aTemp))
+  (if (= (:myScale aTemp) (or "F" "f"))
+    (def newDegree (- (:myDegrees aTemp) 459.66999999999996)))
+  (if (= (:myScale aTemp) (or "K" "k"))
+    (def newDegree (- (:myDegrees aTemp) 273.15)))
+  (make-Temp newDegree "C")
+)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; toK converts Temp to Kelvin
+;; Receive: aTemp, a Temp.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn toK [aTemp]
+  (def newDegree (:myDegrees aTemp))
+  (if (= (:myScale aTemp) (or "F" "f"))
+    (def newDegree (+ (* (/ 5 9) (- (:myDegrees aTemp) 32)) 273.15)))
+  (if (= (:myScale aTemp) (or "C" "c"))
+    (def newDegree (+ (:myDegrees aTemp) 273.15)))
+  (make-Temp newDegree "K")
+)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; isEqual checks temperature's equality scales
+;; Receive: Left, a Temp; Right, a Temp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn isEqual [Left Right]
+  (def LeftCopy (toK Left))
+  (def RightCopy (toK Right))
+  (= (:myDegrees LeftCopy) (:myDegrees (toK RightCopy)))
+)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; isLessThan checks temperature's lessThan across scales
+;; Receive: Left, a Temp; Right, a Temp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn isLessThan [Left Right]
+  (< (:myDegrees (toF Left)) (:myDegrees (toF Right)))
+)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; raiseTemp increases temperature
+;; Receive: aTemp, a Temp; degree, a double
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn raiseTemp [aTemp degree]
+  (if (isValid (+ (:myDegrees aTemp) degree) (:myScale aTemp))
+    (make-Temp (+ (:myDegrees aTemp) degree) (:myScale aTemp))
+  )
+)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; lowerTemp decreases temperature
+;; Receive: aTemp, a Temp; degree, a double
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn lowerTemp [aTemp degree]
+  (if (isValid (- (:myDegrees aTemp) degree) (:myScale aTemp))
+    (make-Temp (- (:myDegrees aTemp) degree) (:myScale aTemp))
+  )
+)]0;ldc6@maroon25: ~/cs214/Projects/09/clojure[01;32mldc6@maroon25[00m:[01;34m~/cs214/Projects/09/clojure[00m$ clojure -, [K[Km r[Ktemp_tester.clj
+Execution error (FileNotFoundException) at clojure.main/main (main.java:40).
+Could not locate temp_tester/clj__init.class, temp_tester/clj.clj or temp_tester/clj.cljc on classpath. Please check that namespaces with dashes use underscores in the Clojure file name.
+
+Full report at:
+/tmp/clojure-9304363636521899795.edn
+]0;ldc6@maroon25: ~/cs214/Projects/09/clojure[01;32mldc6@maroon25[00m:[01;34m~/cs214/Projects/09/clojure[00m$ clojure -m temp_tester.clj[K[K[K[K
+Enter Base Temperature 
+Enter Degrees and Scale: 0 F
+Enter Limit Temperature 
+Enter Degrees and Scale: 100 C
+Enter Step Value: 2.5
+Fahrenheit: 0.0 F	Celsius: -459.66999999999996 C	Kelvin: 255.3722222222222 K
+Fahrenheit: 2.5 F	Celsius: -457.16999999999996 C	Kelvin: 256.76111111111106 K
+Fahrenheit: 5.0 F	Celsius: -454.66999999999996 C	Kelvin: 258.15 K
+Fahrenheit: 7.5 F	Celsius: -452.16999999999996 C	Kelvin: 259.5388888888889 K
+Fahrenheit: 10.0 F	Celsius: -449.66999999999996 C	Kelvin: 260.92777777777775 K
+Fahrenheit: 12.5 F	Celsius: -447.16999999999996 C	Kelvin: 262.31666666666666 K
+Fahrenheit: 15.0 F	Celsius: -444.66999999999996 C	Kelvin: 263.7055555555555 K
+Fahrenheit: 17.5 F	Celsius: -442.16999999999996 C	Kelvin: 265.09444444444443 K
+Fahrenheit: 20.0 F	Celsius: -439.66999999999996 C	Kelvin: 266.4833333333333 K
+Fahrenheit: 22.5 F	Celsius: -437.16999999999996 C	Kelvin: 267.8722222222222 K
+Fahrenheit: 25.0 F	Celsius: -434.66999999999996 C	Kelvin: 269.26111111111106 K
+Fahrenheit: 27.5 F	Celsius: -432.16999999999996 C	Kelvin: 270.65 K
+Fahrenheit: 30.0 F	Celsius: -429.66999999999996 C	Kelvin: 272.0388888888889 K
+Fahrenheit: 32.5 F	Celsius: -427.16999999999996 C	Kelvin: 273.42777777777775 K
+Fahrenheit: 35.0 F	Celsius: -424.66999999999996 C	Kelvin: 274.81666666666666 K
+Fahrenheit: 37.5 F	Celsius: -422.16999999999996 C	Kelvin: 276.2055555555555 K
+Fahrenheit: 40.0 F	Celsius: -419.66999999999996 C	Kelvin: 277.59444444444443 K
+Fahrenheit: 42.5 F	Celsius: -417.16999999999996 C	Kelvin: 278.9833333333333 K
+Fahrenheit: 45.0 F	Celsius: -414.66999999999996 C	Kelvin: 280.3722222222222 K
+Fahrenheit: 47.5 F	Celsius: -412.16999999999996 C	Kelvin: 281.76111111111106 K
+Fahrenheit: 50.0 F	Celsius: -409.66999999999996 C	Kelvin: 283.15 K
+Fahrenheit: 52.5 F	Celsius: -407.16999999999996 C	Kelvin: 284.5388888888889 K
+Fahrenheit: 55.0 F	Celsius: -404.66999999999996 C	Kelvin: 285.92777777777775 K
+Fahrenheit: 57.5 F	Celsius: -402.16999999999996 C	Kelvin: 287.31666666666666 K
+Fahrenheit: 60.0 F	Celsius: -399.66999999999996 C	Kelvin: 288.7055555555555 K
+Fahrenheit: 62.5 F	Celsius: -397.16999999999996 C	Kelvin: 290.09444444444443 K
+Fahrenheit: 65.0 F	Celsius: -394.66999999999996 C	Kelvin: 291.4833333333333 K
+Fahrenheit: 67.5 F	Celsius: -392.16999999999996 C	Kelvin: 292.8722222222222 K
+Fahrenheit: 70.0 F	Celsius: -389.66999999999996 C	Kelvin: 294.26111111111106 K
+Fahrenheit: 72.5 F	Celsius: -387.16999999999996 C	Kelvin: 295.65 K
+Fahrenheit: 75.0 F	Celsius: -384.66999999999996 C	Kelvin: 297.0388888888889 K
+Fahrenheit: 77.5 F	Celsius: -382.16999999999996 C	Kelvin: 298.42777777777775 K
+Fahrenheit: 80.0 F	Celsius: -379.66999999999996 C	Kelvin: 299.81666666666666 K
+Fahrenheit: 82.5 F	Celsius: -377.16999999999996 C	Kelvin: 301.2055555555555 K
+Fahrenheit: 85.0 F	Celsius: -374.66999999999996 C	Kelvin: 302.59444444444443 K
+Fahrenheit: 87.5 F	Celsius: -372.16999999999996 C	Kelvin: 303.9833333333333 K
+Fahrenheit: 90.0 F	Celsius: -369.66999999999996 C	Kelvin: 305.3722222222222 K
+Fahrenheit: 92.5 F	Celsius: -367.16999999999996 C	Kelvin: 306.76111111111106 K
+Fahrenheit: 95.0 F	Celsius: -364.66999999999996 C	Kelvin: 308.15 K
+Fahrenheit: 97.5 F	Celsius: -362.16999999999996 C	Kelvin: 309.5388888888889 K
+Fahrenheit: 100.0 F	Celsius: -359.66999999999996 C	Kelvin: 310.92777777777775 K
+Fahrenheit: 102.5 F	Celsius: -357.16999999999996 C	Kelvin: 312.31666666666666 K
+Fahrenheit: 105.0 F	Celsius: -354.66999999999996 C	Kelvin: 313.7055555555555 K
+Fahrenheit: 107.5 F	Celsius: -352.16999999999996 C	Kelvin: 315.09444444444443 K
+Fahrenheit: 110.0 F	Celsius: -349.66999999999996 C	Kelvin: 316.4833333333333 K
+Fahrenheit: 112.5 F	Celsius: -347.16999999999996 C	Kelvin: 317.8722222222222 K
+Fahrenheit: 115.0 F	Celsius: -344.66999999999996 C	Kelvin: 319.26111111111106 K
+Fahrenheit: 117.5 F	Celsius: -342.16999999999996 C	Kelvin: 320.65 K
+Fahrenheit: 120.0 F	Celsius: -339.66999999999996 C	Kelvin: 322.0388888888889 K
+Fahrenheit: 122.5 F	Celsius: -337.16999999999996 C	Kelvin: 323.42777777777775 K
+Fahrenheit: 125.0 F	Celsius: -334.66999999999996 C	Kelvin: 324.81666666666666 K
+Fahrenheit: 127.5 F	Celsius: -332.16999999999996 C	Kelvin: 326.2055555555555 K
+Fahrenheit: 130.0 F	Celsius: -329.66999999999996 C	Kelvin: 327.59444444444443 K
+Fahrenheit: 132.5 F	Celsius: -327.16999999999996 C	Kelvin: 328.9833333333333 K
+Fahrenheit: 135.0 F	Celsius: -324.66999999999996 C	Kelvin: 330.3722222222222 K
+Fahrenheit: 137.5 F	Celsius: -322.16999999999996 C	Kelvin: 331.76111111111106 K
+Fahrenheit: 140.0 F	Celsius: -319.66999999999996 C	Kelvin: 333.15 K
+Fahrenheit: 142.5 F	Celsius: -317.16999999999996 C	Kelvin: 334.5388888888889 K
+Fahrenheit: 145.0 F	Celsius: -314.66999999999996 C	Kelvin: 335.92777777777775 K
+Fahrenheit: 147.5 F	Celsius: -312.16999999999996 C	Kelvin: 337.31666666666666 K
+Fahrenheit: 150.0 F	Celsius: -309.66999999999996 C	Kelvin: 338.7055555555555 K
+Fahrenheit: 152.5 F	Celsius: -307.16999999999996 C	Kelvin: 340.09444444444443 K
+Fahrenheit: 155.0 F	Celsius: -304.66999999999996 C	Kelvin: 341.48333333333335 K
+Fahrenheit: 157.5 F	Celsius: -302.16999999999996 C	Kelvin: 342.8722222222222 K
+Fahrenheit: 160.0 F	Celsius: -299.66999999999996 C	Kelvin: 344.26111111111106 K
+Fahrenheit: 162.5 F	Celsius: -297.16999999999996 C	Kelvin: 345.65 K
+Fahrenheit: 165.0 F	Celsius: -294.66999999999996 C	Kelvin: 347.0388888888889 K
+Fahrenheit: 167.5 F	Celsius: -292.16999999999996 C	Kelvin: 348.42777777777775 K
+Fahrenheit: 170.0 F	Celsius: -289.66999999999996 C	Kelvin: 349.81666666666666 K
+Fahrenheit: 172.5 F	Celsius: -287.16999999999996 C	Kelvin: 351.2055555555555 K
+Fahrenheit: 175.0 F	Celsius: -284.66999999999996 C	Kelvin: 352.59444444444443 K
+Fahrenheit: 177.5 F	Celsius: -282.16999999999996 C	Kelvin: 353.98333333333335 K
+Fahrenheit: 180.0 F	Celsius: -279.66999999999996 C	Kelvin: 355.3722222222222 K
+Fahrenheit: 182.5 F	Celsius: -277.16999999999996 C	Kelvin: 356.76111111111106 K
+Fahrenheit: 185.0 F	Celsius: -274.66999999999996 C	Kelvin: 358.15 K
+Fahrenheit: 187.5 F	Celsius: -272.16999999999996 C	Kelvin: 359.5388888888889 K
+Fahrenheit: 190.0 F	Celsius: -269.66999999999996 C	Kelvin: 360.92777777777775 K
+Fahrenheit: 192.5 F	Celsius: -267.16999999999996 C	Kelvin: 362.31666666666666 K
+Fahrenheit: 195.0 F	Celsius: -264.66999999999996 C	Kelvin: 363.7055555555555 K
+Fahrenheit: 197.5 F	Celsius: -262.16999999999996 C	Kelvin: 365.09444444444443 K
+Fahrenheit: 200.0 F	Celsius: -259.66999999999996 C	Kelvin: 366.48333333333335 K
+Fahrenheit: 202.5 F	Celsius: -257.16999999999996 C	Kelvin: 367.8722222222222 K
+Fahrenheit: 205.0 F	Celsius: -254.66999999999996 C	Kelvin: 369.26111111111106 K
+Fahrenheit: 207.5 F	Celsius: -252.16999999999996 C	Kelvin: 370.65 K
+Fahrenheit: 210.0 F	Celsius: -249.66999999999996 C	Kelvin: 372.0388888888889 K
+]0;ldc6@maroon25: ~/cs214/Projects/09/clojure[01;32mldc6@maroon25[00m:[01;34m~/cs214/Projects/09/clojure[00m$ clojure -m temp_tester
+Enter Base Temperature 
+Enter Degrees and Scale: 0 K
+Enter Limit Temperature 
+Enter Degrees and Scale: 212 F
+Enter Step Value: 20.0
+Fahrenheit: -459.66999999999996 F	Celsius: -273.15 C	Kelvin: 0.0 K
+Fahrenheit: -423.66999999999996 F	Celsius: -253.14999999999998 C	Kelvin: 20.0 K
+Fahrenheit: -387.66999999999996 F	Celsius: -233.14999999999998 C	Kelvin: 40.0 K
+Fahrenheit: -351.66999999999996 F	Celsius: -213.14999999999998 C	Kelvin: 60.0 K
+Fahrenheit: -315.66999999999996 F	Celsius: -193.14999999999998 C	Kelvin: 80.0 K
+Fahrenheit: -279.66999999999996 F	Celsius: -173.14999999999998 C	Kelvin: 100.0 K
+Fahrenheit: -243.66999999999996 F	Celsius: -153.14999999999998 C	Kelvin: 120.0 K
+Fahrenheit: -207.66999999999996 F	Celsius: -133.14999999999998 C	Kelvin: 140.0 K
+Fahrenheit: -171.66999999999996 F	Celsius: -113.14999999999998 C	Kelvin: 160.0 K
+Fahrenheit: -135.66999999999996 F	Celsius: -93.14999999999998 C	Kelvin: 180.0 K
+Fahrenheit: -99.66999999999996 F	Celsius: -73.14999999999998 C	Kelvin: 200.0 K
+Fahrenheit: -63.66999999999996 F	Celsius: -53.14999999999998 C	Kelvin: 220.0 K
+Fahrenheit: -27.66999999999996 F	Celsius: -33.14999999999998 C	Kelvin: 240.0 K
+Fahrenheit: 8.330000000000041 F	Celsius: -13.149999999999977 C	Kelvin: 260.0 K
+Fahrenheit: 44.33000000000004 F	Celsius: 6.850000000000023 C	Kelvin: 280.0 K
+Fahrenheit: 80.33000000000004 F	Celsius: 26.850000000000023 C	Kelvin: 300.0 K
+Fahrenheit: 116.33000000000004 F	Celsius: 46.85000000000002 C	Kelvin: 320.0 K
+Fahrenheit: 152.33000000000004 F	Celsius: 66.85000000000002 C	Kelvin: 340.0 K
+Fahrenheit: 188.33000000000004 F	Celsius: 86.85000000000002 C	Kelvin: 360.0 K
+]0;ldc6@maroon25: ~/cs214/Projects/09/clojure[01;32mldc6@maroon25[00m:[01;34m~/cs214/Projects/09/clojure[00m$ exit
+exit
+
+Script done on 2022-03-22 00:14:54-04:00 [COMMAND_EXIT_CODE="0"]
+Script started on 2022-03-20 00:22:11-04:00 [TERM="xterm-256color" TTY="/dev/pts/6" COLUMNS="227" LINES="27"]
+]0;ldc6@maroon25: ~/cs214/Projects/09/ruby[01;32mldc6@maroon25[00m:[01;34m~/cs214/Projects/09/ruby[00m$ cat temperature_tester.rb
+#######################################################################################################################
+#### Name: Daniela Contreras
+#### Date: 03/19/2022
+### temperature_tester.rb tests class temp
+##########################################################################################################################
+require './Temp'
+
+def testTemperature
+  # Creates Temp objects
+  baseTemp = Temperatures::Temp.new(0.0, 'K')
+  limitTemp = Temperatures::Temp.new(0.0, 'K')
+
+  # base temperature
+  puts "Base Temperature"
+  baseTemp.readTemperature
+
+  # limit temperature
+  puts "Limit Temperature"
+  limitTemp.readTemperature
+
+  # increment value
+  print "Enter Step Value: "
+  stepValue = gets.to_f
+
+  # Store original scale for reset each loop
+  originalScale = baseTemp.scale
+
+  # Loop to printout temperature table
+  while (baseTemp.isLessThan(limitTemp) || baseTemp.isEqual(limitTemp)) do
+    # Fahrenheit
+    print "Fahrenheit: "
+    baseTemp.toF
+    baseTemp.writeTemperature
+    print "\t"
+
+    # Celsius
+    print "Celsius: "
+    baseTemp.toC
+    baseTemp.writeTemperature
+    print "\t"
+
+    # Kelvin
+    print "Kelvin: "
+    baseTemp.toK
+    baseTemp.writeTemperature
+    print "\n"
+
+    # Get baseTemp to original scale and increment temperature
+    baseTemp.toScale(originalScale)
+    baseTemp.raiseTemp(stepValue)
+  end
+end
+
+testTemperature]0;ldc6@maroon25: ~/cs214/Projects/09/ruby[01;32mldc6@maroon25[00m:[01;34m~/cs214/Projects/09/ruby[00m$ cat Temp.rb
+#######################################################################################################################
+#### Name: Daniela Contreras
+#### Date: 03/19/2022
+### Temp.rb is a module containing the class Temperature
+###
+module Temperatures
+    class Temp
+      # Initializes Temp
+      def initialize(degrees, scale)
+        if isValid(degrees, scale) then
+        @degree = degrees
+        @scale = scale
+        end
+      end
+  
+      # Accessors for Temp
+      attr_reader :degree, :scale
+  
+      #######################################################################
+      # readTemperature: reads in degrees and its scale
+      # Output: user sets new value
+      #######################################################################
+      def readTemperature
+        print "Enter Degrees and Scale: "
+        temperature = gets
+        anArray = temperature.split(" ")
+        initialize( anArray[0].to_f, anArray[1][0,1] )
+      end
+  
+      #######################################################################
+      # writeTemperature: prints the temperature to the user/screen
+      #######################################################################
+      def writeTemperature
+         print @degree.round(2).to_s + " " + @scale.to_s
+      end
+  
+      #######################################################################
+      # toF: converts Temperature to Fahrenheit
+      #######################################################################
+      def toF
+        if @scale.upcase == 'K' then
+            @degree = (@degree-273.15)*9/5+32;
+        elsif @scale.upcase == 'C' then
+            @degree = @degree*9/5+32;
+        end
+        @scale = 'F';
+      end
+  
+      #######################################################################
+      # toC: converts Temp to Celsius
+      #######################################################################
+      def toC
+        if @scale.upcase == 'K' then
+            @degree = @degree-273.15;
+        elsif @scale.upcase == 'F' then
+            @degree = (@degree-32)*5/9;
+        end
+        @scale = 'C';
+      end
+      #######################################################################
+      # toK: converts Temp to Kelvin
+      #######################################################################
+      def toK
+        if @scale.upcase == 'C' then
+          @degree = @degree + 273.15;
+        elsif @scale.upcase == 'F' then
+            @degree = (@degree-32)*5/9+273.15;
+        end
+        @scale = 'K';
+      end
+  
+      #######################################################################
+      # toScale: converts Temp to scale of choice
+      #######################################################################
+      def toScale(scale)
+        if    scale.upcase == "F" then
+          toF
+        elsif scale.upcase == "C" then
+          toC
+        elsif scale.upcase == "K" then
+          toK
+        end
+      end
+  
+      #######################################################################
+      # raiseTemp: increases Temp by degree
+      # Receive: aTemp, a Temp
+      #######################################################################
+      def raiseTemp(degree)
+        if isValid(@degree+degree, @scale) then
+        @degree = @degree + degree
+        end
+      end
+  
+      #######################################################################
+      # lowerTemp: decreases Temp by degree
+      # Receive: aTemp, a Temp
+      #######################################################################
+      def lowerTemp(degrees)
+        if isValid(@degree-degrees, @scale) then
+              @degree = @degree - degrees
+        end
+      end
+  
+      #######################################################################
+      # isEqual: checks the equality of Temperatures across scales
+      #######################################################################
+      def isEqual(temp)
+         origScale1 = @scale
+         origScale2 = temp.scale
+         temp.toK
+         toK
+         boolTest = (@degree == temp.degree)
+         toScale(origScale1)
+         temp.toScale(origScale2)
+         return boolTest
+      end
+  
+      #######################################################################
+      # isLessThan: checks lessThan of Temperatures 
+      #######################################################################
+      def isLessThan(temp)
+         origScale2 = temp.scale
+         origScale1 = @scale
+         temp.toK
+         toK
+         boolTest = (@degree < temp.degree)
+         toScale(origScale1)
+         temp.toScale(origScale2)
+         return boolTest
+      end
+      #######################################################################
+      # isValid: checks Temperatures
+      #######################################################################
+      def isValid(degree, scale)
+        if    scale.upcase == 'K' and degree >= 0.00    then
+          return true 
+        elsif scale.upcase == 'C' and degree >= -273.15 then
+    return true
+        elsif scale.upcase == 'F' and degree >= -459.67 then
+    return true
+        else
+    puts "Error: isValid(), Invalid Temperature."
+    return false
+        end
+      end
+    end
+  end]0;ldc6@maroon25: ~/cs214/Projects/09/ruby[01;32mldc6@maroon25[00m:[01;34m~/cs214/Projects/09/ruby[00m$ ruby Temp[K[K[K[Ktemperature_tster.rb
+[1mTraceback[m (most recent call last):
+ruby: [1mNo such file or directory -- temperature_tster.rb ([1;4mLoadError[m[1m)[m
+]0;ldc6@maroon25: ~/cs214/Projects/09/ruby[01;32mldc6@maroon25[00m:[01;34m~/cs214/Projects/09/ruby[00m$ ruby temperature_tester.rb
+Base Temperature
+Enter Degrees and Scale: 0 F
+Limit Temperature
+Enter Degrees and Scale: 100 C
+Enter Step Value: 2.5
+Fahrenheit: 0.0 F	Celsius: -17.78 C	Kelvin: 255.37 K
+Fahrenheit: 2.5 F	Celsius: -16.39 C	Kelvin: 256.76 K
+Fahrenheit: 5.0 F	Celsius: -15.0 C	Kelvin: 258.15 K
+Fahrenheit: 7.5 F	Celsius: -13.61 C	Kelvin: 259.54 K
+Fahrenheit: 10.0 F	Celsius: -12.22 C	Kelvin: 260.93 K
+Fahrenheit: 12.5 F	Celsius: -10.83 C	Kelvin: 262.32 K
+Fahrenheit: 15.0 F	Celsius: -9.44 C	Kelvin: 263.71 K
+Fahrenheit: 17.5 F	Celsius: -8.06 C	Kelvin: 265.09 K
+Fahrenheit: 20.0 F	Celsius: -6.67 C	Kelvin: 266.48 K
+Fahrenheit: 22.5 F	Celsius: -5.28 C	Kelvin: 267.87 K
+Fahrenheit: 25.0 F	Celsius: -3.89 C	Kelvin: 269.26 K
+Fahrenheit: 27.5 F	Celsius: -2.5 C	Kelvin: 270.65 K
+Fahrenheit: 30.0 F	Celsius: -1.11 C	Kelvin: 272.04 K
+Fahrenheit: 32.5 F	Celsius: 0.28 C	Kelvin: 273.43 K
+Fahrenheit: 35.0 F	Celsius: 1.67 C	Kelvin: 274.82 K
+Fahrenheit: 37.5 F	Celsius: 3.06 C	Kelvin: 276.21 K
+Fahrenheit: 40.0 F	Celsius: 4.44 C	Kelvin: 277.59 K
+Fahrenheit: 42.5 F	Celsius: 5.83 C	Kelvin: 278.98 K
+Fahrenheit: 45.0 F	Celsius: 7.22 C	Kelvin: 280.37 K
+Fahrenheit: 47.5 F	Celsius: 8.61 C	Kelvin: 281.76 K
+Fahrenheit: 50.0 F	Celsius: 10.0 C	Kelvin: 283.15 K
+Fahrenheit: 52.5 F	Celsius: 11.39 C	Kelvin: 284.54 K
+Fahrenheit: 55.0 F	Celsius: 12.78 C	Kelvin: 285.93 K
+Fahrenheit: 57.5 F	Celsius: 14.17 C	Kelvin: 287.32 K
+Fahrenheit: 60.0 F	Celsius: 15.56 C	Kelvin: 288.71 K
+Fahrenheit: 62.5 F	Celsius: 16.94 C	Kelvin: 290.09 K
+Fahrenheit: 65.0 F	Celsius: 18.33 C	Kelvin: 291.48 K
+Fahrenheit: 67.5 F	Celsius: 19.72 C	Kelvin: 292.87 K
+Fahrenheit: 70.0 F	Celsius: 21.11 C	Kelvin: 294.26 K
+Fahrenheit: 72.5 F	Celsius: 22.5 C	Kelvin: 295.65 K
+Fahrenheit: 75.0 F	Celsius: 23.89 C	Kelvin: 297.04 K
+Fahrenheit: 77.5 F	Celsius: 25.28 C	Kelvin: 298.43 K
+Fahrenheit: 80.0 F	Celsius: 26.67 C	Kelvin: 299.82 K
+Fahrenheit: 82.5 F	Celsius: 28.06 C	Kelvin: 301.21 K
+Fahrenheit: 85.0 F	Celsius: 29.44 C	Kelvin: 302.59 K
+Fahrenheit: 87.5 F	Celsius: 30.83 C	Kelvin: 303.98 K
+Fahrenheit: 90.0 F	Celsius: 32.22 C	Kelvin: 305.37 K
+Fahrenheit: 92.5 F	Celsius: 33.61 C	Kelvin: 306.76 K
+Fahrenheit: 95.0 F	Celsius: 35.0 C	Kelvin: 308.15 K
+Fahrenheit: 97.5 F	Celsius: 36.39 C	Kelvin: 309.54 K
+Fahrenheit: 100.0 F	Celsius: 37.78 C	Kelvin: 310.93 K
+Fahrenheit: 102.5 F	Celsius: 39.17 C	Kelvin: 312.32 K
+Fahrenheit: 105.0 F	Celsius: 40.56 C	Kelvin: 313.71 K
+Fahrenheit: 107.5 F	Celsius: 41.94 C	Kelvin: 315.09 K
+Fahrenheit: 110.0 F	Celsius: 43.33 C	Kelvin: 316.48 K
+Fahrenheit: 112.5 F	Celsius: 44.72 C	Kelvin: 317.87 K
+Fahrenheit: 115.0 F	Celsius: 46.11 C	Kelvin: 319.26 K
+Fahrenheit: 117.5 F	Celsius: 47.5 C	Kelvin: 320.65 K
+Fahrenheit: 120.0 F	Celsius: 48.89 C	Kelvin: 322.04 K
+Fahrenheit: 122.5 F	Celsius: 50.28 C	Kelvin: 323.43 K
+Fahrenheit: 125.0 F	Celsius: 51.67 C	Kelvin: 324.82 K
+Fahrenheit: 127.5 F	Celsius: 53.06 C	Kelvin: 326.21 K
+Fahrenheit: 130.0 F	Celsius: 54.44 C	Kelvin: 327.59 K
+Fahrenheit: 132.5 F	Celsius: 55.83 C	Kelvin: 328.98 K
+Fahrenheit: 135.0 F	Celsius: 57.22 C	Kelvin: 330.37 K
+Fahrenheit: 137.5 F	Celsius: 58.61 C	Kelvin: 331.76 K
+Fahrenheit: 140.0 F	Celsius: 60.0 C	Kelvin: 333.15 K
+Fahrenheit: 142.5 F	Celsius: 61.39 C	Kelvin: 334.54 K
+Fahrenheit: 145.0 F	Celsius: 62.78 C	Kelvin: 335.93 K
+Fahrenheit: 147.5 F	Celsius: 64.17 C	Kelvin: 337.32 K
+Fahrenheit: 150.0 F	Celsius: 65.56 C	Kelvin: 338.71 K
+Fahrenheit: 152.5 F	Celsius: 66.94 C	Kelvin: 340.09 K
+Fahrenheit: 155.0 F	Celsius: 68.33 C	Kelvin: 341.48 K
+Fahrenheit: 157.5 F	Celsius: 69.72 C	Kelvin: 342.87 K
+Fahrenheit: 160.0 F	Celsius: 71.11 C	Kelvin: 344.26 K
+Fahrenheit: 162.5 F	Celsius: 72.5 C	Kelvin: 345.65 K
+Fahrenheit: 165.0 F	Celsius: 73.89 C	Kelvin: 347.04 K
+Fahrenheit: 167.5 F	Celsius: 75.28 C	Kelvin: 348.43 K
+Fahrenheit: 170.0 F	Celsius: 76.67 C	Kelvin: 349.82 K
+Fahrenheit: 172.5 F	Celsius: 78.06 C	Kelvin: 351.21 K
+Fahrenheit: 175.0 F	Celsius: 79.44 C	Kelvin: 352.59 K
+Fahrenheit: 177.5 F	Celsius: 80.83 C	Kelvin: 353.98 K
+Fahrenheit: 180.0 F	Celsius: 82.22 C	Kelvin: 355.37 K
+Fahrenheit: 182.5 F	Celsius: 83.61 C	Kelvin: 356.76 K
+Fahrenheit: 185.0 F	Celsius: 85.0 C	Kelvin: 358.15 K
+Fahrenheit: 187.5 F	Celsius: 86.39 C	Kelvin: 359.54 K
+Fahrenheit: 190.0 F	Celsius: 87.78 C	Kelvin: 360.93 K
+Fahrenheit: 192.5 F	Celsius: 89.17 C	Kelvin: 362.32 K
+Fahrenheit: 195.0 F	Celsius: 90.56 C	Kelvin: 363.71 K
+Fahrenheit: 197.5 F	Celsius: 91.94 C	Kelvin: 365.09 K
+Fahrenheit: 200.0 F	Celsius: 93.33 C	Kelvin: 366.48 K
+Fahrenheit: 202.5 F	Celsius: 94.72 C	Kelvin: 367.87 K
+Fahrenheit: 205.0 F	Celsius: 96.11 C	Kelvin: 369.26 K
+Fahrenheit: 207.5 F	Celsius: 97.5 C	Kelvin: 370.65 K
+Fahrenheit: 210.0 F	Celsius: 98.89 C	Kelvin: 372.04 K
+]0;ldc6@maroon25: ~/cs214/Projects/09/ruby[01;32mldc6@maroon25[00m:[01;34m~/cs214/Projects/09/ruby[00m$ ruby temperature_tester.rb
+Base Temperature
+Enter Degrees and Scale: 0 K
+Limit Temperature
+Enter Degrees and Scale: 212 F
+Enter Step Value: 20.0
+Fahrenheit: -459.67 F	Celsius: -273.15 C	Kelvin: 0.0 K
+Fahrenheit: -423.67 F	Celsius: -253.15 C	Kelvin: 20.0 K
+Fahrenheit: -387.67 F	Celsius: -233.15 C	Kelvin: 40.0 K
+Fahrenheit: -351.67 F	Celsius: -213.15 C	Kelvin: 60.0 K
+Fahrenheit: -315.67 F	Celsius: -193.15 C	Kelvin: 80.0 K
+Fahrenheit: -279.67 F	Celsius: -173.15 C	Kelvin: 100.0 K
+Fahrenheit: -243.67 F	Celsius: -153.15 C	Kelvin: 120.0 K
+Fahrenheit: -207.67 F	Celsius: -133.15 C	Kelvin: 140.0 K
+Fahrenheit: -171.67 F	Celsius: -113.15 C	Kelvin: 160.0 K
+Fahrenheit: -135.67 F	Celsius: -93.15 C	Kelvin: 180.0 K
+Fahrenheit: -99.67 F	Celsius: -73.15 C	Kelvin: 200.0 K
+Fahrenheit: -63.67 F	Celsius: -53.15 C	Kelvin: 220.0 K
+Fahrenheit: -27.67 F	Celsius: -33.15 C	Kelvin: 240.0 K
+Fahrenheit: 8.33 F	Celsius: -13.15 C	Kelvin: 260.0 K
+Fahrenheit: 44.33 F	Celsius: 6.85 C	Kelvin: 280.0 K
+Fahrenheit: 80.33 F	Celsius: 26.85 C	Kelvin: 300.0 K
+Fahrenheit: 116.33 F	Celsius: 46.85 C	Kelvin: 320.0 K
+Fahrenheit: 152.33 F	Celsius: 66.85 C	Kelvin: 340.0 K
+Fahrenheit: 188.33 F	Celsius: 86.85 C	Kelvin: 360.0 K
+]0;ldc6@maroon25: ~/cs214/Projects/09/ruby[01;32mldc6@maroon25[00m:[01;34m~/cs214/Projects/09/ruby[00m$ exit
+exit
+
+Script done on 2022-03-2 00:23:48-04:00 [COMMAND_EXIT_CODE="0"]

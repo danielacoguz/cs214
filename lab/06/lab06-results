@@ -1,0 +1,457 @@
+Script started on 2022-02-18 16:35:08-05:00 [TERM="xterm-256color" TTY="/dev/pts/3" COLUMNS="80" LINES="24"]
+]0;ldc6@gold31: ~/cs214/Labs/06[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06[00m$ cat Splitter.java
+cat: Splitter.java: No such file or directory
+]0;ldc6@gold31: ~/cs214/Labs/06[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06[00m$ cat Split.java   ava
+/* Split.java is a class and program that splits a string
+ * into two substrings.
+ * 
+ * Begun by: Serita Nelesen
+ * Completed by: Daniela Contreras
+ ***************************************************************/
+
+import java.util.Scanner;
+
+// java class Split
+public class Split
+{
+  // main program
+  public static void main(String[] args)
+    {
+      Scanner keyboard = new Scanner(System.in);
+      // prompt for the string
+      System.out.println("\nTo split a string, enter the string: ");
+      String theString = keyboard.next();
+      
+      // prompt for splitting position
+      System.out.println("\nEnter the split position: ");
+      int position = keyboard.nextInt();
+
+      //Create list, compute results and print
+      String [] resultList = new String[2];
+      splitter(theString, position, resultList);
+      System.out.println("\nThe first part is " + resultList[0] + "\n and the second part is " + resultList[1]);
+      
+    }
+  
+  /* splitter() splits a string according to the position specified
+   * Receive: 	theString - the string to be split
+   * 		pos - the position at which to split
+   *            resList - an array of strings in which to place results
+   *****************************************************/
+     public static void splitter(String theString, int pos, String[] results)
+   {
+    results [0] = theString.substring(0, pos);
+
+    results [1] = theString.substring(pos, theString.length());
+
+
+   } 
+
+
+
+
+}
+]0;ldc6@gold31: ~/cs214/Labs/06[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06[00m$ javac -deprecation Split.java
+]0;ldc6@gold31: ~/cs214/Labs/06[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06[00m$ java Split. 
+
+To split a string, enter the string: 
+down    substring
+
+Enter the split position: 
+4
+
+The first part is subs
+ and the second part is tring
+]0;ldc6@gold31: ~/cs214/Labs/06[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06[00m$ java Split
+
+To split a string, enter the string: 
+gori    bahamas
+
+Enter the split position: 
+3
+
+The first part is bah
+ and the second part is amas
+]0;ldc6@gold31: ~/cs214/Labs/06[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06[00m$ java Split
+
+To split a string, enter the string: 
+colorado
+
+Enter the split position: 
+6
+
+The first part is colora
+ and the second part is do
+]0;ldc6@gold31: ~/cs214/Labs/06[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06[00m$ java Split
+
+To split a string, enter the string: 
+program
+
+Enter the split position: 
+1
+
+The first part is p
+ and the second part is rogram
+]0;ldc6@gold31: ~/cs214/Labs/06[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06[00m$ java Split
+
+To split a string, enter the string: 
+array
+
+Enter the split position: 
+3
+
+The first part is arr
+ and the second part is ay
+]0;ldc6@gold31: ~/cs214/Labs/06[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06[00m$ exit
+exit
+
+Script done on 2022-02-18 16:40:00-05:00 [COMMAND_EXIT_CODE="0"]
+Script started on 2022-02-18 23:38:58-05:00 [TERM="xterm-256color" TTY="/dev/pts/3" COLUMNS="80" LINES="24"]
+]0;ldc6@gold31: ~/cs214/Labs/06[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06[00m$ cat split.adb
+-- split.adb splits an input string about a specified position.
+--
+-- Input: Astring, a string,
+--        Pos, an integer.
+-- Precondition: pos is in Astring'Range.
+-- Output: The substrings Astring(Astring'First..Pos-1) and
+--                        Astring(Pos..Astring'Last).
+--
+-- Begun by: Dr. Adams, for CS 214 at Calvin College.
+-- Completed by:
+-- Date:
+--------------------------------------------------------------
+
+with Ada.Text_IO, Ada.Integer_Text_IO, Ada.Strings.Fixed;
+use  Ada.Text_IO, Ada.Integer_Text_IO, Ada.Strings.Fixed;
+
+procedure split is
+
+   EMPTY_STRING : String := "                                        ";
+
+   Astring, Part1, Part2 : String  := EMPTY_STRING;
+   Pos, Chars_read       : Natural;
+
+   ------------------------------------------------
+   --  split() splits a string in two.           
+   -- Receive: The_String, the string to be split,
+   --          Position, the split index.        
+   -- PRE: 0 < Position <= The_String.length(). 
+   --     (Ada arrays are 1-relative by default)
+   -- Passback: First_Part - the first substring,
+   --           Last_Part - the second substring.
+   ------------------------------------------------
+   procedure split(The_String: in String; Pos: in Natural; First_Part: in out String; Last_part: in out String ) is--begins function
+   begin
+      Move(The_String(1 .. Pos-1), First_Part);
+      Move(The_String(Pos .. The_String'length), Last_Part);
+   end split;
+
+begin                                           -- Prompt for input
+   Put("To split a string, enter the string: ");
+   Get_Line(Astring, Chars_Read);
+   Put("Enter the split position: ");
+   Get(Pos);
+
+   split(Astring, Pos, Part1, Part2);
+
+   Put("The first part is ");
+   Put_Line(Part1);
+   Put(" and the second part is ");
+   Put_Line(Part2);
+
+end split;
+
+]0;ldc6@gold31: ~/cs214/Labs/06[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06[00m$ gnatmake split
+gnatmake: "split" up to date.
+]0;ldc6@gold31: ~/cs214/Labs/06[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06[00m$ ./split
+To split a string, enter the string: hello
+Enter the split position: 1
+The first part is                                         
+ and the second part is hello                                   
+]0;ldc6@gold31: ~/cs214/Labs/06[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06[00m$ ./split
+To split a string, enter the string: hello
+Enter the split position: 4
+The first part is hel                                     
+ and the second part is lo                                      
+]0;ldc6@gold31: ~/cs214/Labs/06[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06[00m$ ./split
+To split a string, enter the string: hello
+Enter the split position: 6
+The first part is hello                                   
+ and the second part is                                         
+]0;ldc6@gold31: ~/cs214/Labs/06[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06[00m$ ./split
+To split a string, enter the string: dai  aniela
+Enter the split position: 7
+The first part is daniel                                  
+ and the second part is a                                       
+]0;ldc6@gold31: ~/cs214/Labs/06[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06[00m$ exit
+exit
+
+Script done on 2022-02-18 23:41:16-05:00 [COMMAND_EXIT_CODE="0"]
+Script started on 2022-02-18 23:46:57-05:00 [TERM="xterm-256color" TTY="/dev/pts/4" COLUMNS="80" LINES="24"]
+]0;ldc6@gold31: ~/cs214/Labs/06[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06[00m$ cat src/split.clj
+cat: src/split.clj: No such file or directory
+]0;ldc6@gold31: ~/cs214/Labs/06[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06[00m$ cd C
+bash: cd: C: No such file or directory
+]0;ldc6@gold31: ~/cs214/Labs/06[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06[00m$ cd C
+bash: cd: C: No such file or directory
+]0;ldc6@gold31: ~/cs214/Labs/06[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06[00m$ cd Clojue
+bash: cd: Clojue: No such file or directory
+]0;ldc6@gold31: ~/cs214/Labs/06[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06[00m$ cd clojure/
+]0;ldc6@gold31: ~/cs214/Labs/06/clojure[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06/clojure[00m$ cat   script script.clojure
+Script started, file is script.clojure
+]0;ldc6@gold31: ~/cs214/Labs/06/clojure[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06/clojure[00m$ cat src  /circle      split.adb
+cat: src/split.adb: No such file or directory
+]0;ldc6@gold31: ~/cs214/Labs/06/clojure[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06/clojure[00m$ cat src/split.clj
+;;;; split.clj splits a string into two substrings.
+;;;;
+;;;; Input: aString, the string to be split,
+;;;;        pos, the index where aString is to be split.
+;;;; Output: the substring of aString before pos, and
+;;;;         the substring of aString from pos onwards.
+;;;;
+;;;; Usage: clojure -m split
+;;;;
+;;;; Begun by: Dr. Adams, for CS 214 at Calvin College.
+;;;; Completed by:
+;;;; Date:
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(ns split)      ; name the program
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; split() splits a string into its two substrings.  
+;;; Receive: aString, the string to be split,         
+;;;          splitPos, the index where aString should be split.
+;;; PRE: 0 <= splitPos < the length of aString.
+;;; Return: the substring of aString before pos, and  
+;;;         the substring of aString from pos onwards.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn split [str pos]
+  (let
+    [first(subs str 0 pos)
+      last (subs str pos (count str))
+      ]
+      (vector first last)
+    )
+)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; main function
+;;; Input: the string to be split,
+;;;        the index where it should be split.
+;;; Output: the two split parts of the string.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn -main []
+  (print "To split a string, enter the string: ") (flush)
+  (let
+    [ aString (read-line) ]                      ; read the string
+    (print "Enter the split position: ") (flush)
+    (let 
+      [ pos (read)                               ; read the split pos.
+        result (split aString pos)               ; split the string
+        part1 (get result 0)                     ; retrieve the two
+        part2 (get result 1)                     ;  parts
+      ]
+                                                 ; display the parts
+      (printf (str "\nThe first part is \"%s\" and" 
+                    " the second part is \"%s\"\n\n")
+                       part1 part2)
+    )
+  )
+)
+
+]0;ldc6@gold31: ~/cs214/Labs/06/clojure[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06/clojure[00m$ scipt script.clojure
+
+Command 'scipt' not found, did you mean:
+
+  command 'script' from deb bsdutils (1:2.34-0.1ubuntu9.3)
+
+Try: apt install <deb name>
+
+]0;ldc6@gold31: ~/cs214/Labs/06/clojure[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06/clojure[00m$ script script  .clojure
+Script started, file is script.clojure
+]0;ldc6@gold31: ~/cs214/Labs/06/clojure[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06/clojure[00m$ cat src/split.clj
+;;;; split.clj splits a string into two substrings.
+;;;;
+;;;; Input: aString, the string to be split,
+;;;;        pos, the index where aString is to be split.
+;;;; Output: the substring of aString before pos, and
+;;;;         the substring of aString from pos onwards.
+;;;;
+;;;; Usage: clojure -m split
+;;;;
+;;;; Begun by: Dr. Adams, for CS 214 at Calvin College.
+;;;; Completed by:
+;;;; Date:
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(ns split)      ; name the program
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; split() splits a string into its two substrings.  
+;;; Receive: aString, the string to be split,         
+;;;          splitPos, the index where aString should be split.
+;;; PRE: 0 <= splitPos < the length of aString.
+;;; Return: the substring of aString before pos, and  
+;;;         the substring of aString from pos onwards.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn split [str pos]
+  (let
+    [first(subs str 0 pos)
+      last (subs str pos (count str))
+      ]
+      (vector first last)
+    )
+)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; main function
+;;; Input: the string to be split,
+;;;        the index where it should be split.
+;;; Output: the two split parts of the string.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn -main []
+  (print "To split a string, enter the string: ") (flush)
+  (let
+    [ aString (read-line) ]                      ; read the string
+    (print "Enter the split position: ") (flush)
+    (let 
+      [ pos (read)                               ; read the split pos.
+        result (split aString pos)               ; split the string
+        part1 (get result 0)                     ; retrieve the two
+        part2 (get result 1)                     ;  parts
+      ]
+                                                 ; display the parts
+      (printf (str "\nThe first part is \"%s\" and" 
+                    " the second part is \"%s\"\n\n")
+                       part1 part2)
+    )
+  )
+)
+
+]0;ldc6@gold31: ~/cs214/Labs/06/clojure[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06/clojure[00m$ clojure -m split
+To split a string, enter the string: hello
+Enter the split position: 0
+
+The first part is "" and the second part is "hello"
+
+]0;ldc6@gold31: ~/cs214/Labs/06/clojure[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06/clojure[00m$ clojure -m split
+To split a string, enter the string: hello
+Enter the split position: 3
+
+The first part is "hel" and the second part is "lo"
+
+]0;ldc6@gold31: ~/cs214/Labs/06/clojure[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06/clojure[00m$ clojure -m split
+To split a string, enter the string: hello
+Enter the split position: 5
+
+The first part is "hello" and the second part is ""
+
+]0;ldc6@gold31: ~/cs214/Labs/06/clojure[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06/clojure[00m$ clojure -m split
+To split a string, enter the string: daniela
+Enter the split position: 7
+
+The first part is "daniela" and the second part is ""
+
+]0;ldc6@gold31: ~/cs214/Labs/06/clojure[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06/clojure[00m$ clojure -m split
+To split a string, enter the string: daniela
+Enter the split position: 5
+
+The first part is "danie" and the second part is "la"
+
+]0;ldc6@gold31: ~/cs214/Labs/06/clojure[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06/clojure[00m$ exit
+exit
+Script done, file is script.clojure
+]0;ldc6@gold31: ~/cs214/Labs/06/clojure[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06/clojure[00m$ exit
+Script done, file is script.clojure
+]0;ldc6@gold31: ~/cs214/Labs/06/clojure[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06/clojure[00m$ exit
+
+Script done on 2022-02-18 23:53:42-05:00 [COMMAND_EXIT_CODE="0"]
+Script started on 2022-02-18 23:18:07-05:00 [TERM="xterm-256color" TTY="/dev/pts/5" COLUMNS="80" LINES="24"]
+]0;ldc6@gold31: ~/cs214/Labs/06[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06[00m$ script script.rubycd 06[KLabs/cs214[4Pexitruby split.rb[1Pcat split.rb  adb
+-- split.adb splits an input string about a specified position.
+--
+-- Input: Astring, a string,
+--        Pos, an integer.
+-- Precondition: pos is in Astring'Range.
+-- Output: The substrings Astring(Astring'First..Pos-1) and
+--                        Astring(Pos..Astring'Last).
+--
+-- Begun by: Dr. Adams, for CS 214 at Calvin College.
+-- Completed by:
+-- Date:
+--------------------------------------------------------------
+
+with Ada.Text_IO, Ada.Integer_Text_IO, Ada.Strings.Fixed;
+use  Ada.Text_IO, Ada.Integer_Text_IO, Ada.Strings.Fixed;
+
+procedure split is
+
+   EMPTY_STRING : String := "                                        ";
+
+   Astring, Part1, Part2 : String  := EMPTY_STRING;
+   Pos, Chars_read       : Natural;
+
+   ------------------------------------------------
+   --  split() splits a string in two.           
+   -- Receive: The_String, the string to be split,
+   --          Position, the split index.        
+   -- PRE: 0 < Position <= The_String.length(). 
+   --     (Ada arrays are 1-relative by default)
+   -- Passback: First_Part - the first substring,
+   --           Last_Part - the second substring.
+   ------------------------------------------------
+   procedure split(The_String: in String; Pos: in Natural; First_Part: in out String; Last_part: in out String ) is--begins function
+   begin
+      Move(The_String(1 .. Pos-1), First_Part);
+      Move(The_String(Pos .. The_String'length), Last_Part);
+   end split;
+
+begin                                           -- Prompt for input
+   Put("To split a string, enter the string: ");
+   Get_Line(Astring, Chars_Read);
+   Put("Enter the split position: ");
+   Get(Pos);
+
+   split(Astring, Pos, Part1, Part2);
+
+   Put("The first part is ");
+   Put_Line(Part1);
+   Put(" and the second part is ");
+   Put_Line(Part2);
+
+end split;
+
+]0;ldc6@gold31: ~/cs214/Labs/06[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06[00m$ cat split.adbscript script.rubycd 06[KLabs/cs214[4Pexitruby split.rbexit[Kcd cs214Labs/[3P06script script.ruby[5Pcat split.adb[Kgnatmake split
+gnatmake: "split" up to date.
+]0;ldc6@gold31: ~/cs214/Labs/06[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06[00m$ ./split
+To split a string, enter the string: hello
+Enter the split position: 1
+The first part is                                         
+ and the second part is hello                                   
+]0;ldc6@gold31: ~/cs214/Labs/06[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06[00m$ ./split
+To split a string, enter the string: hello
+Enter the split position: 4
+The first part is hel                                     
+ and the second part is lo                                      
+]0;ldc6@gold31: ~/cs214/Labs/06[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06[00m$ ./split
+To split a string, enter the string: 6
+Enter the split position: 6
+The first part is 6                                       
+ and the second part is                                         
+]0;ldc6@gold31: ~/cs214/Labs/06[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06[00m$ ./split
+To split a string, enter the string: hello
+Enter the split position: 6
+The first part is hello                                   
+ and the second part is                                         
+]0;ldc6@gold31: ~/cs214/Labs/06[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06[00m$ ./split
+To split a string, enter the string: daniela
+Enter the split position: 4
+The first part is dan                                     
+ and the second part is iela                                    
+]0;ldc6@gold31: ~/cs214/Labs/06[01;32mldc6@gold31[00m:[01;34m~/cs214/Labs/06[00m$ exit
+exit
+
+Script done on 2022-02-18 23:20:19-05:00 [COMMAND_EXIT_CODE="0"]

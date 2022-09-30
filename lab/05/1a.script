@@ -1,0 +1,17 @@
+Script started on 2022-02-11 16:00:57-05:00 [TERM="xterm-256color" TTY="/dev/pts/5" COLUMNS="80" LINES="24"]
+]0;ldc6@gold32: ~[01;32mldc6@gold32[00m:[01;34m~[00m$ clojure
+[KClojure 1.10.1
+[Kuser=> [Kuser=> [Kuser=> ((fn [x y z][x y z] (max (Math/abs x)(Math/abs x) (Math/abs y)(Math/abs y) (Math/abs z)(Math/abs z))user=> ((fn [x y z] (max (Math/abs x) (Math/abs y) (Math/abs z)))user=> ((fn [x y z] (max (Math/abs x) (Math/abs y) (Math/abs z))) -2 -4 7 )user=> ((fn [x y z] (max (Math/abs x) (Math/abs y) (Math/abs z))) -2 -4 7 )user=> [K((fn [x y z] (max (Math/abs x) (Math/abs y) (Math/abs z))) -2 -4 7 )
+[K7
+user=> [Kuser=> [Kuser=> ((fn [x y z][x y z] (max (Math/abs x)(Math/abs x) (Math/abs y)(Math/abs y) (Math/abs z)(Math/abs z))user=> ((fn [x y z] (max (Math/abs x) (Math/abs y) (Math/abs z)))user=> ((fn [x y z] (max (Math/abs x) (Math/abs y) (Math/abs z))) 3 21 -7 )user=> ((fn [x y z] (max (Math/abs x) (Math/abs y) (Math/abs z))) 3 21 -7 )user=> [K((fn [x y z] (max (Math/abs x) (Math/abs y) (Math/abs z))) 3 21 -7 )
+21
+user=> [Kuser=> [Kuser=> ((fn [x y z][x y z] (max (Math/abs x)(Math/abs x) (Math/abs y)(Math/abs y) (Math/abs z)(Math/abs z))user=> ((fn [x y z] (max (Math/abs x) (Math/abs y) (Math/abs z)))user=> ((fn [x y z] (max (Math/abs x) (Math/abs y) (Math/abs z))) 8 -10 -15)user=> ((fn [x y z] (max (Math/abs x) (Math/abs y) (Math/abs z))) 8 -10 -15)user=> [K((fn [x y z] (max (Math/abs x) (Math/abs y) (Math/abs z))) 8 -10 -15)
+15
+user=> [Kuser=> [Kuser=> ((fn [x y z] (max (Math/abs x) (Math/abs y) (Math/abs z))) 8 -10 -15)   100)user=> ((fn [x y z] (max (Math/abs x) (Math/abs y) (Math/abs z))) 8 -10 -100)user=> [K((fn [x y z] (max (Math/abs x) (Math/abs y) (Math/abs z))) 8 -10 -100)
+100
+user=> [Kuser=> [Kuser=> ((fn [x y z] (max (Math/abs x) (Math/abs y) (Math/abs z))) 8 -10 -100)           -8 -6 -1)user=> ((fn [x y z] (max (Math/abs x) (Math/abs y) (Math/abs z))) -8 -6 -1)user=> [K((fn [x y z] (max (Math/abs x) (Math/abs y) (Math/abs z))) -8 -6 -1)
+8
+user=> [Kuser=> [Kuser=> 
+[K]0;ldc6@gold32: ~[01;32mldc6@gold32[00m:[01;34m~[00m$ exit
+
+Script done on 2022-02-11 16:02:52-05:00 [COMMAND_EXIT_CODE="0"]

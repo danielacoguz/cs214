@@ -1,0 +1,392 @@
+Script started on 2022-03-21 00:35:30-04:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="250" LINES="27"]
+]0;ldc6@maroon25: ~/cs214/Projects/09/ada[01;32mldc6@maroon25[00m:[01;34m~/cs214/Projects/09/ada[00m$ cat temperature_tester.adb
+---temp_tester.adb is a test-driver fro Temp type
+---Author: Daniela Contreras
+-- Date: 03/20/22
+----------------------------------------------------------------------------------------------------------------------------------------------
+with Ada.Float_Text_IO, Ada.Text_IO, Ada.Characters.Handling, Temp_Package;
+use Ada.Float_Text_IO, Ada.Text_IO, Ada.Characters.Handling, Temp_Package;
+
+with Ada.Assertions;  use Ada.Assertions;
+
+procedure Temperature_Tester is
+
+  -- Creates three objects
+  baseDuplicate, baseTemp, limitTemp : Temp_Package.Temp;
+  stepValue : Float := 0.0;
+  orig_scale : Character := 'C';
+
+begin
+  -- Ask user for base temperature
+  Put_Line("Enter Base Temperature");
+  readTemperature(baseTemp);
+ 
+  -- Ask user for limit temperature
+  Put_Line("Enter Limit Temperature");
+  readTemperature(limitTemp);
+ 
+  -- Ask user for increment value
+  Put("Enter Step Value: ");
+  Get(stepValue);
+
+  --  Loop for temperature table
+  while ( isLessThan(baseTemp, limitTemp) or isEqual(baseTemp, limitTemp)) loop
+    -- Stores a copy of baseTemp in baseDuplicate for looping
+    Init(baseDuplicate,getDegree(baseTemp),getScale(baseTemp));
+   
+    -- Prints Fahrenheit and stores copy
+    Put("Fahrenheit: ");
+    toF(baseDuplicate); writeTemp(baseDuplicate);
+    Put("   ");
+
+    -- Prints Celsius and stores copy
+    Put("Celsius: ");
+    toC(baseDuplicate); writeTemp(baseDuplicate);
+    Put("   ");
+
+    -- Prints Kelvin and stores copy
+    Put("Kelvin: ");
+    toK(baseDuplicate); writeTemp(baseDuplicate);
+    New_Line;
+
+    -- Increment temperature
+    raiseTemp(baseTemp, stepValue);
+  end loop;
+end Temperature_Tester;]0;ldc6@maroon25: ~/cs214/Projects/09/ada[01;32mldc6@maroon25[00m:[01;34m~/cs214/Projects/09/ada[00m$ cat temp_package.ab[Kdb
+--------------------------------------------------------------------------------------------------------------------------------------------------
+--- Author: Daniela Contreras
+-- Date: 03/20/22
+--- team_package.adb defines operations for the Temp type
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+with Ada.Text_IO, Ada.Float_Text_IO, Ada.Characters.Handling;
+use Ada.Text_IO, Ada.Float_Text_IO, Ada.Characters.Handling;
+
+package body Temp_Package is
+
+  -- Initialize mid variables:
+  Tmp1_Copy, Tmp2_Copy: Temp;
+  User_Degree : Float := 0.0;
+  User_Scale, Empty : Character;
+
+  -------------------------------------------------------------------------
+  -- Init initializes  Temp variable
+  -- Receive: Tmp, the Temp variable;
+  --          Degree, the degrees value;
+  --          Scale (fahrenheit, celcius or kelvin);
+  -- Return: Tmp, set to degree and scale.
+  -------------------------------------------------------------------------
+  procedure Init(Tmp: out Temp; Degree: in Float; Scale: in Character ) is
+  begin
+    if isValid(Degree, Scale) then
+       Tmp.MyDegree := Degree;
+       Tmp.MyScale := Scale;
+    end if;
+  end Init;
+
+  -------------------------------------------------------------------------
+  -- getDegree(Tmp) retrieves Tmp.MyDegree
+  -- Receive: Tmp, a Temp.
+  -- Return: Tmp.MyDegree.
+  -------------------------------------------------------------------------
+  function getDegree(Tmp: in Temp) return Float is
+  begin
+    return Tmp.MyDegree;
+  end getDegree;
+
+  -------------------------------------------------------------------------
+  -- getScale(Tmp) retrieves Tmp.MyScale
+  -- Receive: Tmp, a Temp.
+  -------------------------------------------------------------------------
+  function getScale(Tmp: in Temp) return Character is
+  begin
+     return Tmp.MyScale;
+  end getScale;
+
+  -------------------------------------------------------------------------
+  -- toF(Temp) converts temperature to Fahrenheit
+  -- Receive: Tmp, a Temp.
+  -------------------------------------------------------------------------
+  procedure toF(Tmp: out Temp) is
+  begin
+     if (To_Upper(getScale(Tmp)) = 'C') then
+        Tmp.MyDegree := 1.8*Tmp.MyDegree+32.0;
+     elsif (To_Upper(getScale(Tmp)) = 'K') then
+        Tmp.MyDegree := 1.8*(Tmp.MyDegree-273.15)+32.0;
+     end if;
+     Tmp.myScale := 'F';
+  end toF;
+
+  -------------------------------------------------------------------------
+  -- toC(Temp) converts temperature to Celsius
+  -- Receive: Tmp, a Temp.
+  -------------------------------------------------------------------------
+  procedure toC(Tmp: out Temp) is
+  begin
+     if (To_Upper(getScale(Tmp)) = 'F') then
+        Tmp.MyDegree := (5.0/9.0)*(Tmp.MyDegree-32.0);
+     elsif (To_Upper(getScale(Tmp)) = 'K') then
+        Tmp.MyDegree := Tmp.MyDegree-273.15;
+     end if;
+     Tmp.myScale := 'C';
+  end toC;
+
+  -------------------------------------------------------------------------
+  -- toK(Temp) converts temperature to Kelvin
+  -- Receive: Tmp, a Temp.
+  -------------------------------------------------------------------------
+  procedure toK(Tmp: out Temp) is
+  begin
+     if (To_Upper(getScale(Tmp)) = 'F') then
+        Tmp.MyDegree := (5.0/9.0)*(Tmp.MyDegree-32.0)+273.15;
+     elsif (To_Upper(getScale(Tmp)) = 'C') then
+        Tmp.MyDegree := Tmp.MyDegree+273.15;
+     end if;
+     Tmp.myScale := 'K';
+  end toK;
+
+  -------------------------------------------------------------------------
+  -- raiseTemp(Tmp) increases the value of Degree
+  -- Receive: Tmp, a Temp.
+  -- PRE: Tmp has been initialized.
+  -------------------------------------------------------------------------
+  procedure raiseTemp(Tmp: out Temp; Degree: in Float) is
+  begin
+     if isValid(Tmp.MyDegree+Degree, Tmp.MyScale) then
+        Tmp.MyDegree := Tmp.MyDegree+Degree;
+     end if;
+  end raiseTemp;
+
+  -------------------------------------------------------------------------
+  -- lowerTemp(Tmp) decreases the value of Degree
+  -- Receive: Tmp, a Temp.
+  -- PRE: Tmp has been initialized.
+  -------------------------------------------------------------------------
+  procedure lowerTemp(Tmp: out Temp; Degree: in Float) is
+  begin
+     if isValid(Tmp.MyDegree-Degree, Tmp.MyScale) then
+        Tmp.MyDegree := Tmp.MyDegree-Degree;
+     end if;
+  end lowerTemp;
+
+  -------------------------------------------------------------------------
+  -- isEqual(Tmp1, Tmp2) Checks '=' Degree relation between any Scale
+  -- Receive: Degree, a Float; Scale, a Character
+  -- Return: True if valid and False if otherwise.
+  -------------------------------------------------------------------------
+  function isEqual(Tmp1: in Temp; Tmp2: in Temp) return Boolean is
+  begin
+    Init(Tmp1_Copy, getDegree(Tmp1), getScale(Tmp1));
+    Init(Tmp2_Copy, getDegree(Tmp2), getScale(Tmp2));
+    toK(Tmp1_Copy);
+    toK(Tmp2_Copy);
+    return Tmp1_Copy.MyDegree = Tmp2_Copy.MyDegree;
+  end isEqual;
+
+  -------------------------------------------------------------------------
+  -- isLessThan(Tmp1, Tmp2) Checks '<' degree relation between any scale
+  -- Receive: Degree, a Float; Scale, a Character
+  -- Return: True if valid and False if otherwise.
+  -------------------------------------------------------------------------
+  function isLessThan(Tmp1: in Temp; Tmp2: in Temp) return Boolean is
+  begin
+    Init(Tmp1_Copy, getDegree(Tmp1), getScale(Tmp1));
+    Init(Tmp2_Copy, getDegree(Tmp2), getScale(Tmp2));
+    toK(Tmp1_Copy);
+    toK(Tmp2_Copy);
+    return Tmp1_Copy.MyDegree < Tmp2_Copy.MyDegree;
+  end isLessThan;
+
+  -------------------------------------------------------------------------
+  -- isValid(Degree, Scale) Checks for valid Degree and Scale
+  -- Receive: Degree, a Float; Scale, a Character
+  -- Return: True if valid and False if otherwise.
+  -------------------------------------------------------------------------
+  function isValid(Degree: in Float; Scale: in Character) return Boolean is
+  begin
+     return (    (To_Upper(Scale) = 'K' and Degree >=    0.00)
+              or (To_Upper(Scale) = 'C' and Degree >= -273.15)
+     or (To_Upper(Scale) = 'F' and Degree >= -459.67));
+  end isValid;
+
+  -------------------------------------------------------------------------
+  -- readTemperature(Tmp) reads in the Degree and Scale from the user
+  -- Receive: Tmp, a Temp.
+  -- PRE: Tmp has been initialized.
+  -------------------------------------------------------------------------
+  procedure readTemperature(Tmp: out Temp) is
+  begin
+     Put("Enter Degrees and Scale: ");
+     Get(User_Degree);
+     Get(Empty);
+     Get(User_Scale);
+     if isValid(User_Degree, User_Scale) then
+        Tmp.MyDegree := User_Degree;
+        Tmp.MyScale  := User_Scale;
+     end if;
+  end readTemperature;
+
+  -------------------------------------------------------------------------
+  -- writeTemp(Tmp) prints Degree and Scale
+  -- Receive: Tmp, a Temp.
+  -- PRE: Tmp has been initialized.
+  -------------------------------------------------------------------------
+  procedure writeTemp(Tmp: in Temp) is
+  begin
+     Put(Float'Image(Tmp.MyDegree) & " " & Tmp.MyScale);
+  end writeTemp;
+
+end Temp_Package;]0;ldc6@maroon25: ~/cs214/Projects/09/ada[01;32mldc6@maroon25[00m:[01;34m~/cs214/Projects/09/ada[00m$ cat temp_package.ads
+-----------------------------------------------------------------------------------------------------------------------------
+-- temperature_package.ads calls the Temp type and the operations
+--name: Daniela Contreras
+--Date: 03/20/22
+--------------------------------------------------------------
+
+package Temp_Package is
+
+  type Temp is private;
+
+  procedure Init(Tmp: out Temp; Degree: in Float; Scale: in Character);
+  function  getDegree(Tmp: in Temp) return Float;
+  function  getScale(Tmp: in Temp) return Character;
+  procedure toF(Tmp: out Temp);
+  procedure toC(Tmp: out Temp);
+  procedure toK(Tmp: out Temp);
+  procedure raiseTemp(Tmp: out Temp; Degree: in Float);
+  procedure lowerTemp(Tmp: out Temp; Degree: in Float);
+  function  isEqual(Tmp1: in Temp; Tmp2: in Temp) return Boolean;
+  function  isLessThan(Tmp1: in Temp; Tmp2: in Temp) return Boolean;
+  function  isValid(Degree: in Float; Scale: in Character) return Boolean;
+  procedure readTemperature(Tmp: out Temp);
+  procedure writeTemp(Tmp: in Temp);
+
+  private
+
+    type Temp is record
+      MyDegree : Float     := 0.0;
+      MyScale  : Character := 'C';
+    end record;
+
+end Temp_Package;]0;ldc6@maroon25: ~/cs214/Projects/09/ada[01;32mldc6@maroon25[00m:[01;34m~/cs214/Projects/09/ada[00m$ gnatmake temperature_tester
+gnatmake: "temperature_tester" up to date.
+]0;ldc6@maroon25: ~/cs214/Projects/09/ada[01;32mldc6@maroon25[00m:[01;34m~/cs214/Projects/09/ada[00m$ ./temperature_tester
+Enter Base Temperature
+Enter Degrees and Scale: 0 F
+Enter Limit Temperature
+Enter Degrees and Scale: 100 C
+Enter Step Value: 2.5
+Fahrenheit:  0.00000E+00 F   Celsius: -1.77778E+01 C   Kelvin:  2.55372E+02 K
+Fahrenheit:  2.50000E+00 F   Celsius: -1.63889E+01 C   Kelvin:  2.56761E+02 K
+Fahrenheit:  5.00000E+00 F   Celsius: -1.50000E+01 C   Kelvin:  2.58150E+02 K
+Fahrenheit:  7.50000E+00 F   Celsius: -1.36111E+01 C   Kelvin:  2.59539E+02 K
+Fahrenheit:  1.00000E+01 F   Celsius: -1.22222E+01 C   Kelvin:  2.60928E+02 K
+Fahrenheit:  1.25000E+01 F   Celsius: -1.08333E+01 C   Kelvin:  2.62317E+02 K
+Fahrenheit:  1.50000E+01 F   Celsius: -9.44444E+00 C   Kelvin:  2.63706E+02 K
+Fahrenheit:  1.75000E+01 F   Celsius: -8.05556E+00 C   Kelvin:  2.65094E+02 K
+Fahrenheit:  2.00000E+01 F   Celsius: -6.66667E+00 C   Kelvin:  2.66483E+02 K
+Fahrenheit:  2.25000E+01 F   Celsius: -5.27778E+00 C   Kelvin:  2.67872E+02 K
+Fahrenheit:  2.50000E+01 F   Celsius: -3.88889E+00 C   Kelvin:  2.69261E+02 K
+Fahrenheit:  2.75000E+01 F   Celsius: -2.50000E+00 C   Kelvin:  2.70650E+02 K
+Fahrenheit:  3.00000E+01 F   Celsius: -1.11111E+00 C   Kelvin:  2.72039E+02 K
+Fahrenheit:  3.25000E+01 F   Celsius:  2.77778E-01 C   Kelvin:  2.73428E+02 K
+Fahrenheit:  3.50000E+01 F   Celsius:  1.66667E+00 C   Kelvin:  2.74817E+02 K
+Fahrenheit:  3.75000E+01 F   Celsius:  3.05556E+00 C   Kelvin:  2.76206E+02 K
+Fahrenheit:  4.00000E+01 F   Celsius:  4.44444E+00 C   Kelvin:  2.77594E+02 K
+Fahrenheit:  4.25000E+01 F   Celsius:  5.83333E+00 C   Kelvin:  2.78983E+02 K
+Fahrenheit:  4.50000E+01 F   Celsius:  7.22222E+00 C   Kelvin:  2.80372E+02 K
+Fahrenheit:  4.75000E+01 F   Celsius:  8.61111E+00 C   Kelvin:  2.81761E+02 K
+Fahrenheit:  5.00000E+01 F   Celsius:  1.00000E+01 C   Kelvin:  2.83150E+02 K
+Fahrenheit:  5.25000E+01 F   Celsius:  1.13889E+01 C   Kelvin:  2.84539E+02 K
+Fahrenheit:  5.50000E+01 F   Celsius:  1.27778E+01 C   Kelvin:  2.85928E+02 K
+Fahrenheit:  5.75000E+01 F   Celsius:  1.41667E+01 C   Kelvin:  2.87317E+02 K
+Fahrenheit:  6.00000E+01 F   Celsius:  1.55556E+01 C   Kelvin:  2.88706E+02 K
+Fahrenheit:  6.25000E+01 F   Celsius:  1.69444E+01 C   Kelvin:  2.90094E+02 K
+Fahrenheit:  6.50000E+01 F   Celsius:  1.83333E+01 C   Kelvin:  2.91483E+02 K
+Fahrenheit:  6.75000E+01 F   Celsius:  1.97222E+01 C   Kelvin:  2.92872E+02 K
+Fahrenheit:  7.00000E+01 F   Celsius:  2.11111E+01 C   Kelvin:  2.94261E+02 K
+Fahrenheit:  7.25000E+01 F   Celsius:  2.25000E+01 C   Kelvin:  2.95650E+02 K
+Fahrenheit:  7.50000E+01 F   Celsius:  2.38889E+01 C   Kelvin:  2.97039E+02 K
+Fahrenheit:  7.75000E+01 F   Celsius:  2.52778E+01 C   Kelvin:  2.98428E+02 K
+Fahrenheit:  8.00000E+01 F   Celsius:  2.66667E+01 C   Kelvin:  2.99817E+02 K
+Fahrenheit:  8.25000E+01 F   Celsius:  2.80556E+01 C   Kelvin:  3.01206E+02 K
+Fahrenheit:  8.50000E+01 F   Celsius:  2.94444E+01 C   Kelvin:  3.02594E+02 K
+Fahrenheit:  8.75000E+01 F   Celsius:  3.08333E+01 C   Kelvin:  3.03983E+02 K
+Fahrenheit:  9.00000E+01 F   Celsius:  3.22222E+01 C   Kelvin:  3.05372E+02 K
+Fahrenheit:  9.25000E+01 F   Celsius:  3.36111E+01 C   Kelvin:  3.06761E+02 K
+Fahrenheit:  9.50000E+01 F   Celsius:  3.50000E+01 C   Kelvin:  3.08150E+02 K
+Fahrenheit:  9.75000E+01 F   Celsius:  3.63889E+01 C   Kelvin:  3.09539E+02 K
+Fahrenheit:  1.00000E+02 F   Celsius:  3.77778E+01 C   Kelvin:  3.10928E+02 K
+Fahrenheit:  1.02500E+02 F   Celsius:  3.91667E+01 C   Kelvin:  3.12317E+02 K
+Fahrenheit:  1.05000E+02 F   Celsius:  4.05556E+01 C   Kelvin:  3.13706E+02 K
+Fahrenheit:  1.07500E+02 F   Celsius:  4.19444E+01 C   Kelvin:  3.15094E+02 K
+Fahrenheit:  1.10000E+02 F   Celsius:  4.33333E+01 C   Kelvin:  3.16483E+02 K
+Fahrenheit:  1.12500E+02 F   Celsius:  4.47222E+01 C   Kelvin:  3.17872E+02 K
+Fahrenheit:  1.15000E+02 F   Celsius:  4.61111E+01 C   Kelvin:  3.19261E+02 K
+Fahrenheit:  1.17500E+02 F   Celsius:  4.75000E+01 C   Kelvin:  3.20650E+02 K
+Fahrenheit:  1.20000E+02 F   Celsius:  4.88889E+01 C   Kelvin:  3.22039E+02 K
+Fahrenheit:  1.22500E+02 F   Celsius:  5.02778E+01 C   Kelvin:  3.23428E+02 K
+Fahrenheit:  1.25000E+02 F   Celsius:  5.16667E+01 C   Kelvin:  3.24817E+02 K
+Fahrenheit:  1.27500E+02 F   Celsius:  5.30556E+01 C   Kelvin:  3.26206E+02 K
+Fahrenheit:  1.30000E+02 F   Celsius:  5.44444E+01 C   Kelvin:  3.27594E+02 K
+Fahrenheit:  1.32500E+02 F   Celsius:  5.58333E+01 C   Kelvin:  3.28983E+02 K
+Fahrenheit:  1.35000E+02 F   Celsius:  5.72222E+01 C   Kelvin:  3.30372E+02 K
+Fahrenheit:  1.37500E+02 F   Celsius:  5.86111E+01 C   Kelvin:  3.31761E+02 K
+Fahrenheit:  1.40000E+02 F   Celsius:  6.00000E+01 C   Kelvin:  3.33150E+02 K
+Fahrenheit:  1.42500E+02 F   Celsius:  6.13889E+01 C   Kelvin:  3.34539E+02 K
+Fahrenheit:  1.45000E+02 F   Celsius:  6.27778E+01 C   Kelvin:  3.35928E+02 K
+Fahrenheit:  1.47500E+02 F   Celsius:  6.41667E+01 C   Kelvin:  3.37317E+02 K
+Fahrenheit:  1.50000E+02 F   Celsius:  6.55556E+01 C   Kelvin:  3.38706E+02 K
+Fahrenheit:  1.52500E+02 F   Celsius:  6.69445E+01 C   Kelvin:  3.40094E+02 K
+Fahrenheit:  1.55000E+02 F   Celsius:  6.83333E+01 C   Kelvin:  3.41483E+02 K
+Fahrenheit:  1.57500E+02 F   Celsius:  6.97222E+01 C   Kelvin:  3.42872E+02 K
+Fahrenheit:  1.60000E+02 F   Celsius:  7.11111E+01 C   Kelvin:  3.44261E+02 K
+Fahrenheit:  1.62500E+02 F   Celsius:  7.25000E+01 C   Kelvin:  3.45650E+02 K
+Fahrenheit:  1.65000E+02 F   Celsius:  7.38889E+01 C   Kelvin:  3.47039E+02 K
+Fahrenheit:  1.67500E+02 F   Celsius:  7.52778E+01 C   Kelvin:  3.48428E+02 K
+Fahrenheit:  1.70000E+02 F   Celsius:  7.66667E+01 C   Kelvin:  3.49817E+02 K
+Fahrenheit:  1.72500E+02 F   Celsius:  7.80556E+01 C   Kelvin:  3.51206E+02 K
+Fahrenheit:  1.75000E+02 F   Celsius:  7.94445E+01 C   Kelvin:  3.52594E+02 K
+Fahrenheit:  1.77500E+02 F   Celsius:  8.08333E+01 C   Kelvin:  3.53983E+02 K
+Fahrenheit:  1.80000E+02 F   Celsius:  8.22222E+01 C   Kelvin:  3.55372E+02 K
+Fahrenheit:  1.82500E+02 F   Celsius:  8.36111E+01 C   Kelvin:  3.56761E+02 K
+Fahrenheit:  1.85000E+02 F   Celsius:  8.50000E+01 C   Kelvin:  3.58150E+02 K
+Fahrenheit:  1.87500E+02 F   Celsius:  8.63889E+01 C   Kelvin:  3.59539E+02 K
+Fahrenheit:  1.90000E+02 F   Celsius:  8.77778E+01 C   Kelvin:  3.60928E+02 K
+Fahrenheit:  1.92500E+02 F   Celsius:  8.91667E+01 C   Kelvin:  3.62317E+02 K
+Fahrenheit:  1.95000E+02 F   Celsius:  9.05556E+01 C   Kelvin:  3.63706E+02 K
+Fahrenheit:  1.97500E+02 F   Celsius:  9.19445E+01 C   Kelvin:  3.65094E+02 K
+Fahrenheit:  2.00000E+02 F   Celsius:  9.33333E+01 C   Kelvin:  3.66483E+02 K
+Fahrenheit:  2.02500E+02 F   Celsius:  9.47222E+01 C   Kelvin:  3.67872E+02 K
+Fahrenheit:  2.05000E+02 F   Celsius:  9.61111E+01 C   Kelvin:  3.69261E+02 K
+Fahrenheit:  2.07500E+02 F   Celsius:  9.75000E+01 C   Kelvin:  3.70650E+02 K
+Fahrenheit:  2.10000E+02 F   Celsius:  9.88889E+01 C   Kelvin:  3.72039E+02 K
+]0;ldc6@maroon25: ~/cs214/Projects/09/ada[01;32mldc6@maroon25[00m:[01;34m~/cs214/Projects/09/ada[00m$ ./temperature_tester
+Enter Base Temperature
+Enter Degrees and Scale: 0 K
+Enter Limit Temperature
+Enter Degrees and Scale: 212 F
+Enter Step Value: 20.0
+Fahrenheit: -4.59670E+02 F   Celsius: -2.73150E+02 C   Kelvin:  0.00000E+00 K
+Fahrenheit: -4.23670E+02 F   Celsius: -2.53150E+02 C   Kelvin:  2.00000E+01 K
+Fahrenheit: -3.87670E+02 F   Celsius: -2.33150E+02 C   Kelvin:  4.00000E+01 K
+Fahrenheit: -3.51670E+02 F   Celsius: -2.13150E+02 C   Kelvin:  6.00000E+01 K
+Fahrenheit: -3.15670E+02 F   Celsius: -1.93150E+02 C   Kelvin:  8.00000E+01 K
+Fahrenheit: -2.79670E+02 F   Celsius: -1.73150E+02 C   Kelvin:  1.00000E+02 K
+Fahrenheit: -2.43670E+02 F   Celsius: -1.53150E+02 C   Kelvin:  1.20000E+02 K
+Fahrenheit: -2.07670E+02 F   Celsius: -1.33150E+02 C   Kelvin:  1.40000E+02 K
+Fahrenheit: -1.71670E+02 F   Celsius: -1.13150E+02 C   Kelvin:  1.60000E+02 K
+Fahrenheit: -1.35670E+02 F   Celsius: -9.31500E+01 C   Kelvin:  1.80000E+02 K
+Fahrenheit: -9.96700E+01 F   Celsius: -7.31500E+01 C   Kelvin:  2.00000E+02 K
+Fahrenheit: -6.36700E+01 F   Celsius: -5.31500E+01 C   Kelvin:  2.20000E+02 K
+Fahrenheit: -2.76700E+01 F   Celsius: -3.31500E+01 C   Kelvin:  2.40000E+02 K
+Fahrenheit:  8.33001E+00 F   Celsius: -1.31500E+01 C   Kelvin:  2.60000E+02 K
+Fahrenheit:  4.43300E+01 F   Celsius:  6.85001E+00 C   Kelvin:  2.80000E+02 K
+Fahrenheit:  8.03300E+01 F   Celsius:  2.68500E+01 C   Kelvin:  3.00000E+02 K
+Fahrenheit:  1.16330E+02 F   Celsius:  4.68500E+01 C   Kelvin:  3.20000E+02 K
+Fahrenheit:  1.52330E+02 F   Celsius:  6.68500E+01 C   Kelvin:  3.40000E+02 K
+Fahrenheit:  1.88330E+02 F   Celsius:  8.68500E+01 C   Kelvin:  3.60000E+02 K
+]0;ldc6@maroon25: ~/cs214/Projects/09/ada[01;32mldc6@maroon25[00m:[01;34m~/cs214/Projects/09/ada[00m$ exit
+exit
+
+Script done on 2022-03-21 00:37:09-04:00 [COMMAND_EXIT_CODE="0"]

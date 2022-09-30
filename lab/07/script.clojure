@@ -1,0 +1,23 @@
+Script started on 2022-03-03 12:46:59-05:00 [TERM="xterm-256color" TTY="/dev/pts/1" COLUMNS="167" LINES="15"]
+]0;ldc6@remotel1: ~/cs214/Labs/07[01;32mldc6@remotel1[00m:[01;34m~/cs214/Labs/07[00m$ cp lab07-results /home/cs/214/current/ldc6[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cat script.clojure script.ada script.java script.ruby >lab07-results[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cscript script.clojure[K[3Pclojure -m averagescript script.ruby[1Padarubyclojure -m average
+
+The empty vec:  []
+The test  vec:  [9.0 8.0 7.0 6.0]
+
+
+The first sum is 0.000
+The second sum is 30.000
+
+The first average is 0.000
+The second average is 7.500
+
+
+
+The first sum2 is 0.000
+The second sum2 is 30.000
+
+
+]0;ldc6@remotel1: ~/cs214/Labs/07[01;32mldc6@remotel1[00m:[01;34m~/cs214/Labs/07[00m$ exit
+exit
+
+Script done on 2022-03-03 12:47:18-05:00 [COMMAND_EXIT_CODE="0"]

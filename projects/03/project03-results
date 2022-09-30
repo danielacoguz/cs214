@@ -1,0 +1,298 @@
+Script started on 2022-02-02 19:55:19-05:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="151" LINES="12"]
+]0;ldc6@remotel2: ~/cs214/Projects/03[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/03[00m$ cat LETTER[K[K[K[K[K[KLetterGrades.java
+/* YearCodes.java is a driver for function letterGrade().
+ *
+ * Begun by: Prof. Adams, for CS 214 at Calvin College.
+ * COmpleted by Daniela Contreras ldc6
+ ****************************************************************/
+
+import java.util.Scanner;
+
+public class LetterGrades {
+
+   public static void main(String[] args) {
+      Scanner keyboard = new Scanner(System.in);
+      System.out.println("\nEnter your grade: "); // prompt
+
+      int average = keyboard.nextInt();      // read average
+      System.out.println(letterGrade(average)); // display its code
+   }
+
+   /***************************************************************
+    * letterGrade() converts an integer into a letter grade.
+    *
+    * Receive: grade, a string.
+    * PRE:letter Grade is {A, B, C, D, or F}.
+    * Return: the letter corresponding to the grade.
+    */
+    public static char letterGrade(int average)
+    {
+      switch (average / 10)
+      {
+         case 10: case 9:
+            return 'A';
+         case 8:
+            return 'B';
+         case 7:
+            return 'C';
+         case 6:
+            return 'D';
+         default:
+            return 'F';
+      }
+    }
+}
+
+
+
+]0;ldc6@remotel2: ~/cs214/Projects/03[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/03[00m$ -deprecation LetterGrades.java
+-deprecation: command not found
+]0;ldc6@remotel2: ~/cs214/Projects/03[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/03[00m$ javac -dec[Kprecation LetterGrades.java
+]0;ldc6@remotel2: ~/cs214/Projects/03[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/03[00m$ java LetterGrades
+
+Enter your grade: 
+100
+A
+]0;ldc6@remotel2: ~/cs214/Projects/03[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/03[00m$ java LetterGrades
+
+Enter your grade: 
+90
+A
+]0;ldc6@remotel2: ~/cs214/Projects/03[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/03[00m$ java LetterGrades
+
+Enter your grade: 
+89
+B
+]0;ldc6@remotel2: ~/cs214/Projects/03[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/03[00m$ java LetterGrades
+
+Enter your grade: 
+79
+C
+]0;ldc6@remotel2: ~/cs214/Projects/03[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/03[00m$ java LetterGrades
+
+Enter your grade: 
+65
+D
+]0;ldc6@remotel2: ~/cs214/Projects/03[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/03[00m$ java LetterGrades
+
+Enter your grade: 
+55
+F
+]0;ldc6@remotel2: ~/cs214/Projects/03[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/03[00m$ java LetterGrades
+
+Enter your grade: 
+30
+F
+]0;ldc6@remotel2: ~/cs214/Projects/03[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/03[00m$ exit
+exit
+
+Script done on 2022-02-02 19:57:02-05:00 [COMMAND_EXIT_CODE="0"]
+Script started on 2022-02-02 20:01:43-05:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="151" LINES="12"]
+]0;ldc6@remotel2: ~/cs214/Projects/03[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/03[00m$ cat letter_grades.adb[K[Kbd[K[Kdb
+-- letter_grades.adb converts integer grade code to corresponding letter grades.
+--
+-- Begun by: Dr. Adams, for CS 214 at Calvin College.
+--
+-- Input: average, an integer 
+-- Precondition: average is an integer divisible by 10
+-- Output: The letter grade (A, B, C, D or F) corresponding to average between 100-90, 80-89, 70-79, 60-69, and below 69.
+----------------------------------------------------
+
+with Ada.Text_IO, Ada.Integer_Text_IO;
+use  Ada.Text_IO, Ada.Integer_Text_IO;
+
+procedure letter_grades is
+
+   
+   grade : integer := 0;
+   
+
+   function LetterGrades(average : integer) return character is --begins the function
+   begin
+      case average / 10 is
+         when 10 | 9 => return 'A';
+         when 8 => return 'B';
+         when 7 => return 'C';
+         when 6 => return 'D';
+         when others => return 'F';
+      end case;
+   end LetterGrades;
+-- this function is the one that has the user input an integer from 100-0 in order to get a ltter grade
+begin                                          
+   Put("Enter your grade average: ");           -- Prompt for input
+   Get(grade);                   -- Input
+   Put( LetterGrades(grade) );                       -- Convert and output
+   New_Line;
+end letter_grades;]0;ldc6@remotel2: ~/cs214/Projects/03[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/03[00m$ gnatmake letter_grades
+x86_64-linux-gnu-gcc-7 -c letter_grades.adb
+x86_64-linux-gnu-gnatbind-7 -x letter_grades.ali
+x86_64-linux-gnu-gnatlink-7 letter_grades.ali
+]0;ldc6@remotel2: ~/cs214/Projects/03[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/03[00m$ ./letter_grades
+Enter your grade average: 99
+A
+]0;ldc6@remotel2: ~/cs214/Projects/03[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/03[00m$ ./letter_grades
+Enter your grade average: 1 100
+A
+]0;ldc6@remotel2: ~/cs214/Projects/03[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/03[00m$ ./letter_grades
+Enter your grade average: 80
+B
+]0;ldc6@remotel2: ~/cs214/Projects/03[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/03[00m$ ./letter_grades
+Enter your grade average: 78
+C
+]0;ldc6@remotel2: ~/cs214/Projects/03[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/03[00m$ ./letter_grades
+Enter your grade average: 8 68
+D
+]0;ldc6@remotel2: ~/cs214/Projects/03[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/03[00m$ ./letter_grades
+Enter your grade average: 54
+F
+]0;ldc6@remotel2: ~/cs214/Projects/03[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/03[00m$ ./letter_grades
+Enter your grade average: 30
+F
+]0;ldc6@remotel2: ~/cs214/Projects/03[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/03[00m$ ./letter_grades
+Enter your grade average: 2
+F
+]0;ldc6@remotel2: ~/cs214/Projects/03[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/03[00m$ exit
+exit
+
+Script done on 2022-02-02 20:04:02-05:00 [COMMAND_EXIT_CODE="0"]
+Script started on 2022-02-02 20:06:22-05:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="151" LINES="12"]
+]0;ldc6@remotel2: ~/cs214/Projects/03[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/03[00m$ cat letter_grades.clj
+;;;; letter_grades.clj is a driver for function letterGrades.
+;;;;
+;;;; Input: An integer letter average one of {100-0}.
+;;;; Output: The letetr grade for that integer value (A, B ,C, D or F)
+;;;;
+;;;; Usage: clojure -m letter_grades
+;;;;
+;;;; Begun by: Prof. Adams, for CS 214 at Calvin College.
+;;;; Completed by: Daniela Contreras
+;;;; Date:02/02/22
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(ns letter_grades)                    ; name the program
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; letterGrade() returns the code for a given average integer.
+;;; Receive: average, an integer.
+;;; Precondition: average is between 
+;;;   {100-0}.
+;;; Return: the integer code corresponding to average.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;; solution using the cond function
+;; letterGrade turns a numerical grade into a letter grade
+;; Input: Is the average which is between 100-0
+;; output: we receive a letter grade (a, b, c, d, or F)
+(defn letterGrade [average]
+    (let [numerical_grade (int (/ average 10))]
+        (cond
+            (= numerical_grade 10) "A"
+            (= numerical_grade 9) "A"
+            (= numerical_grade 8) "B"
+            (= numerical_grade 7) "C"
+            (= numerical_grade 6) "D"
+            :else "F"
+        )
+    )
+)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Function -main() test-drives our yearCode() function.
+;;; Input: year: one of {freshman, sophomore, junior, or senior}.
+;;; Output: the code corresponding to year.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn -main []
+ (print "\nEnter your average grade: ") (flush)
+ (let
+    [ average (read) ]                ; read average (a integer)
+    (println (letterGrade average) "\n")      ; display its code
+ )
+)]0;ldc6@remotel2: ~/cs214/Projects/03[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/03[00m$ co[Klojure -, cir[K[K[K[K[Km circle[K[K[K[K[K[Kletter_grades.clj[K[K[K[K[Kd[Ks
+
+Enter your average grade: 95
+A 
+
+]0;ldc6@remotel2: ~/cs214/Projects/03[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/03[00m$ clojure -m letter_grades
+
+Enter your average grade: 100
+A 
+
+]0;ldc6@remotel2: ~/cs214/Projects/03[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/03[00m$ clojure -m letter_grades
+
+Enter your average grade: 83
+B 
+
+]0;ldc6@remotel2: ~/cs214/Projects/03[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/03[00m$ clojure -m letter_grades
+
+Enter your average grade: 75
+C 
+
+]0;ldc6@remotel2: ~/cs214/Projects/03[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/03[00m$ clojure -m letter_grades
+
+Enter your average grade: 62
+D 
+
+]0;ldc6@remotel2: ~/cs214/Projects/03[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/03[00m$ clojure -m letter_grades
+
+Enter your average grade: 50
+F 
+
+]0;ldc6@remotel2: ~/cs214/Projects/03[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/03[00m$ exit
+exit
+
+Script done on 2022-02-02 20:07:27-05:00 [COMMAND_EXIT_CODE="0"]
+Script started on 2022-02-02 20:04:41-05:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="151" LINES="12"]
+]0;ldc6@remotel2: ~/cs214/Projects/03[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/03[00m$ cat letter_grades.rb
+#! /usr/bin/ruby
+# letter_grades.rb translates a numeric average into a letter grade
+# Begun by: Dr. Nelesen, for CS 214 at Calvin College 
+################################################################
+
+# Input:  The numeric average
+# Precondition: The everage is an integer divisible by 10
+# Output: The corresponding letter grade for the given integer value 
+
+#  Replace this line with the definition of function letterGrade() 
+def letterGrade(average)
+    case (average)
+    when 90 .. 100
+        return 'A'
+    when 80 .. 89
+        return 'B'
+    when 70 .. 79
+        return 'C'
+    when 60 .. 69
+        return 'D'
+    else 
+        return 'F'
+    end
+end
+ if __FILE__ == $0
+    print "Enter the average score: "
+    average = gets
+    print "Letter code is: "
+    puts letterGrade(average.to_i)
+ end]0;ldc6@remotel2: ~/cs214/Projects/03[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/03[00m$ ruby letter_grades.rb
+Enter the average score: 90
+Letter code is: A
+]0;ldc6@remotel2: ~/cs214/Projects/03[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/03[00m$ ruby letter_grades.rb
+Enter the average score: 87
+Letter code is: B
+]0;ldc6@remotel2: ~/cs214/Projects/03[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/03[00m$ ruby letter_grades.rb
+Enter the average score: 77
+Letter code is: C
+]0;ldc6@remotel2: ~/cs214/Projects/03[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/03[00m$ ruby letter_grades.rb
+Enter the average score: 61
+Letter code is: D
+]0;ldc6@remotel2: ~/cs214/Projects/03[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/03[00m$ ruby letter_grades.rb
+Enter the average score: 59
+Letter code is: F
+]0;ldc6@remotel2: ~/cs214/Projects/03[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/03[00m$ ex[K[Kruby letter_grades.rb
+Enter the average score: 100
+Letter code is: A
+]0;ldc6@remotel2: ~/cs214/Projects/03[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/03[00m$ ruby letter_grades.rb[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[Kexit
+exit
+
+Script done on 2022-02-02 20:05:59-05:00 [COMMAND_EXIT_CODE="0"]

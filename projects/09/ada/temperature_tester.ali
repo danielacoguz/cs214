@@ -1,0 +1,88 @@
+V "GNAT Lib v7"
+M P W=b
+P ZX
+
+RN
+RV NO_DIRECT_BOOLEAN_OPERATORS
+RV NO_FLOATING_POINT
+RV NO_IO
+RV NO_DEFAULT_INITIALIZATION
+RV SPARK_05
+
+U temperature_tester%b	temperature_tester.adb	bcf7fda4 NE OO SU
+W ada%s			ada.ads			ada.ali
+W ada.assertions%s	a-assert.adb		a-assert.ali
+W ada.characters%s	a-charac.ads		a-charac.ali
+W ada.characters.handling%s  a-chahan.adb	a-chahan.ali
+W ada.float_text_io%s	a-flteio.ads		a-flteio.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+W temp_package%s	temp_package.adb	temp_package.ali
+
+D ada.ads		20170106103348 76789da1 ada%s
+D a-assert.ads		20150130152538 a1febc19 ada.assertions%s
+D a-charac.ads		20070912115821 2d3ec45b ada.characters%s
+D a-chahan.ads		20140611123156 1601a50f ada.characters.handling%s
+D a-except.ads		20151016123252 291912d5 ada.exceptions%s
+D a-flteio.ads		20070406091342 e18a47a0 ada.float_text_io%s
+D a-ioexce.ads		20140225151544 e4a01f64 ada.io_exceptions%s
+D a-stream.ads		20141120112812 119b8fb3 ada.streams%s
+D a-tags.ads		20151016130316 01f5e3ef ada.tags%s
+D a-textio.ads		20140717063745 386df5d4 ada.text_io%s
+D a-tiflio.ads		20140717063513 56fbda09 ada.text_io.float_io%s
+D a-unccon.ads		20170106103348 31484697 ada.unchecked_conversion%s
+D interfac.ads		20160502101001 5ab55268 interfaces%s
+D i-cstrea.ads		20140801100435 e53d8b8e interfaces.c_streams%s
+D system.ads		20170510173650 4635ec04 system%s
+D s-assert.ads		20140225151544 cd8d2c94 system.assertions%s
+D s-crtl.ads		20141120112812 0ebbdb71 system.crtl%s
+D s-exctab.ads		20140225151139 54135002 system.exception_table%s
+D s-ficobl.ads		20140718105747 078245e4 system.file_control_block%s
+D s-parame.ads		20140801093848 7e2a0d7f system.parameters%s
+D s-soflin.ads		20151020124036 14e1eb6c system.soft_links%s
+D s-stache.ads		20140225151139 a37c21ec system.stack_checking%s
+D s-stalib.ads		20151112104907 09bd3940 system.standard_library%s
+D s-stoele.ads		20140225151139 2dc34a04 system.storage_elements%s
+D s-traent.ads		20140730135025 005bf670 system.traceback_entries%s
+D s-unstyp.ads		20160502101423 34867c83 system.unsigned_types%s
+D s-wchcon.ads		20140718092328 1b7d22d2 system.wch_con%s
+D temp_package.ads	20220326034302 4046e3ce temp_package%s
+D temperature_tester.adb  20220326035239 92a9b508 temperature_tester%b
+X 1 ada.ads
+16K9*Ada 20e8 29|5r6 5r25 5r38 6r5 6r24 6r37 8r6 8r27
+X 2 a-assert.ads
+50K13*Assertions 66e19 29|8w10 8r31
+X 3 a-charac.ads
+16K13*Characters 18e19 29|5r42 6r41
+X 4 a-chahan.ads
+36K24*Handling 159e28 29|5w53 6r52
+X 6 a-flteio.ads
+20K13*Float_Text_IO[11|46] 29|5w10 6r9
+X 10 a-textio.ads
+49K13*Text_IO 471e16 29|5w29 6r28
+166U14*New_Line 29|48s5
+242U14*Put 29|27s3 36s5 38s5 41s5 43s5 46s5
+263U14*Put_Line 29|19s3 23s3
+X 11 a-tiflio.ads
+57U14*Get 29|28s3[6|20]
+X 28 temp_package.ads
+7K9*Temp_Package 32e17 29|5w63 6r62 13r40
+9R8*Temp 30e15 29|13r53
+11U13*Init 29|33s5
+12V13*getDegree{float} 29|33s24
+13V13*getScale{character} 29|33s44
+14U13*toF 29|37s5
+15U13*toC 29|42s5
+16U13*toK 29|47s5
+17U13*raiseTemp 29|51s5
+19V13*isEqual{boolean} 29|31s46
+20V13*isLessThan{boolean} 29|31s11
+22U13*readTemperature 29|20s3 24s3
+23U13*writeTemp 29|37s25 42s25 47s25
+X 29 temperature_tester.adb
+10U11*Temperature_Tester 10b11 53l5 53t23
+13r3 baseDuplicate{28|9R8} 33m10 37m9 37r35 42m9 42r35 47m9 47r35
+13r18 baseTemp{28|9R8} 20m19 31r22 31r54 33r34 33r53 51m15
+13r28 limitTemp{28|9R8} 24m19 31r32 31r64
+14f3 stepValue{float} 28m7 51r25
+15e3 orig_scale{character}
+

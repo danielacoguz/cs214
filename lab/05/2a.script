@@ -1,0 +1,17 @@
+Script started on 2022-02-11 17:32:26-05:00 [TERM="xterm-256color" TTY="/dev/pts/4" COLUMNS="80" LINES="24"]
+]0;ldc6@gold32: ~[01;32mldc6@gold32[00m:[01;34m~[00m$ clojure 
+[KClojure 1.10.1
+[Kuser=> [Kuser=> [Kuser=> (def squareSqur   quare #(* 5 % % % 5 %)(* % % % %))user=> (def squareSquare #(* % % % %))user=> [K(def squareSquare #(* % % % %))
+#'user/squareSquare
+user=> [Kuser=> [Kuser=> (sw quareSquare 2)user=> (squareSquare 2)user=> [K(squareSquare 2)
+16
+user=> [Kuser=> [Kuser=> (squareSquare 2)[1P)-)2)user=> [K(squareSquare -2)
+16
+user=> [Kuser=> [Kuser=> (squareSquare -2)[1P)[1P)[1P)[1P)) e 3)user=> (squareSquare 3)user=> [K(squareSquare 3)
+81
+user=> [Kuser=> [Kuser=> (squareSquare -3)user=> (squareSquare -3)user=> [K(squareSquare -3)
+81
+user=> [Kuser=> [Kuser=> 2a  
+[K]0;ldc6@gold32: ~[01;32mldc6@gold32[00m:[01;34m~[00m$ exit
+
+Script done on 2022-02-11 17:37:17-05:00 [COMMAND_EXIT_CODE="0"]

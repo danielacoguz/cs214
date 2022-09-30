@@ -1,0 +1,121 @@
+V "GNAT Lib v7"
+P ZX
+
+RN
+RV NO_DIRECT_BOOLEAN_OPERATORS
+RV NO_FLOATING_POINT
+RV NO_IO
+RV NO_DEFAULT_INITIALIZATION
+RV NO_DYNAMIC_SIZED_OBJECTS
+RV SPARK_05
+
+U temp_package%b	temp_package.adb	fae232dd NE OO PK
+W ada%s			ada.ads			ada.ali
+W ada.characters%s	a-charac.ads		a-charac.ali
+W ada.characters.handling%s  a-chahan.adb	a-chahan.ali
+W ada.float_text_io%s	a-flteio.ads		a-flteio.ali
+W ada.tags%s		a-tags.adb		a-tags.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+W system.concat_3%s	s-conca3.adb		s-conca3.ali
+W system.img_real%s	s-imgrea.adb		s-imgrea.ali
+
+U temp_package%s	temp_package.ads	4046e3ce EE NE OO PK
+W ada.tags%s		a-tags.adb		a-tags.ali
+
+D ada.ads		20170106103348 76789da1 ada%s
+D a-charac.ads		20070912115821 2d3ec45b ada.characters%s
+D a-chahan.ads		20140611123156 1601a50f ada.characters.handling%s
+D a-except.ads		20151016123252 291912d5 ada.exceptions%s
+D a-flteio.ads		20070406091342 e18a47a0 ada.float_text_io%s
+D a-ioexce.ads		20140225151544 e4a01f64 ada.io_exceptions%s
+D a-stream.ads		20141120112812 119b8fb3 ada.streams%s
+D a-tags.ads		20151016130316 01f5e3ef ada.tags%s
+D a-textio.ads		20140717063745 386df5d4 ada.text_io%s
+D a-tiflio.ads		20140717063513 56fbda09 ada.text_io.float_io%s
+D a-unccon.ads		20170106103348 31484697 ada.unchecked_conversion%s
+D interfac.ads		20160502101001 5ab55268 interfaces%s
+D i-cstrea.ads		20140801100435 e53d8b8e interfaces.c_streams%s
+D system.ads		20170510173650 4635ec04 system%s
+D s-conca3.ads		20140225151544 0b705ca5 system.concat_3%s
+D s-crtl.ads		20141120112812 0ebbdb71 system.crtl%s
+D s-exctab.ads		20140225151139 54135002 system.exception_table%s
+D s-ficobl.ads		20140718105747 078245e4 system.file_control_block%s
+D s-imgrea.ads		20090409150019 c7a851e2 system.img_real%s
+D s-parame.ads		20140801093848 7e2a0d7f system.parameters%s
+D s-soflin.ads		20151020124036 14e1eb6c system.soft_links%s
+D s-stache.ads		20140225151139 a37c21ec system.stack_checking%s
+D s-stalib.ads		20151112104907 09bd3940 system.standard_library%s
+D s-stoele.ads		20140225151139 2dc34a04 system.storage_elements%s
+D s-traent.ads		20140730135025 005bf670 system.traceback_entries%s
+D s-unstyp.ads		20160502101423 34867c83 system.unsigned_types%s
+D s-wchcon.ads		20140718092328 1b7d22d2 system.wch_con%s
+D temp_package.ads	20220326034302 4046e3ce temp_package%s
+D temp_package.adb	20220326033931 7542c668 temp_package%b
+X 1 ada.ads
+16K9*Ada 20e8 29|7r6 7r19 7r38 8r5 8r18 8r37
+X 2 a-charac.ads
+16K13*Characters 18e19 29|7r42 8r41
+X 3 a-chahan.ads
+36K24*Handling 159e28 29|7w53 8r52
+67V13*To_Upper{character} 29|57s10 59s13 71s10 73s13 85s10 87s13 152s19 153s19
+. 154s10
+X 5 a-flteio.ads
+20K13*Float_Text_IO[10|46] 29|7w23 8r22
+X 9 a-textio.ads
+49K13*Text_IO 471e16 29|7w10 8r9
+206U14*Get 29|166s6 167s6
+242U14*Put 29|164s6 181s6
+X 10 a-tiflio.ads
+57U14*Get 29|165s6[5|20]
+X 28 temp_package.ads
+7K9*Temp_Package 27E10 32l5 32e17 29|10b14 184l5 184t17
+9R8*Temp 11r27 12r31 13r30 14r26 15r26 16r26 17r32 18r32 19r30 19r45 20r33
+. 20r48 22r38 23r31 27c10 30e15 29|13r25 24r27 37r30 46r29 55r26 69r26 83r26
+. 98r32 110r32 122r29 122r44 136r32 136r47 162r38 179r31
+11U13*Init 11<18 11>33 11>51 29|24b13 30l7 30t11 124s5 125s5 138s5 139s5
+11r18 Tmp{9R8} 29|24b18 27m8 28m8
+11f33 Degree{float} 29|24b33 26r16 27r24
+11e51 Scale{character} 29|24b51 26r24 28r23
+12V13*getDegree{float} 12>23 29|37b12 40l7 40t16 124s21 125s21 138s21 139s21
+12r23 Tmp{9R8} 29|37b22 39r12
+13V13*getScale{character} 13>22 29|46b12 49l7 49t15 57s19 59s22 71s19 73s22
+. 85s19 87s22 124s38 125s38 138s38 139s38
+13r22 Tmp{9R8} 29|46b21 48r13
+14U13*toF 14<17 29|55b13 63l7 63t10
+14r17 Tmp{9R8} 29|55b17 57r28 58m9 58r29 59r31 60m9 60r30 62m6
+15U13*toC 15<17 29|69b13 77l7 77t10
+15r17 Tmp{9R8} 29|69b17 71r28 72m9 72r36 73r31 74m9 74r25 76m6
+16U13*toK 16<17 29|83b13 91l7 91t10 126s5 127s5 140s5 141s5
+16r17 Tmp{9R8} 29|83b17 85r28 86m9 86r36 87r31 88m9 88r25 90m6
+17U13*raiseTemp 17<23 17>38 29|98b13 103l7 103t16
+17r23 Tmp{9R8} 29|98b23 100r17 100r38 101m9 101r25
+17f38 Degree{float} 29|98b38 100r30 101r38
+18U13*lowerTemp 18<23 18>38 29|110b13 115l7 115t16
+18r23 Tmp{9R8} 29|110b23 112r17 112r38 113m9 113r25
+18f38 Degree{float} 29|110b38 112r30 113r38
+19V13*isEqual{boolean} 19>21 19>36 29|122b12 129l7 129t14
+19r21 Tmp1{9R8} 29|122b20 124r31 124r47
+19r36 Tmp2{9R8} 29|122b35 125r31 125r47
+20V13*isLessThan{boolean} 20>24 20>39 29|136b12 143l7 143t17
+20r24 Tmp1{9R8} 29|136b23 138r31 138r47
+20r39 Tmp2{9R8} 29|136b38 139r31 139r47
+21V13*isValid{boolean} 21>21 21>39 29|26s8 100s9 112s9 150b12 155l7 155t14
+. 168s9
+21f21 Degree{float} 29|150b20 152r45 153r45 154r36
+21e39 Scale{character} 29|150b38 152r28 153r28 154r19
+22U13*readTemperature 22<29 29|162b13 172l7 172t22
+22r29 Tmp{9R8} 29|162b29 169m9 170m9
+23U13*writeTemp 23>23 29|179b13 182l7 182t16
+23r23 Tmp{9R8} 29|179b23 181r22 181r44
+28f7*MyDegree{float} 29|27m12 39r16 58m13 58r33 60m13 60r34 72m13 72r40 74m13
+. 74r29 86m13 86r40 88m13 88r29 100r21 101m13 101r29 112r21 113m13 113r29
+. 128r22 128r43 142r22 142r43 169m13 181r26
+29e7*MyScale{character} 29|28m12 48r17 62m10 76m10 90m10 100r42 112r42 170m13
+. 181r48
+X 29 temp_package.adb
+13r3 Tmp1_Copy{28|9R8} 124m10 126m9 128r12 138m10 140m9 142r12
+13r14 Tmp2_Copy{28|9R8} 125m10 127m9 128r33 139m10 141m9 142r33
+14f3 User_Degree{float} 165m10 168r17 169r25
+15e3 User_Scale{character} 167m10 168r30 170r25
+15e15 Empty{character} 166m10
+

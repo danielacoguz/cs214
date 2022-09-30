@@ -1,0 +1,17 @@
+Script started on 2022-01-23 00:44:06-05:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="80" LINES="24"]
+]0;ldc6@remotel3: ~/cs214/Labs/02[01;32mldc6@remotel3[00m:[01;34m~/cs214/Labs/02[00m$ makecd 02/[2@Labs/cs214[4Pmake./example6make clean[Kcd 02[KLabs/cs214[4Pmakecd 02/[2@Labs/cs2145[5Pmakecd 02/      flex example6.lex  
+]0;ldc6@remotel3: ~/cs214/Labs/02[01;32mldc6@remotel3[00m:[01;34m~/cs214/Labs/02[00m$ bison -d example7 6.y
+]0;ldc6@remotel3: ~/cs214/Labs/02[01;32mldc6@remotel3[00m:[01;34m~/cs214/Labs/02[00m$ gcc lex.yy.c example6.tab.c -o example6
+]0;ldc6@remotel3: ~/cs214/Labs/02[01;32mldc6@remotel3[00m:[01;34m~/cs214/Labs/02[00m$ ./example6
+set humidity to $45
+to$	Humidity set to 45
+temperature set                 set temperature to $45
+to$	Temperature set to 45
+heat on
+	Heat turned on
+tea   heaat of     t off
+	Heat turned off
+]0;ldc6@remotel3: ~/cs214/Labs/02[01;32mldc6@remotel3[00m:[01;34m~/cs214/Labs/02[00m$ exit
+exit
+
+Script done on 2022-01-23 00:46:30-05:00 [COMMAND_EXIT_CODE="0"]

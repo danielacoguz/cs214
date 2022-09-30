@@ -1,0 +1,350 @@
+Script started on 2022-03-14 23:08:30-04:00 [TERM="xterm-256color" TTY="/dev/pts/3" COLUMNS="106" LINES="27"]
+]0;ldc6@remotel2: ~/cs214/Projects/07[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/07[00m$ cat Array. .java
+/*Array.java writes two utilit subprograms for array processing.
+
+*Name: Daniela Contreras
+Date: 03/14/2022
+* Wroked with Germaine Hounakey
+*/
+import java.util.Scanner;
+
+public class Array
+{
+    public static void main(final String[] args){
+
+        Scanner input = new Scanner(System.in);
+        System.out.println("Enter desired lenght of array:  ");
+        int length = input.nextInt();
+        double[] anArray  = new double[length];
+
+
+
+        readArray(anArray, input);
+        printArray(anArray);
+        System.out.println("  ");
+
+    }
+    /* printArray() prints out given array
+    and takes in anArray[] of doubles
+    */
+    public static void printArray (double anArray[]){
+        System.out.println("array is: [ ");
+        if (anArray.length != 0){
+            for(int i = 0; i < anArray.length; i++){
+                System.out.println(anArray[i] + "  ");
+
+            }
+        }else {
+            System.out.print("Array has no elements");
+
+        }
+        System.out.println("]");
+
+    }
+    /*
+    *readArray(); obtains values from specific sized array
+    *input: Scanner input 
+    *return: anArray with input fromt he user
+    receives:array with doubles
+    */
+    public static void readArray(double anArray[], Scanner input){
+        System.out.println("desired values for array are ");
+            for (int i= 0; i < anArray.length; i++) {
+                anArray[i] = input.nextDouble();
+        }
+    }
+}]0;ldc6@remotel2: ~/cs214/Projects/07[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/07[00m$ javac -deprecation Array.java
+]0;ldc6@remotel2: ~/cs214/Projects/07[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/07[00m$ java Array
+Enter desired lenght of array:  
+3
+desired values for array are 
+3
+4
+3
+array is: [ 
+3.0  
+4.0  
+3.0  
+]
+  
+]0;ldc6@remotel2: ~/cs214/Projects/07[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/07[00m$ java Array
+Enter desired lenght of array:  
+5
+desired values for array are 
+4
+5
+4
+5
+4
+array is: [ 
+4.0  
+5.0  
+4.0  
+5.0  
+4.0  
+]
+  
+]0;ldc6@remotel2: ~/cs214/Projects/07[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/07[00m$ java Array
+Enter desired lenght of array:  
+1
+desired values for array are 
+2
+array is: [ 
+2.0  
+]
+  
+]0;ldc6@remotel2: ~/cs214/Projects/07[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/07[00m$ java Array
+Enter desired lenght of array:  
+3
+desired values for array are 
+4
+0
+6
+array is: [ 
+4.0  
+0.0  
+6.0  
+]
+  
+]0;ldc6@remotel2: ~/cs214/Projects/07[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/07[00m$ exit
+exit
+
+Script done on 2022-03-15 02:10:08-04:00 [COMMAND_EXIT_CODE="0"]
+Script started on 2022-03-15 02:18:06-04:00 [TERM="xterm-256color" TTY="/dev/pts/3" COLUMNS="106" LINES="27"]
+]0;ldc6@remotel2: ~/cs214/Projects/07/clojure[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/07/clojure[00m$ cat src/circle      array.clj
+;; array.clj tests functions printArray and readArray
+;;Author: Daniela Contreras
+;;Date: 03/15/22
+;; User Inputs: values in array
+;; User output: Values in array
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(ns array)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;readArray() fills array with double values
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn readArray [anArray i size]
+    (if (< i size)
+        (do
+        (aset anArray i (double (read)))
+        (readArray anArray (+ i 1) size)
+        )
+    )
+)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; printArray() displays desired values
+;;receive: anArray : anArray now holding doubles
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn printArray [anArray size]
+    (print "Array: ")
+    (if (not= size 0)
+        (println (seq anArray))
+        (println "Nothing here!")
+    )
+)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;main function to display values and test printArray and readArray
+;;Outputs the items of array
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn -main[]
+    (print "Type here desired size for your array: \n") (flush)
+    (def size (int (read)))
+    (def anArray (to-array (repeat size 0)))
+    (if (> size 0)
+        (do (print " Enter values: \n") (flush))
+    )
+    (readArray anArray 0 size)
+    (printArray anArray size)
+)
+]0;ldc6@remotel2: ~/cs214/Projects/07/clojure[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/07/clojure[00m$ clojure -m array
+Type here desired size for your array: 
+3
+ Enter values: 
+3
+2
+3
+Array: (3.0 2.0 3.0)
+]0;ldc6@remotel2: ~/cs214/Projects/07/clojure[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/07/clojure[00m$ clojure -m array
+Type here desired size for your array: 
+5
+ Enter values: 
+4
+5
+4
+2
+3
+Array: (4.0 5.0 4.0 2.0 3.0)
+]0;ldc6@remotel2: ~/cs214/Projects/07/clojure[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/07/clojure[00m$ clojure -m array
+1Type here desired size for your array: 
+
+ Enter values: 
+34
+Array: (34.0)
+]0;ldc6@remotel2: ~/cs214/Projects/07/clojure[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/07/clojure[00m$ clojure -m array
+Type here desired size for your array: 
+5 9 2
+ Enter values: 
+3
+4
+Array: (3.0 4.0)
+]0;ldc6@remotel2: ~/cs214/Projects/07/clojure[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/07/clojure[00m$ exit
+exit
+
+Script done on 2022-03-14 23:19:19-04:00 [COMMAND_EXIT_CODE="0"]
+Script started on 2022-03-14 23:10:18-04:00 [TERM="xterm-256color" TTY="/dev/pts/3" COLUMNS="106" LINES="27"]
+]0;ldc6@remotel2: ~/cs214/Projects/07[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/07[00m$ cat array.rb
+####################################################################
+## Name: Daniela Contreras
+## Date: 03/13/22
+##worked with Germaine Hounakey
+###############################################################
+#readArray() Array with doubles
+#Receive: anArray, an empty array
+#########################################################
+def readArray (anArray)
+    if anArray.size > 0 then
+        print "Enter array Elements: "
+        for i in 0..anArray.size-1
+            anArray[i] = gets.to_f
+        end
+    end
+
+end
+## printArray() outputs the values of anArray
+## Receive: a full array
+###########################################################
+
+def printArray (anArray)
+    print "Array: [ "
+    if anArray.size > 0 then
+        for i in 0..anArray.size
+            print anArray[i]
+            print ' ' 
+        end
+    else
+        print "nothing here "    
+    end
+    print "\b] \n"
+
+end
+
+def main
+    #get array size
+    print "Enter array Size: "
+    size = gets.to_i
+    anArray = Array.new (size)
+    readArray(anArray)
+    printArray(anArray)
+    
+end
+main
+]0;ldc6@remotel2: ~/cs214/Projects/07[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/07[00m$ ruby array.rb
+Enter array Size: 4
+Enter array Elements: 3
+4
+5
+4
+Array: [ 3.0 4.0 5.0 4.0  ] 
+]0;ldc6@remotel2: ~/cs214/Projects/07[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/07[00m$ ruby array.rb
+Enter array Size: 2
+Enter array Elements: 4
+3
+Array: [ 4.0 3.0  ] 
+]0;ldc6@remotel2: ~/cs214/Projects/07[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/07[00m$ ruby array.rb
+Enter array Size: 6
+Enter array Elements: 3
+4
+5
+3
+4
+3
+Array: [ 3.0 4.0 5.0 3.0 4.0 3.0  ] 
+]0;ldc6@remotel2: ~/cs214/Projects/07[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/07[00m$ exit
+exit
+
+Script done on 2022-03-15 01:11:37-04:00 [COMMAND_EXIT_CODE="0"]
+Script started on 2022-03-15 01:11:53-04:00 [TERM="xterm-256color" TTY="/dev/pts/3" COLUMNS="106" LINES="27"]
+]0;ldc6@remotel2: ~/cs214/Projects/07[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/07[00m$ cat an_array.adb
+-----------------------------------------------------------
+---Student Name: Daniela Contreras
+--- Date: 03/14/22
+---an_array.ada completes print and read functions 
+
+with Ada.Text_IO; use Ada.Text_IO;
+with Ada.Float_Text_IO; use Ada.Float_text_IO;
+with Ada.Integer_text_IO; use Ada.Integer_Text_IO;
+--declaring vector type-----
+procedure an_array is
+    type Vector is array (Positive range <>) of Float;
+    Size : Integer := 0;
+
+----------------------------------------------------------
+--Receive: anArray, empty array , size, 
+--amount of elements 
+----------------------------------------------------------
+procedure read_array(anArray: out Vector; Size: Integer)is
+begin
+    Put_line("Enter array values: ");
+    for I in anArray'Range loop
+        Get (anArray(I));
+    end loop;
+end read_array;
+---------------------------------------------
+--Receive: anArray,of size n
+----------------------------------------------
+procedure print_array(anArray: Vector) is
+begin 
+    if anArray'Length /= 0 then
+        Put ("Array: [ ");
+        for I in anArray'Range loop
+            Put (anArray(I));
+    end loop;
+    Put (" ] ");
+    else
+        Put("nothing here!");
+    end if;
+end print_array;
+--has user put in size of array--
+begin
+Put ("Enter desired size of array: ");
+Get(size);
+declare
+    anArray : Vector(1 .. Size);
+--input and output---
+begin
+    if Size /=0 then
+        read_array(anArray,Size);
+    end if;
+    print_array(anArray);
+end;
+end an_array;
+]0;ldc6@remotel2: ~/cs214/Projects/07[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/07[00m$ gnatmake an_array
+gnatmake: "an_array" up to date.
+]0;ldc6@remotel2: ~/cs214/Projects/07[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/07[00m$ ./an_array
+Enter desired size of array: 3
+Enter array values: 
+4
+3
+2
+Array: [  4.00000E+00 3.00000E+00 2.00000E+00 ] 
+]0;ldc6@remotel2: ~/cs214/Projects/07[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/07[00m$ ./an_array
+Enter desired size of array: 3
+Enter array values: 
+2
+3
+2
+Array: [  2.00000E+00 3.00000E+00 2.00000E+00 ] 
+]0;ldc6@remotel2: ~/cs214/Projects/07[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/07[00m$ ./an_array
+Enter desired size of array: 6
+Enter array values: 
+5
+43
+4
+35
+3
+4
+Array: [  5.00000E+00 4.30000E+01 4.00000E+00 3.50000E+01 3.00000E+00 4.00000E+00 ] 
+]0;ldc6@remotel2: ~/cs214/Projects/07[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/07[00m$ exit
+exit
+
+Script done on 2022-03-15 09:13:24-04:00 [COMMAND_EXIT_CODE="0"]

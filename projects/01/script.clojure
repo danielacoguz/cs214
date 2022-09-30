@@ -1,0 +1,45 @@
+Script started on 2022-01-19 22:27:21-05:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="80" LINES="24"]
+]0;ldc6@remotel2: ~/cs214/Projects/01/Clojure[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/01/Clojure[00m$ clojure -m rectangleArea
+
+To compute the area of a rectangle,
+ enter its width: 4
+ enter its height: 5
+
+The area is 20.000000
+
+]0;ldc6@remotel2: ~/cs214/Projects/01/Clojure[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/01/Clojure[00m$ clojure -m rectangleArea
+
+To compute the area of a rectangle,
+ enter its width: 30
+ enter its height: 10
+
+The area is 300.000000
+
+]0;ldc6@remotel2: ~/cs214/Projects/01/Clojure[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/01/Clojure[00m$ clojure -m rectangleArea
+
+To compute the area of a rectangle,
+ enter its width: 2
+ enter its height: 15
+
+The area is 30.000000
+
+]0;ldc6@remotel2: ~/cs214/Projects/01/Clojure[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/01/Clojure[00m$ clojure -m rectangleArea
+
+To compute the area of a rectangle,
+ enter its width: 20
+ enter its height: 14
+
+The area is 280.000000
+
+]0;ldc6@remotel2: ~/cs214/Projects/01/Clojure[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/01/Clojure[00m$ clojure -m rectangleArea
+
+To compute the area of a rectangle,
+ enter its width: 1 32
+ enter its height: 10
+
+The area is 320.000000
+
+]0;ldc6@remotel2: ~/cs214/Projects/01/Clojure[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/01/Clojure[00m$ mv[K]0;ldc6@remotel2: ~/cs214/Projects/01/Clojure[01;32mldc6@remotel2[00m:[01;34m~/cs214/Projects/01/Clojure[00m$ mv  exit
+exit
+
+Script done on 2022-01-19 22:29:26-05:00 [COMMAND_EXIT_CODE="0"]
